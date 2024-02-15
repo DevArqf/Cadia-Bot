@@ -51,31 +51,33 @@ module.exports = {
 
                     // Check if the guild exists
                     if (!targetGuild) {
-                        return await interaction.reply('<:bl_x_mark:1206436599794241576> **• Beemo has detected that this is an invalid server ID!**');
+                        return await interaction.reply('<:bl_x_mark:1206436599794241576> • Beemo has detected that this is an **Invalid Server ID**!');
                     }
 
                     // Check if the guild is already blacklisted
                     const existingGuild = await Guild.findOne({ guildId: targetGuild.id });
                     if (existingGuild !== null) {
-                        return await interaction.reply('<:bl_x_mark:1206436599794241576> **• This server has already been found in Beemo\'s blacklist!**');
+                        return await interaction.reply('<:bl_x_mark:1206436599794241576> • This server has already been found in Beemo\'s blacklist!');
                     }
 
                     // Create an embed for notification
                     const embed = new EmbedBuilder()
                         .setTitle('`📖` Blacklisted Servers')
                         .setColor("#50a090")
-                        .setDescription(`<a:bl_redwarning:1207453255710277642> **Your server has been detected as blacklisted from using Beemo!**\n\n**• Server Name:** \`${targetGuild.name}\`\n**• Reason:** \`${reason}\` || "\`No Reason Provided.\`"}`)
+                        .setDescription(`<a:bl_redwarning:1207453255710277642> Your server has been **blacklisted** from using Beemo!\n\n**• Server Name:** \`${targetGuild.name}\`\n**• Reason:** \`${reason}\``)
                         .setFooter({ text: `${footer_message}`, iconURL: interaction.client.user.displayAvatarURL() })
-                        .setThumbnail(interaction.client.user.displayAvatarURL());
+                        .setThumbnail(interaction.client.user.displayAvatarURL())
+                        .setTimestamp();
 
                     // Create a new document in the blacklist schema
                     await Guild.create({ guildId: targetGuild.id, reason });
 
                     // Create a button for ban appeal
                     const banAppealButton = new ButtonBuilder()
-                        .setLabel("<:bl_ban:1207453823677767680> Beemo\'s Ban Appeal")
+                        .setLabel("Beemo\'s Ban Appeal")
                         .setCustomId("ban_appeal")
-                        .setStyle(ButtonStyle.Success);
+                        .setStyle(ButtonStyle.Success)
+                        .setEmoji('1207453823677767680');
 
                     // Create an action row containing the ban appeal button
                     const row = new ActionRowBuilder().addComponents(banAppealButton);
@@ -85,7 +87,7 @@ module.exports = {
                     await targetGuild.leave();
 
                     // Respond to the interaction indicating success
-                    await interaction.reply(`<a:bl_redwarning:1207453255710277642> **• The Server with ID \`${targetGuild.id}\` has been successfully added to Beemo\'s blacklist!\n\n**• Reason:** > \`${reason}\` || '> \`No Reason Provided.\`'}`);
+                    await interaction.reply(`<a:bl_redwarning:1207453255710277642> • The Server with ID \`${targetGuild.id}\` has been **successfully added** to Beemo\'s blacklist!\n\n**• Reason:**\n> \`${reason}\``);
                     break;
 
                 // Case for removing a server from blacklist
@@ -97,11 +99,11 @@ module.exports = {
 
                     // Check if the guild was found and removed
                     if (!removedGuild) {
-                        return await interaction.reply('<:bl_x_mark:1206436599794241576> **• This server has not been found in Beemo\'s blacklist!**');
+                        return await interaction.reply('<:bl_x_mark:1206436599794241576> • This server has **not** been **found** in Beemo\'s blacklist!');
                     }
 
                     // Respond to the interaction indicating success
-                    await interaction.reply(`<:bl_check_mark:1206436519498354738> **• The Server with ID ${removedGuild.guildId} has been successfully removed from Beemo\'s blacklist!`);
+                    await interaction.reply(`<:bl_check_mark:1206436519498354738> • The Server with ID \`${removedGuild.guildId}\` has been **successfully removed** from Beemo\'s blacklist! \n **• Reason:**\n > \`No Reason Provided.\``);
                     break;
 
                 // Case for listing all blacklisted servers
@@ -114,10 +116,11 @@ module.exports = {
                         .setColor("#50a090")
                         .setFooter({ text: `${footer_message}`, iconURL: interaction.client.user.displayAvatarURL() })
                         .setThumbnail(interaction.client.user.displayAvatarURL())
+                        .setTimestamp()
                         .setDescription(
                             blacklistedGuilds.length > 0
-                                ? blacklistedGuilds.map(guild => `**• Server ID:** > \`${guild.guildId}\`\n**• Reason:** > \`${guild.reason}\` || '> \`No Reason Provided.\`'}\n`).join('\n')
-                                : '<:bl_x_mark:1206436599794241576> **• No servers have been detected in Beemo\'s blacklist!**'
+                                ? blacklistedGuilds.map(guild => `**• Server ID:**\n> \`${guild.guildId}\`\n**• Reason:**\n> \`${guild.reason}\` .\`'\n`).join('\n')
+                                : '<:bl_x_mark:1206436599794241576> • No servers have been **detected** in Beemo\'s blacklist!'
                         );
 
                     // Respond to the interaction with the embed
@@ -126,13 +129,13 @@ module.exports = {
 
                 // Default case for invalid actions
                 default:
-                    await interaction.reply('<a:bl_redwarning:1207453255710277642> **• Invalid action! Use `/blacklist add`, `/blacklist remove`, or `/blacklist list`!**');
+                    await interaction.reply('<a:bl_redwarning:1207453255710277642> • **Invalid action!** Use `/blacklist add`, `/blacklist remove`, or `/blacklist list`!');
                     break;
             }
         } catch (error) {
             // Catch and log any errors that occur during execution
             console.error(error);
-            await interaction.reply({ content: '<:bl_x_mark:1206436599794241576> **• Beemo has encountered an error while processing your command!**', ephemeral: true });
+            await interaction.reply({ content: '<:bl_x_mark:1206436599794241576> • Beemo has **encountered** an **error** while processing your command!', ephemeral: true });
         }
     },
 };
