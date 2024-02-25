@@ -1,10 +1,30 @@
-# **🌟 Introducing Beemo! 🌟**
-Get ready to embark on an epic adventure with Beemo, the ultimate Discord Bot inspired by Adventure Time's lovable BMO! 🤖
+# Javascript Sapphire Bot example
 
-🎮 • With Beemo, your Discord server becomes a playground of endless possibilities! 
-Whether you're chatting with friends, managing your server, or diving into thrilling RPG-style quests and gameplay, Beemo has you covered.
+This is a basic setup of a Discord bot using the [sapphire framework][sapphire] written in Javascript
 
-🛠️ • Unleash the power of Beemo's multipurpose features, from moderating your server to entertaining your community with fun games and utilities. 
-Plus, immerse yourself in a one-of-a-kind RPG experience right in your Discord server!
+## How to use it?
 
-**Join the adventure with Beemo today and experience Discord like never before!**
+### Prerequisite
+
+```sh
+npm install
+```
+
+### Development
+
+This example can be run with `nodemon` to watch the files and automatically restart your bot.
+
+```sh
+npm run watch
+```
+
+### Production
+
+You can also run the bot with `npm start`, this will run `node ./src/index.js`. But this is not the recommended way to run a bot in production.
+
+## License
+
+Dedicated to the public domain via the [Unlicense], courtesy of the Sapphire Community and its contributors.
+
+[sapphire]: https://github.com/sapphiredev/framework
+[unlicense]: https://github.com/sapphiredev/examples/blob/main/LICENSE.md
