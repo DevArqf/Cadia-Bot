@@ -1,1 +1,0 @@
-module.exports = 'Beemo | Beta 1.0.0';
