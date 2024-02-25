@@ -11,11 +11,6 @@ node_modules/
 # Environment variables
 .DS_Store
 
-dist/
-
-# Ignore the config file (contains sensitive information such as tokens)
-config.ts
-
 # Ignore heapsnapshot and log files
 *.heapsnapshot
 *.log
