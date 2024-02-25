@@ -1,4 +1,5 @@
 import { ArrayString } from '@skyra/env-utilities';
+import mongoose from 'mongoose';
 
 declare module '@skyra/env-utilities' {
 	interface Env {
@@ -8,6 +9,10 @@ declare module '@skyra/env-utilities' {
 		BOT_OWNERS: ArrayString;
 		DEVELOPERS: ArrayString;
 	}
+}
+
+declare module '@sapphire/pieces' {
+	interface Container {}
 }
 
 declare module '@sapphire/framework' {

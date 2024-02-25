@@ -1,5 +1,5 @@
-import { seconds } from './lib/util/common/time';
-import { PrivilegedUsers } from './lib/util/constants';
+const { seconds } = require('./lib/util/common/time');
+const { PrivilegedUsers } = require('./lib/util/constants');
 
 const { LogLevel, BucketScope } = require('@sapphire/framework');
 
@@ -33,4 +33,19 @@ const config = {
 	}
 };
 
-module.exports = config;
+const ClientConfig = {
+	intents: config.intents,
+	defaultPrefix: config.default_prefix,
+	allowedMentions: config.mentions,
+	caseInsensitiveCommands: true,
+	caseInsensitivePrefixes: true,
+	defaultCooldown: config.cooldown_options,
+	partials: config.partials,
+	logger: config.logger,
+	loadMessageCommandListeners: true,
+	typing: false,
+	disableMentionPrefix: false,
+	preventFailedToFetchLogForGuilds: true
+};
+
+module.exports = { ClientConfig };
