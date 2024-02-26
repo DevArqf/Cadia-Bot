@@ -48,4 +48,24 @@ const ClientConfig = {
 	preventFailedToFetchLogForGuilds: true
 };
 
-module.exports = { ClientConfig };
+const emojis = {
+	reg: {
+	success: '`✅`',
+	warning: '`⚠️`',
+	fail: '`❌`',
+	},
+	custom: {
+	success: '<:bl_check_mark:1206436519498354738>',
+	fail: '<:bl_x_mark:1206436599794241576>',
+	warning: '<:bl_warning:1206435135701123073>'
+	}
+};
+
+const color = {
+	default: '#50a090',
+	success: '#3bb143',
+	fail: '#ff2626',
+	warning: '#e9d502'
+};
+
+module.exports = { ClientConfig, color, emojis };
