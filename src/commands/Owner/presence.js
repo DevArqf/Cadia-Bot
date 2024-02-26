@@ -1,7 +1,7 @@
 const BeemoCommand = require('../../lib/structures/commands/BeemoCommand');
 const { PermissionLevels } = require('../../lib/types/Enums');
+const { color, emojis } = require('../../config')
 const { EmbedBuilder } = require('discord.js');
-const { color } = require('../../config')
 
 class botOwner extends BeemoCommand {
 	/**
@@ -11,7 +11,7 @@ class botOwner extends BeemoCommand {
 	constructor(context, options) {
 		super(context, {
 			...options,
-			description: 'Set The Bot\`s Presence'
+			description: 'Modify the Bot\`s Presence'
 		});
 	}
 
@@ -33,9 +33,9 @@ class botOwner extends BeemoCommand {
                         { name: "• 👀 Invisible", value: "Invisible" }
                     )
                     .setRequired(true)
-                    ),
-                    );
-    }
+                ),
+            );
+        }
                 
 	/**
 	 * @param {BeemoCommand.ChatInputCommandInteraction} interaction
@@ -45,8 +45,8 @@ class botOwner extends BeemoCommand {
         const presence = interaction.options.getString('type');
 
         const embed = new EmbedBuilder()
-        .setTitle("Beemo's Presence")
-        .setDescription(`${emoji.custom.success} Successfully set presence to **${presence}**!\n\n > Please wait up to 5 minutes for the presence to change.`)
+        .setTitle("`🔒` Beemo's Presence")
+        .setDescription(`${emojis.custom.success} Successfully set presence to **${presence}**!\n\n > Please wait up to 5 minutes for the presence to change.`)
         .setColor(`${color.default}`)
         .setTimestamp()
         .setFooter({ text: `${interaction.user.displayName}`, iconURL: interaction.client.user.displayAvatarURL() });
@@ -64,7 +64,7 @@ class botOwner extends BeemoCommand {
         return await interaction.reply({ embeds: [embed] });
 
     } catch (error) {
-        interaction.channel.send({ content: ` \`\`\`js\n${error}\`\`\` `, ephemeral: true });
+        interaction.channel.send({ content: `${emojis.custom.fail} I have **encountered** an **error**\n \`\`\`js\n${error}\`\`\` `, ephemeral: true });
     };
 
     }
