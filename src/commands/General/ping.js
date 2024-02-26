@@ -2,6 +2,7 @@ const BeemoCommand = require('../../lib/structures/commands/BeemoCommand');
 const { PermissionLevels } = require('../../lib/types/Enums');
 const { color, emojis } = require('../../config')
 const { EmbedBuilder } = require('discord.js');
+const { RandomLoadingMessage } = require("../../lib/util/constants")
 
 class UserCommand extends BeemoCommand {
 	/**
@@ -30,7 +31,8 @@ class UserCommand extends BeemoCommand {
 	 * @param {BeemoCommand.ChatInputCommandInteraction} interaction
 	 */
 	async chatInputRun(interaction) {
-		const sent = await interaction.reply('<a:bl_loading:1206433137928708146> Fetching Latency...');
+		const loadingMessage = RandomLoadingMessage[Math.floor(Math.random() * RandomLoadingMessage.length)];
+		const sent = await interaction.reply(`<a:bl_loading:1206433137928708146> **${loadingMessage}**`, { fetchReply: true });
 
 		const now = Date.now();
 		const uptime_ms = interaction.client.uptime;
