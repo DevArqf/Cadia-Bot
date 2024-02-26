@@ -49,7 +49,7 @@ class botOwner extends BeemoCommand {
         .setDescription(`${emojis.custom.success} Successfully set presence to **${presence}**!\n\n > Please wait up to 5 minutes for the presence to change.`)
         .setColor(`${color.default}`)
         .setTimestamp()
-        .setFooter({ text: `${interaction.user.displayName}`, iconURL: interaction.client.user.displayAvatarURL() });
+        .setFooter({ text: `${interaction.user.displayName}`, iconURL: interaction.user.displayAvatarURL() });
         
         if (presence === 'Online') {
             interaction.client.user.setPresence({status: 'online'});
@@ -64,7 +64,7 @@ class botOwner extends BeemoCommand {
         return await interaction.reply({ embeds: [embed] });
 
     } catch (error) {
-        interaction.channel.send({ content: `${emojis.custom.fail} I have **encountered** an **error**\n \`\`\`js\n${error}\`\`\` `, ephemeral: true });
+        interaction.channel.send({ content: `${emojis.custom.fail} I have **encountered** an **error**:\n \`\`\`js\n${error}\`\`\` `, ephemeral: true });
     };
 
     }
