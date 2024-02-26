@@ -55,7 +55,7 @@ class UserCommand extends BeemoCommand {
                 { name: '• **Server Creation:**', value: `> <t:${server_made}:R>` }
                 )
        		.setTimestamp()
-            .setFooter({ text: `${interaction.user.displayName}`, iconURL: interaction.client.user.displayAvatarURL() })
+            .setFooter({ text: `${interaction.user.displayName}`, iconURL: interaction.user.displayAvatarURL() })
             
         await interaction.reply({
             embeds: [embed]
@@ -78,7 +78,7 @@ class UserCommand extends BeemoCommand {
                 )
        		.setTimestamp()
             .setThumbnail(server_icon)
-            .setFooter({ text: `${interaction.user.displayName}`, iconURL: interaction.client.user.displayAvatarURL() })
+            .setFooter({ text: `${interaction.user.displayName}`, iconURL: interaction.user.displayAvatarURL() })
             
         await interaction.reply({
             embeds: [embed_with_icon]
@@ -92,7 +92,7 @@ class UserCommand extends BeemoCommand {
             .setTitle(`${emojis.default.fail} Error Getting Information`)
             .setDescription(`${emojis.custom.fail} I have **encountered** an **error** while getting Information`)
             .setTimestamp()
-            .setFooter({ text: `${interaction.user.displayName}`, iconURL: interaction.client.user.displayAvatarURL() });
+            .setFooter({ text: `${interaction.user.displayName}`, iconURL: interaction.user.displayAvatarURL() });
         await interaction.reply({ content: '', embeds: [errorEmbed] });
         }
     }
