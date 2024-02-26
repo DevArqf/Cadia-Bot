@@ -69,7 +69,7 @@ class UserCommand extends BeemoCommand {
             .setTitle(`\`🎱\` Ball Response`)
             .setDescription(`• **Question:**\n > \`${question}\`\n\n • **Response:**\n > ${get_response}`)
             .setTimestamp()
-            .setFooter({ text: `${interaction.user.displayName}`, iconURL: interaction.client.user.displayAvatarURL() })
+            .setFooter({ text: `${interaction.user.displayName}`, iconURL: interaction.user.displayAvatarURL() })
             
         await interaction.reply({
             embeds: [embed]
