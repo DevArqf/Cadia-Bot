@@ -11,7 +11,7 @@ class UserCommand extends BeemoCommand {
 	constructor(context, options) {
 		super(context, {
 			...options,
-			description: 'Moderatea a user\`s name'
+			description: 'Moderate a user\`s name'
 		});
 	}
 
@@ -29,7 +29,7 @@ class UserCommand extends BeemoCommand {
                         .setRequired(true))
                 .addStringOption(option =>
                     option.setName('reason')
-                        .setDescription('Reason for the banning the user')
+                        .setDescription('Reason for the name moderation of the user')
                         .setRequired(false)),
 		);
 	}
@@ -57,7 +57,7 @@ class UserCommand extends BeemoCommand {
             const completed = new EmbedBuilder()
                 .setColor(`${color.success}`)
                 .setTitle(`${emojis.reg.success} Name Successfully Moderated`)
-                .setDescription(`**${userToModerate.tag}**'s name has been **moderated**! \n\n**New Nickname:**\n <:bl_Reply:1212047469014425650>\`${nickname}\` \n\n**Reason:**\n <:bl_Reply:1212047469014425650>\`${reason}\``)
+                .setDescription(`**${userToModerate.tag}**'s name has been **moderated**! \n\n• **New Nickname:**\n <:bl_Reply:1212047469014425650>\`${nickname}\` \n\n• **Reason:**\n <:bl_Reply:1212047469014425650>\`${reason}\``)
                 .setTimestamp()
                 .setFooter({ text: `${interaction.user.displayName}`, iconURL: interaction.user.displayAvatarURL() })
 
