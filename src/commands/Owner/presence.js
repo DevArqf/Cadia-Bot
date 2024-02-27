@@ -3,7 +3,14 @@ const { PermissionLevels } = require('../../lib/types/Enums');
 const { color, emojis } = require('../../config')
 const { EmbedBuilder } = require('discord.js');
 
-class botOwner extends BeemoCommand {
+// Array of developer IDs
+const devIds = [
+    '899385550585364481',
+    '863508137080127518',
+    '600707283097485322'
+];
+
+class BotOwner extends BeemoCommand {
 	/**
 	 * @param {BeemoCommand.Context} context
 	 * @param {BeemoCommand.Options} options
@@ -42,6 +49,15 @@ class botOwner extends BeemoCommand {
 	 */
 	async chatInputRun(interaction, client) {
         try {
+        
+        // Check if the user's ID is in the devIds array
+        if (!devIds.includes(interaction.user.id)) {
+            return interaction.reply({
+              content: `${emojis.custom.fail} You are not **authorized** to **execute** this command`,
+              ephemeral: true
+            });
+          }
+        
         const presence = interaction.options.getString('type');
 
         const embed = new EmbedBuilder()
@@ -71,5 +87,5 @@ class botOwner extends BeemoCommand {
 }
 
 module.exports = {
-	botOwner
+	BotOwner
 };
