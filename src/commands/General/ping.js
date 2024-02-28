@@ -44,9 +44,9 @@ class UserCommand extends BeemoCommand {
 			.setTitle(`${emojis.reg.success} Latency Fetched`)
 			.setColor(`${color.success}`)
 			.addFields(
-				{ name: '• Uptime:', value: `> <:bl_clock:1206612806560915547> \`${uptime_hours} h${uptime_hours !== 1 ? '' : ''} ${uptime_minutes} m${uptime_minutes !== 1 ? '' : ''} ${uptime_seconds} s${uptime_seconds !== 1 ? '' : ''}\``, inline: false },
-				{ name: '• Bot Latency:', value: `> <:bl_online:1206434279312195594> \`${Math.round(this.container.client.ws.ping)} ms\`` },
-				{ name: '• API Latency:', value: `> <:bl_js:1206438112490692618> \`${now - sent.createdTimestamp} ms\`` },
+				{ name: '• Uptime:', value: `<:bl_Reply:1212047469014425650> <:bl_clock:1206612806560915547> \`${uptime_hours} h${uptime_hours !== 1 ? '' : ''} ${uptime_minutes} m${uptime_minutes !== 1 ? '' : ''} ${uptime_seconds} s${uptime_seconds !== 1 ? '' : ''}\``, inline: false },
+				{ name: '• Bot Latency:', value: `<:bl_Reply:1212047469014425650> <:bl_online:1206434279312195594> \`${Math.round(this.container.client.ws.ping)} ms\`` },
+				{ name: '• API Latency:', value: `<:bl_Reply:1212047469014425650> <:bl_js:1206438112490692618> \`${now - sent.createdTimestamp} ms\`` },
 			)
 			.setTimestamp()
 			.setFooter({ text: `${interaction.user.displayName}`, iconURL: interaction.user.displayAvatarURL() });
