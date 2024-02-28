@@ -44,15 +44,16 @@ class UserCommand extends BeemoCommand {
         	.setColor(`${color.default}`)
             .setTitle(`\`⚙️\` Server Information`)
             .addFields(
-                { name: '• **Server Name:**', value: `> \`${interaction.guild.name}\``},
-                { name: '• **Owner:**', value: `> ${await interaction.guild.fetchOwner()}` },
-                { name: '• **Boost Tier:**', value: `> \`${boostLevel}\`` },
-                { name: '• **Member Count:**', value: `> \`${interaction.guild.memberCount}\`` },
-                { name: '• **Channel Count:**', value: `> \`${interaction.guild.channels.cache.size}\`` },
-                { name: '• **Role Count:**', value: `> \`${interaction.guild.roles.cache.size}\`` },
-                { name: '• **Emoji count:**', value: `> **Regular emojis:**\n > \`${emoji_reg}/${maxEmojis}\`\n\n > **Animated emojis:**\n > \`${emoji_animated}/${maxEmojis}\`` },
-                { name: '• **Server Icon:**', value: `> \`None\``},
-                { name: '• **Server Creation:**', value: `> <t:${server_made}:R>` }
+                { name: '**Server Name:**', value: `<:bl_Reply:1212047469014425650> \`${interaction.guild.name}\``},
+                { name: '**Owner:**', value: `<:bl_Reply:1212047469014425650> ${await interaction.guild.fetchOwner()}` },
+                { name: '**Boost Tier:**', value: `<:bl_Reply:1212047469014425650> \`${boostLevel}\`` },
+                { name: '**Member Count:**', value: `<:bl_Reply:1212047469014425650> \`${interaction.guild.memberCount}\`` },
+                { name: '**Channel Count:**', value: `<:bl_Reply:1212047469014425650> \`${interaction.guild.channels.cache.size}\`` },
+                { name: '**Role Count:**', value: `<:bl_Reply:1212047469014425650> \`${interaction.guild.roles.cache.size}\`` },
+                { name: '**Regular Emojis:**', value: `<:bl_Reply:1212047469014425650> \`${emoji_reg}/${maxEmojis}\`` },
+				{ name: '**Animated Emojis:**', value: `<:bl_Reply:1212047469014425650> \`${emoji_animated}/${maxEmojis}\`` },
+                { name: '**Server Icon:**', value: `<:bl_Reply:1212047469014425650> \`None\``},
+                { name: '**Server Creation:**', value: `<:bl_Reply:1212047469014425650> <t:${server_made}:R>` }
                 )
        		.setTimestamp()
             .setFooter({ text: `${interaction.user.displayName}`, iconURL: interaction.user.displayAvatarURL() })
@@ -66,15 +67,16 @@ class UserCommand extends BeemoCommand {
         	.setColor(`${color.default}`)
             .setTitle(`\`⚙️\` Server Information`)
             .addFields(
-                { name: '• **Server Name:**', value: `> \`${interaction.guild.name}\``},
-                { name: '• **Owner:**', value: `> ${await interaction.guild.fetchOwner()}` },
-                { name: '• **Boost Tier:**', value: `> \`${boostLevel}\`` },
-                { name: '• **Member Count:**', value: `> \`${interaction.guild.memberCount}\`` },
-                { name: '• **Channel Count:**', value: `> \`${interaction.guild.channels.cache.size}\`` },
-                { name: '• **Role Count:**', value: `> \`${interaction.guild.roles.cache.size}\`` },
-                { name: '• **Emoji count:**', value: `> **Regular emojis:**\n > \`${emoji_reg}/${maxEmojis}\`\n\n > **Animated emojis:**\n > \`${emoji_animated}/${maxEmojis}\`` },
-                { name: '• **Server Icon:**', value: `> [Click Here](${server_icon})`},
-                { name: '• **Server Creation:**', value: `> <t:${server_made}:R>` }
+                { name: '**Server Name:**', value: `<:bl_Reply:1212047469014425650> \`${interaction.guild.name}\``},
+                { name: '**Owner:**', value: `<:bl_Reply:1212047469014425650> ${await interaction.guild.fetchOwner()}` },
+                { name: '**Boost Tier:**', value: `<:bl_Reply:1212047469014425650> \`${boostLevel}\`` },
+                { name: '**Member Count:**', value: `<:bl_Reply:1212047469014425650> \`${interaction.guild.memberCount}\`` },
+                { name: '**Channel Count:**', value: `<:bl_Reply:1212047469014425650> \`${interaction.guild.channels.cache.size}\`` },
+                { name: '**Role Count:**', value: `<:bl_Reply:1212047469014425650> \`${interaction.guild.roles.cache.size}\`` },
+                { name: '**Regular Emojis:**', value: `<:bl_Reply:1212047469014425650> \`${emoji_reg}/${maxEmojis}\`` },
+				{ name: '**Animated Emojis:**', value: `<:bl_Reply:1212047469014425650> \`${emoji_animated}/${maxEmojis}\`` },
+                { name: '**Server Icon:**', value: `<:bl_Reply:1212047469014425650> [Click Here](${server_icon})` },
+                { name: '**Server Creation:**', value: `<:bl_Reply:1212047469014425650> <t:${server_made}:R>` }
                 )
        		.setTimestamp()
             .setThumbnail(server_icon)
