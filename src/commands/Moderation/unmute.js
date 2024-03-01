@@ -11,7 +11,6 @@ class UserCommand extends BeemoCommand {
 	constructor(context, options) {
 		super(context, {
 			...options,
-			permissionLevel: PermissionLevels.Staff,
 			requiredUserPermissions: ['ManageRoles'],
 			description: 'Unmute a user within the server, allowing them to speak again.'
 		});

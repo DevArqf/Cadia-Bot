@@ -12,7 +12,6 @@ class UserCommand extends BeemoCommand {
 		super(context, {
 			...options,
 			requiredUserPermissions: ['ManageNicknames'],
-			permissionLevel: PermissionLevels.Staff,
 			description: 'Moderate a user`s name'
 		});
 	}

@@ -8,8 +8,7 @@ class UserCommand extends BeemoCommand {
 		super(context, {
 			...options,
 			description: 'Bulk deletes a given amount of messages. Limit is 100.',
-			requiredUserPermissions: ['ManageMessages'],
-			permissionLevel: PermissionLevels.Staff
+			requiredUserPermissions: ['ManageMessages']
 		});
 	}
 
