@@ -16,6 +16,14 @@ After you make a pull request, you should wait for a review from the maintainers
 
 If the maintainers do not approve your pull request, they will leave a comment on the pull request with what you need to fix. You should fix the issues and then make a new commit to the branch. After you make a new commit, the maintainers will review your pull request again.
 
+### How do i make a branch?
+
+This part assumes you are using vscode.
+
+Vscode makes it really easy to make a new branch using the built in git features. You can check your activity bar (the bar on the left with all the icons) and search for a git icon. Click on the git icon and you should be in the source control tab.
+
+Then you can click the 3 dots on the top right of the source control tab and click on `Branch` > `Create Branch From...` and then select `main` on the menu that pops up. You can then name your branch and click enter.
+
 ### How to do local testing
 
 To do local testing, you should use a seperate bot token for your local bot. You should not use the bot token for the main bot for local testing. You can get a bot token from the Discord Developer Portal (<https://discord.com/developers/applications>).
