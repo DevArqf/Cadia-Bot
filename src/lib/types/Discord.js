@@ -37,4 +37,22 @@ class GuildMessage {
 	member;
 }
 
+/**
+ * @typedef {Object} GuildInteraction
+ * @property {Guild} guild
+ * @property {string} guildId
+ * @property {GuildMember} member
+ * @property {TextChannel} channel
+ * @property {GuildCommandInteractionOptionResolver} options
+ * @property {CardinalClient<true>} client
+ */
+
+/**
+ * @typedef {Object} GuildContextMenuInteraction
+ * @property {Guild} guild
+ * @property {string} guildId
+ * @property {GuildMember} member
+ * @property {GuildCommandInteractionOptionResolver} options
+ */
+
 module.exports = { GuildMessage };

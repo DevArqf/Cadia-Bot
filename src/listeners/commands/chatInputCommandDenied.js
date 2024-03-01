@@ -1,9 +1,6 @@
-import { Listener, UserError, ChatInputCommandDeniedPayload } from '@sapphire/framework';
+const { Listener, UserError, ChatInputCommandDeniedPayload } = require('@sapphire/framework');
 
-/**
- * Represents a listener for user events.
- */
-export class UserEvent extends Listener {
+class UserEvent extends Listener {
 	/**
 	 * Handles the user event.
 	 * @param {UserError} error - The error object.
@@ -41,3 +38,5 @@ export class UserEvent extends Listener {
 		});
 	}
 }
+
+module.exports = UserEvent;
