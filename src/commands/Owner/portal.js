@@ -3,7 +3,7 @@ const { PermissionLevels } = require('../../lib/types/Enums');
 const { color, emojis } = require('../../config');
 const { EmbedBuilder, ChannelType } = require('discord.js');
 
-class BotOwner extends BeemoCommand {
+class UserCommand extends BeemoCommand {
 	/**
 	 * @param {BeemoCommand.Context} context
 	 * @param {BeemoCommand.Options} options
@@ -71,5 +71,5 @@ class BotOwner extends BeemoCommand {
 }
 
 module.exports = {
-	BotOwner
+	UserCommand
 };
