@@ -13,6 +13,7 @@ class BotOwner extends BeemoCommand {
 	constructor(context, options) {
 		super(context, {
 			...options,
+			permissionLevel: PermissionLevels.BotOwner,
 			description: 'Evaluates Javascript Code (DEV ONLY)'
 		});
 	}
