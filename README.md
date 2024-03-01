@@ -5,3 +5,4 @@ Whether you're chatting with friends, managing your server, or diving into thril
 
 - Unleash the power of Cadia's multipurpose features, from moderating your server to entertaining your community with fun games and utilities.
 Plus, immerse yourself in a one-of-a-kind RPG experience right in your Discord server!
+---
