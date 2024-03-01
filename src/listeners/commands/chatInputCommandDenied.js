@@ -1,4 +1,5 @@
 const { Listener, UserError, ChatInputCommandDeniedPayload } = require('@sapphire/framework');
+const { emojis } = require('../../config');
 
 class UserEvent extends Listener {
 	/**
@@ -32,7 +33,7 @@ class UserEvent extends Listener {
 		}
 
 		return interaction.reply({
-			content,
+			content: `${content ?? 'An error occurred while executing the command.'}`,
 			allowedMentions: { users: [interaction.user.id], roles: [] },
 			ephemeral: true
 		});

@@ -1,19 +1,19 @@
 const { Precondition } = require('@sapphire/framework');
-const { isOwner } = require('#utils/functions');
 const { GuildMessage } = require('../lib/types/Discord');
 const { ChatInputCommandInteraction } = require('discord.js');
+const { envParseArray } = require('@skyra/env-utilities');
 
 /**
  * @class
  * @extends {Precondition}
  */
-class UserPrecondition extends Precondition {
+class BotOwnerPrecondition extends Precondition {
 	/**
 	 * @param {GuildMessage} message
 	 * @returns {import('@sapphire/framework').PreconditionResult}
 	 */
 	messageRun(message) {
-		return isOwner(message.member) ? this.ok() : this.error({ context: { silent: true } });
+		return this.isOwner(message.member.user.id) ? this.ok() : this.error({ context: { silent: false }, identifier: 'PermissionError' });
 	}
 
 	/**
@@ -21,7 +21,7 @@ class UserPrecondition extends Precondition {
 	 * @returns {import('@sapphire/framework').PreconditionResult}
 	 */
 	chatInputRun(interaction) {
-		return isOwner(interaction.member) ? this.ok() : this.error({ context: { silent: true } });
+		return this.isOwner(interaction.member.user.id) ? this.ok() : this.error({ context: { silent: false }, identifier: 'PermissionError' });
 	}
 
 	/**
@@ -29,8 +29,18 @@ class UserPrecondition extends Precondition {
 	 * @returns {import('@sapphire/framework').PreconditionResult}
 	 */
 	contextMenuRun(interaction) {
-		return isOwner(interaction.member) ? this.ok() : this.error({ context: { silent: true } });
+		return this.isOwner(interaction.member.user.id) ? this.ok() : this.error({ context: { silent: false }, identifier: 'PermissionError' });
+	}
+
+	/**
+	 *
+	 * @param {import('discord.js').Snowflake} userId The id of the user you want to check
+	 */
+	isOwner(userId) {
+		const owners = envParseArray('BOT_OWNERS');
+		const isOwner = owners.includes(userId);
+		return isOwner;
 	}
 }
 
-module.exports = { UserPrecondition };
+module.exports = { BotOwnerPrecondition };
