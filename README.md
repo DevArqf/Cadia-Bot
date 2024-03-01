@@ -1,5 +1,5 @@
 # **🌟 Introducing Cadia Bot! 🌟**
----
+
 - With Cadia Bot, your Discord server becomes a playground of endless possibilities!
 Whether you're chatting with friends, managing your server, or diving into thrilling RPG-style quests and gameplay, Beemo has you covered.
 
