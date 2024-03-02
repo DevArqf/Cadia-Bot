@@ -27,9 +27,9 @@ class UserCommand extends BeemoCommand {
 				.setName('eval')
 				.setDescription(this.description)
 				.addStringOption((option) => 
-				option.setName('code')
-				.setDescription('The code to evaluate')
-				.setRequired(true))
+					option.setName('code')
+						.setDescription('The code to evaluate')
+						.setRequired(true))
 		);
 	}
 
