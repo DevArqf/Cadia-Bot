@@ -50,14 +50,14 @@ const ClientConfig = {
 
 const emojis = {
 	reg: {
-	success: '`✅`',
-	warning: '`⚠️`',
-	fail: '`❌`',
+		success: '`✅`',
+		warning: '`⚠️`',
+		fail: '`❌`'
 	},
 	custom: {
-	success: '<:bl_check_mark:1206436519498354738>',
-	fail: '<:bl_x_mark:1206436599794241576>',
-	warning: '<:bl_warning:1206435135701123073>'
+		success: '<:bl_check_mark:1206436519498354738>',
+		fail: '<:bl_x_mark:1206436599794241576>',
+		warning: '<:bl_warning:1206435135701123073>'
 	}
 };
 
