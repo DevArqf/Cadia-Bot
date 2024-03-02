@@ -36,7 +36,7 @@ class UserCommand extends BeemoCommand {
 		// Permissions
 		// if (!interaction.member.permissions.has(PermissionsBitField.Flags.KickMembers)) {
 		// 	return await interaction.reply({
-		// 		content: '<:bl_x_mark:1206436599794241576> You are not **authorzied** to **execute** this command!',
+		// 		content: `${emojis.custom.fail} You are not **authorzied** to **execute** this command!`,
 		// 		ephemeral: true
 		// 	});
 		// }
@@ -66,7 +66,7 @@ class UserCommand extends BeemoCommand {
 		try {
 			const dmEmbed = {
 				color: `#ff5555`,
-				title: `🚫 You have been kicked from **${interaction.guild.name}**`,
+				title: `\`🚫\` You have been kicked from **${interaction.guild.name}**`,
 				thumbnail: { url: interaction.guild.iconURL() },
 				fields: [
 					{ name: '• **Kicked by:**', value: interaction.user.tag },
@@ -75,12 +75,12 @@ class UserCommand extends BeemoCommand {
 				timestamp: new Date()
 			};
 
-			await userToKick.send({ embeds: [dmEmbed] }).catch((error) => console.error(`Beemo could not send DM to ${userToKick.tag}.`, error));
+			await userToKick.send({ embeds: [dmEmbed] }).catch((error) => console.error(`I couldn\`t send a DM to ${userToKick.tag}.`, error));
 
 			// Kick Successful
 			const kickConfirmationEmbed = {
 				color: `${color.success}`,
-				title: '`✅` Kick Successful',
+				title: `${emojis.reg.success} Kick Successful`,
 				description: `**${userToKick.tag}** has been **kicked** from the server.`,
 				fields: [{ name: '**Reason:**', value: reason }],
 				timestamp: new Date(),
@@ -90,11 +90,14 @@ class UserCommand extends BeemoCommand {
 			// Kick Failed
 			await interaction.guild.members.kick(userToKick, { reason: `**Kicked** by ${interaction.user.tag}: ${reason}` });
 			await interaction.reply({ content: '', embeds: [kickConfirmationEmbed] });
+
 		} catch (error) {
+
 			console.error(error);
+
 			const errorEmbed = {
 				color: `${color.fail}`,
-				title: '`❌` Error Kicking User',
+				title: `${emojis.reg.fail} Error Kicking User',
 				description: `I have **Failed** to kick **${userToKick.tag}** from the server.`,
 				timestamp: new Date(),
 				footer: { text: 'Uh Oh... I have **encountered** an **error**', iconURL: interaction.client.user.displayAvatarURL() }
