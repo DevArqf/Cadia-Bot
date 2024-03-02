@@ -46,11 +46,11 @@ class UserCommand extends BeemoCommand {
 
         // Permissions
         // if (!interaction.member.permissions.has(PermissionsBitField.Flags.BanMembers)) {
-        //    return await interaction.reply({ content: "<:bl_x_mark:1206436599794241576> You are not **authorized** to **execute** this command!", ephemeral: true });
+        //    return await interaction.reply({ content: `${emojis.custom.fail} You are not **authorized** to **execute** this command!`, ephemeral: true });
         // }
         
         if (Number.isNaN(userToUnban)) {
-            return await interaction.reply({ content: "<:bl_x_mark:1206436599794241576> You have inputed something that is not a number!", ephemeral: true });
+            return await interaction.reply({ content: `${emojis.custom.fail} You have inputed something that is not a number!`, ephemeral: true });
         }
         
         const user = interaction.client.user.fetch(userToUnban);

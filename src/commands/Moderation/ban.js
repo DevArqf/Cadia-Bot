@@ -52,23 +52,23 @@ class UserCommand extends BeemoCommand {
 
         // Permissions
         // if (!interaction.member.permissions.has(PermissionsBitField.Flags.BanMembers)) {
-        //    return await interaction.reply({ content: "<:bl_x_mark:1206436599794241576> You are not **authorized** to **execute** this command!", ephemeral: true});
+        //    return await interaction.reply({ content: `${emojis.custom.fail} You are not **authorized** to **execute** this command!`, ephemeral: true});
         // }
 
         if (!banMember) {
-            return await interaction.reply({ content: '<:bl_x_mark:1206436599794241576> The **user** mentioned is no longer within the **server**!', ephemeral: true});
+            return await interaction.reply({ content:`${emojis.custom.fail} The **user** mentioned is no longer within the **server**!`, ephemeral: true});
         }
 
         if (!banMember.kickable) {
-            return await interaction.reply({ content: "<:bl_x_mark:1206436599794241576> I **cannot** ban this user because they are either **higher** than me or you!", ephemeral: true});
+            return await interaction.reply({ content: `${emojis.custom.fail} I **cannot** ban this user because they are either **higher** than me or you!`, ephemeral: true});
         }
 
         if (interaction.member.id === banMember.id) {
-            return interaction.reply({content: "<:bl_x_mark:1206436599794241576> You **cannot** ban yourself!", ephemeral: true});
+            return interaction.reply({content: `${emojis.custom.fail} You **cannot** ban yourself!`, ephemeral: true});
         }
 
         if (banMember.permissions.has(PermissionsBitField.Flags.Administrator)) {
-            return interaction.reply({content: "<:bl_x_mark:1206436599794241576> You **cannot** ban **staff** members or people with the **Administrator** permission!", ephemeral: true});
+            return interaction.reply({content: `${emojis.custom.fail} You **cannot** ban **staff** members or people with the **Administrator** permission!`, ephemeral: true});
         }
 
         // DM Message
