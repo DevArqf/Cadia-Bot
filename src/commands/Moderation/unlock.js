@@ -26,7 +26,7 @@ class UserCommand extends BeemoCommand {
 				.setDescription(this.description)
 				.setDefaultMemberPermissions(PermissionsBitField.Flags.ManageChannels)
 				.addChannelOption((option) =>
-					option.setName('channel').setDescription('The channel you want to lock').addChannelTypes(ChannelType.GuildText).setRequired(true)
+					option.setName('channel').setDescription('The channel you want to unlock').addChannelTypes(ChannelType.GuildText).setRequired(true)
 				)
 				.addRoleOption((option) =>
 					option.setName('role').setDescription('The role you want to restrict from sending messages').setRequired(true)
