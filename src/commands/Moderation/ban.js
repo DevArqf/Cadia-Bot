@@ -12,6 +12,7 @@ class UserCommand extends BeemoCommand {
 	constructor(context, options) {
 		super(context, {
 			...options,
+            requiredUserPermissions: ['BanMembers'],
 			description: 'Ban a user from the server, revoking access for them to join again.'
 		});
 	}
@@ -50,9 +51,9 @@ class UserCommand extends BeemoCommand {
         const picture = interaction.options.getAttachment('picture');
 
         // Permissions
-        if (!interaction.member.permissions.has(PermissionsBitField.Flags.BanMembers)) {
-            return await interaction.reply({ content: "<:bl_x_mark:1206436599794241576> You are not **authorized** to **execute** this command!", ephemeral: true});
-        }
+        // if (!interaction.member.permissions.has(PermissionsBitField.Flags.BanMembers)) {
+        //    return await interaction.reply({ content: "<:bl_x_mark:1206436599794241576> You are not **authorized** to **execute** this command!", ephemeral: true});
+        // }
 
         if (!banMember) {
             return await interaction.reply({ content: '<:bl_x_mark:1206436599794241576> The **user** mentioned is no longer within the **server**!', ephemeral: true});
