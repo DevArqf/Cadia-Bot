@@ -6,6 +6,7 @@ The naming scheme should be:
 
 -   `feature/featureName` for new features
 -   `bugfix/bugName` for bug fixes
+-   `removal/removalName` for removals
 -   `enhancement/enhancementName` for enhancements
 
 When you are done with your feature, bug fix, or enhancement, you should make a pull request to the `main` branch.
