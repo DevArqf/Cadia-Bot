@@ -42,19 +42,6 @@ class UserCommand extends BeemoCommand {
 	 * @param {BeemoCommand.ChatInputCommandInteraction} interaction
 	 */
 	async chatInputRun(interaction) {
-		// Checking if the user has the required permission to execute the command
-		// if (!interaction.member.permissions.has(PermissionsBitField.Flags.ManageMessages)) {
-		// 	// Building and sending embed for permission error
-		// 	const noPermissionEmbed = new EmbedBuilder()
-		// 		.setColor(`${color.fail}`)
-		// 		.setFooter({ text: `${interaction.user.displayName}`, iconURL: interaction.user.displayAvatarURL() })
-		// 		.setTitle(`${emojis.reg.fail} Permission Error`)
-		// 		.setDescription('<:bl_x_mark:1206436599794241576> You are not **authorized** to **execute** this command.')
-		// 		.setTimestamp();
-
-		// 	return interaction.reply({ embeds: [noPermissionEmbed], ephemeral: true });
-		// }
-
 		// Retrieving parameters from user interaction
 		const amount = interaction.options.getInteger('amount');
 		const filter = interaction.options.getString('filter');

@@ -57,7 +57,13 @@ const emojis = {
 	custom: {
 		success: '<:bl_check_mark:1206436519498354738>',
 		fail: '<:bl_x_mark:1206436599794241576>',
-		warning: '<:bl_warning:1206435135701123073>'
+		warning: '<:bl_warning:1206435135701123073>',
+		reply: '<:bl_Reply:1212047469014425650>',
+		clock: '<:bl_clock:1206612806560915547>',
+		online: '<:bl_online:1206434279312195594>',
+		js: '<:bl_js:1206438112490692618>',
+		tada: '<:bl_tada:1207462996859682918>',
+		loading: '<a:bl_loading:1206433137928708146>'
 	}
 };
 

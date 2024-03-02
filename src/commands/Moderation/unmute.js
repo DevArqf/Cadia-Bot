@@ -38,25 +38,18 @@ class UserCommand extends BeemoCommand {
 		const unmuteMember = await interaction.guild.members.fetch(userToUnmute.id);
 		const reason = interaction.options.getString('reason') || 'No Reason Provided';
 
-		// // Permissions
-		// if (!interaction.member.permissions.has(PermissionsBitField.Flags.ManageRoles)) {
-		// 	return await interaction.reply({
-		// 		content: '<:bl_x_mark:1206436599794241576> You are not **authorized** to **execute** this command!',
-		// 		ephemeral: true
-		// 	});
-		// }
 		if (!unmuteMember) {
 			return await interaction.reply({
-				content: '<:bl_x_mark:1206436599794241576> The user **mentioned** is no longer within the **server**!',
+				content: `${emojis.custom.fail} The user **mentioned** is no longer within the **server**!`,
 				ephemeral: true
 			});
 		}
 		if (interaction.member.id === unmuteMember.id) {
-			return interaction.reply({ content: '<:bl_x_mark:1206436599794241576> You **cannot** unmute yourself!', ephemeral: true });
+			return interaction.reply({ content: `${emojis.custom.fail} You **cannot** unmute yourself!`, ephemeral: true });
 		}
 		if (unmuteMember.permissions.has(PermissionFlagsBits.Administrator)) {
 			return interaction.reply({
-				content: '<:bl_x_mark:1206436599794241576> You **cannot** mute **staff members** or people with the **Administrator** permission!',
+				content: `${emojis.custom.fail} You **cannot** mute **staff members** or people with the **Administrator** permission!`,
 				ephemeral: true
 			});
 		}

@@ -43,23 +43,18 @@ class UserCommand extends BeemoCommand {
 			const reason = interaction.options.getString('reason') || 'No Reason Provided';
 			const timeString = interaction.options.getString('time');
 
-			// Permissions
-			// if (!interaction.member.permissions.has(PermissionFlagsBits.ManageRoles)) {
-			//     return await interaction.reply({ content: "<:bl_x_mark:1206436599794241576> You are not **authorized** to **execute** this command!", ephemeral: true });
-			// }
 			if (!muteMember) {
 				return await interaction.reply({
-					content: '<:bl_x_mark:1206436599794241576> The user **mentioned** is no longer within the **server**!',
+					content: `${emojis.custom.fail} The user **mentioned** is no longer within the **server**!`,
 					ephemeral: true
 				});
 			}
 			if (interaction.member.id === muteMember.id) {
-				return interaction.reply({ content: '<:bl_x_mark:1206436599794241576> You **cannot** mute yourself!', ephemeral: true });
+				return interaction.reply({ content: `${emojis.custom.fail} You **cannot** mute yourself!`, ephemeral: true });
 			}
 			if (muteMember.permissions.has(PermissionFlagsBits.Administrator)) {
 				return interaction.reply({
-					content:
-						'<:bl_x_mark:1206436599794241576> You **cannot** mute **staff members** or people with the **Administrator** permission!',
+					content: `${emojis.custom.fail} You **cannot** mute **staff members** or people with the **Administrator** permission!`,
 					ephemeral: true
 				});
 			}
@@ -67,7 +62,7 @@ class UserCommand extends BeemoCommand {
 			// Check if the member is already unmuted
 			const mutedRole = interaction.guild.roles.cache.find((role) => role.name === 'Muted');
 			if (muteMember.roles.cache.has(mutedRole?.id)) {
-				return interaction.reply({ content: '<:bl_x_mark:1206436599794241576> This user is already **muted!**', ephemeral: true });
+				return interaction.reply({ content: `${emojis.custom.fail} This user is already **muted!**`, ephemeral: true });
 			}
 
 			// Convert time string to milliseconds
