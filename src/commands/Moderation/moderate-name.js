@@ -70,7 +70,7 @@ class UserCommand extends BeemoCommand {
 				.setColor(`${color.success}`)
 				.setTitle(`${emojis.reg.success} Name Successfully Moderated`)
 				.setDescription(
-					`**${userToModerate.tag}**'s name has been **moderated**! \n\n• **New Nickname:**\n <:bl_Reply:1212047469014425650>\`${nickname}\` \n\n• **Reason:**\n <:bl_Reply:1212047469014425650>\`${reason}\``
+					`**${userToModerate.tag}**'s name has been **moderated**! \n\n• **New Nickname:**\n ${emojis.custom.reply}\`${nickname}\` \n\n• **Reason:**\n ${emojis.custom.reply}>\`${reason}\``
 				)
 				.setTimestamp()
 				.setFooter({ text: `${interaction.user.displayName}`, iconURL: interaction.user.displayAvatarURL() });

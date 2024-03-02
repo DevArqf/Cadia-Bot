@@ -32,7 +32,7 @@ class UserCommand extends BeemoCommand {
 	 */
 	async chatInputRun(interaction) {
 		const loadingMessage = RandomLoadingMessage[Math.floor(Math.random() * RandomLoadingMessage.length)];
-		const sent = await interaction.reply({ content: `<a:bl_loading:1206433137928708146> **${loadingMessage}**`, fetchReply: true });
+		const sent = await interaction.reply({ content: `${emojis.custom.loading} **${loadingMessage}**`, fetchReply: true });
 
 		const diff = sent.createdTimestamp - interaction.createdTimestamp;
 
@@ -47,16 +47,16 @@ class UserCommand extends BeemoCommand {
 			.addFields(
 				{
 					name: '• Uptime:',
-					value: `<:bl_Reply:1212047469014425650> <:bl_clock:1206612806560915547> \`${uptime_hours} h${uptime_hours !== 1 ? '' : ''} ${uptime_minutes} m${uptime_minutes !== 1 ? '' : ''} ${uptime_seconds} s${uptime_seconds !== 1 ? '' : ''}\``,
+					value: `${emojis.custom.reply} ${emojis.custom.clock} \`${uptime_hours} h${uptime_hours !== 1 ? '' : ''} ${uptime_minutes} m${uptime_minutes !== 1 ? '' : ''} ${uptime_seconds} s${uptime_seconds !== 1 ? '' : ''}\``,
 					inline: false
 				},
 				{
 					name: '• Bot Latency:',
-					value: `<:bl_Reply:1212047469014425650> <:bl_online:1206434279312195594> \`${Math.round(this.container.client.ws.ping)} ms\``
+					value: `${emojis.custom.reply} ${emojis.custom.online} \`${Math.round(this.container.client.ws.ping)} ms\``
 				},
 				{
 					name: '• API Latency:',
-					value: `<:bl_Reply:1212047469014425650> <:bl_js:1206438112490692618> \`${diff} ms\``
+					value: `${emojis.custom.reply} ${emojis.custom.js} \`${diff} ms\``
 				}
 			)
 			.setTimestamp()

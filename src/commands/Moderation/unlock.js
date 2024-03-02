@@ -60,19 +60,19 @@ class UserCommand extends BeemoCommand {
 				{
 					name: '`🔒` Unlocked for Role:',
 					value: `
-        <:bl_Reply:1212047469014425650> ${role}`,
+        ${emojis.custom.reply} ${role}`,
 					inline: false
 				},
 				{
-					name: '<:bl_clock:1206612806560915547> Time:',
+					name: `${emojis.custom.clock} Time:`,
 					value: `
-        <:bl_Reply:1212047469014425650> <t:${new Date()}:f>`,
+        ${emojis.custom.reply} <t:${new Date()}:f>`,
 					inline: false
 				},
 				{
 					name: '`🔒` Unlocked by:',
 					value: `
-        <:bl_Reply:1212047469014425650> <@${interaction.user.id}>`,
+        ${emojis.custom.reply} <@${interaction.user.id}>`,
 					inline: false
 				}
 			)
