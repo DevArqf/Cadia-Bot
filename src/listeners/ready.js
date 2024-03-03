@@ -18,32 +18,12 @@ class UserEvent extends Listener {
 
 	async run(client) {
 		this.container.client = client;
-		const dbConnected = await this._connectDb();
 
-		this._printBanner(dbConnected);
+		this._printBanner(true);
 		this._printStoreDebugInformation();
 		this._displayAdvancedConsole();
 	}
 
-	/**
-	 *
-	 * @returns {Promise<boolean>}
-	 */
-	async _connectDb() {
-		const mongoUrl = envParseString('MONGO_URL');
-
-		if (!mongoUrl) return false;
-
-		try {
-			await mongoose.connect(mongoUrl, {
-				useNewUrlParser: true,
-				useUnifiedTopology: true
-			});
-			return true;
-		} catch (error) {
-			return false;
-		}
-	}
 	/**
 	 *
 	 * @param {boolean} dbConnected Whether or nor the db was connected
@@ -54,7 +34,7 @@ class UserEvent extends Listener {
 
 		const llc = dev ? magentaBright : white;
 		const blc = dev ? magenta : blue;
-		const db = dbConnected ? `[${success}] Mongo Connected` : `[${fail}] Mongo Not Connected`;
+		const db = dbConnected ? `[${success}] Database Connected` : `[${fail}] Database Not Connected`;
 
 		const line01 = llc(String.raw` ███████████                                            `);
 		const line02 = llc(String.raw`░░███░░░░░███                                           `);
