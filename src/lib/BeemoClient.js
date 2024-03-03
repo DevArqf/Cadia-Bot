@@ -1,4 +1,4 @@
-const { SapphireClient } = require('@sapphire/framework');
+const { SapphireClient, container } = require('@sapphire/framework');
 const { ClientConfig } = require('../config');
 const { PrismaClient } = require('@prisma/client');
 
