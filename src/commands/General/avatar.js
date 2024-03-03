@@ -43,8 +43,8 @@ class UserCommand extends BeemoCommand {
 
         const embed = new EmbedBuilder()
         .setColor(`${color.default}`)
-        .setTitle(`${emojis.reg.success} User pfp Fetched`)
-        .setDescription(`${user}\'s pfp`)
+        .setTitle(`${emojis.reg.success} User's Profile Fetched`)
+        .setDescription(`${user}\'s Profile Picture`)
         .setImage(`${avatarURL}`)
         .setTimestamp()
         .setFooter({ text: `${interaction.user.displayName}`, iconURL: interaction.user.displayAvatarURL() });
