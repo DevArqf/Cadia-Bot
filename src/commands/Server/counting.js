@@ -1,5 +1,5 @@
 const { Command, ApplicationCommandRegistry } = require('@sapphire/framework');
-const { ChatInputCommandInteraction, TextChannel, EmbedBuilder } = require('discord.js');
+const { ChatInputCommandInteraction, TextChannel, EmbedBuilder, ChannelType } = require('discord.js');
 const { emojis, color } = require('../../config');
 
 class countingCommand extends Command {
@@ -29,6 +29,7 @@ class countingCommand extends Command {
 								.setName('channel')
 								.setDescription('The channel to setup the counting game in')
 								.setRequired(true)
+								.addChannelTypes(ChannelType.GuildText)
 						)
 						.addIntegerOption((option) =>
 							option //
@@ -84,14 +85,14 @@ class countingCommand extends Command {
 					countChannel: channel.id,
 					countGoal: goal,
 					countLastUser: null,
-					countLastNumber: 0
+					countLastScore: 0
 				},
 				create: {
 					id: interaction.guildId,
 					countChannel: channel.id,
 					countGoal: goal,
 					countLastUser: null,
-					countLastNumber: 0
+					countLastScore: 0
 				}
 			});
 

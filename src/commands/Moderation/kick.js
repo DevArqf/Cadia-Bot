@@ -90,14 +90,12 @@ class UserCommand extends BeemoCommand {
 			// Kick Failed
 			await interaction.guild.members.kick(userToKick, { reason: `**Kicked** by ${interaction.user.tag}: ${reason}` });
 			await interaction.reply({ content: '', embeds: [kickConfirmationEmbed] });
-
 		} catch (error) {
-
 			console.error(error);
 
 			const errorEmbed = {
 				color: `${color.fail}`,
-				title: `${emojis.reg.fail} Error Kicking User',
+				title: `${emojis.reg.fail} Error Kicking User`,
 				description: `I have **Failed** to kick **${userToKick.tag}** from the server.`,
 				timestamp: new Date(),
 				footer: { text: 'Uh Oh... I have **encountered** an **error**', iconURL: interaction.client.user.displayAvatarURL() }

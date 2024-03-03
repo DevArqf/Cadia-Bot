@@ -26,10 +26,15 @@ class UserEvent extends Listener {
 		if (!data) return;
 		if (!data.countChannel) return;
 
-		const channel = guild.channels.cache.get(data.counting.channel);
+		const channel = guild.channels.cache.get(data.countChannel);
 
 		if (!channel || !channel.isTextBased()) return;
 		if (channel.id !== message.channel.id) return;
+
+		if (data.count === 0 && message.content !== '1') {
+			if (message.deletable) message.delete();
+			return;
+		}
 
 		const lastNumber = data.count;
 		const currentNumber = Number(message.content);
@@ -44,7 +49,6 @@ class UserEvent extends Listener {
 				data: {
 					count: 0,
 					countLastUser: null,
-					countHighscore: newHighscore,
 					countLastScore: data.count
 				}
 			});
@@ -53,7 +57,7 @@ class UserEvent extends Listener {
 			return;
 		}
 
-		if (isNaN(currentNumber) || data.countLastUser === message.author.id) {
+		if (isNaN(currentNumber)) {
 			message.delete();
 			return;
 		}
@@ -61,7 +65,7 @@ class UserEvent extends Listener {
 		const oldHighscore = data.countHighscore;
 		const newHighscore = data.count > oldHighscore ? data.count : oldHighscore;
 
-		this.container.db.guild.update({
+		await this.container.db.guild.update({
 			where: {
 				id: guild.id
 			},
@@ -71,6 +75,13 @@ class UserEvent extends Listener {
 				countHighscore: newHighscore
 			}
 		});
+
+		message.react('✅');
+
+		if (data.countGoal === currentNumber) {
+			message.reply({ content: `Congratulations! You reached the goal of ${currentNumber}!` });
+			message.pinnable && message.pin();
+		}
 
 		this.container.client.emit('successfulCount', message, currentNumber);
 	}

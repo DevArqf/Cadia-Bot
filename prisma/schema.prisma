@@ -17,6 +17,7 @@ model Guild {
   countLastScore Int      @default(0)
   countLastUser  String?
   countLastDate  DateTime @default(now())
+  countGoal      Int      @default(100)
   count          Int      @default(0)
 
   createdAt DateTime @default(now())
