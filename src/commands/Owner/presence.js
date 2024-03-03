@@ -3,7 +3,7 @@ const { PermissionLevels } = require('../../lib/types/Enums');
 const { color, emojis } = require('../../config');
 const { EmbedBuilder } = require('discord.js');
 
-class UserCommand extends BeemoCommand {
+class BotOwner extends BeemoCommand {
 	/**
 	 * @param {BeemoCommand.Context} context
 	 * @param {BeemoCommand.Options} options
@@ -11,7 +11,6 @@ class UserCommand extends BeemoCommand {
 	constructor(context, options) {
 		super(context, {
 			...options,
-			permissionLevel: PermissionLevels.BotOwner,
 			description: 'Modify the Bot`s Presence'
 		});
 	}
@@ -49,11 +48,11 @@ class UserCommand extends BeemoCommand {
 			const embed = new EmbedBuilder()
 				.setTitle("`🔒` Beemo's Presence")
 				.setDescription(
-					`${emojis.custom.success} Successfully set presence to **${presence}**!\n\n > Please wait up to 5 minutes for the presence to change.`
+					`${emojis.custom.success} Successfully set presence to **${presence}**!\n⠀${emojis.custom.replyend} Please wait up to 5 minutes for the presence to change.`
 				)
 				.setColor(`${color.default}`)
 				.setTimestamp()
-				.setFooter({ text: `${interaction.user.displayName}`, iconURL: interaction.user.displayAvatarURL() });
+				.setFooter({ text: `Requested by ${interaction.user.displayName}`, iconURL: interaction.user.displayAvatarURL() });
 
 			if (presence === 'Online') {
 				interaction.client.user.setPresence({ status: 'online' });
@@ -65,16 +64,21 @@ class UserCommand extends BeemoCommand {
 				interaction.client.user.setPresence({ status: 'invisible' });
 			}
 
-			return await interaction.reply({ embeds: [embed] });
+			return await interaction.reply({ embeds: [embed], ephemeral: true });
 		} catch (error) {
-			interaction.channel.send({
-				content: `${emojis.custom.fail} I have **encountered** an **error**:\n \`\`\`js\n${error}\`\`\` `,
-				ephemeral: true
-			});
+			console.error(error);
+        	const errorEmbed = new EmbedBuilder()
+            	.setColor(`${color.fail}`)
+            	.setTitle(`${emojis.custom.fail} Presence Command Error`)
+            	.setDescription(`${emojis.custom.fail} I have encountered an error! Please try again later.`)
+            	.setTimestamp();
+
+        	await interaction.reply({ embeds: [errorEmbed], ephemeral: true });
+			return;
 		}
 	}
 }
 
 module.exports = {
-	UserCommand
+	BotOwner
 };

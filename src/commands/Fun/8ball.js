@@ -67,9 +67,9 @@ class UserCommand extends BeemoCommand {
         const embed = new EmbedBuilder()
             .setColor(`${color.default}`)
             .setTitle(`\`🎱\` Ball Response`)
-            .setDescription(`• **Question:**\n > \`${question}\`\n\n • **Response:**\n > ${get_response}`)
+            .setDescription(`• **Question:**\n ${emojis.custom.replyend} \`${question}\`\n\n • **Response:**\n ${emojis.custom.replyend} ${get_response}`)
             .setTimestamp()
-            .setFooter({ text: `${interaction.user.displayName}`, iconURL: interaction.user.displayAvatarURL() })
+            .setFooter({ text: `Requested by ${interaction.user.displayName}`, iconURL: interaction.user.displayAvatarURL() })
             
         await interaction.reply({
             embeds: [embed]
@@ -77,12 +77,14 @@ class UserCommand extends BeemoCommand {
 
         } catch (error) {
         console.error(error);
-        const errEmbed = new EmbedBuilder()
+        const errorEmbed = new EmbedBuilder()
             .setColor(`${color.fail}`)
-            .setTitle(`${emojis.reg.fail} Error Getting 8 Ball Response`)
-            .setDescription(`${emojis.custom.fail} I have **encountered** an **error** while getting 8 Ball's response`)
-            .setTimestamp()
-        await interaction.reply({ content: '', embeds: [errEmbed] });
+            .setTitle(`${emojis.reg.fail} 8 Ball Error`)
+            .setDescription(`${emojis.custom.fail} I have encountered an error! Please try again later.`)
+            .setTimestamp();
+
+        await interaction.reply({ embeds: [errorEmbed], ephemeral: true });
+        return;
             }
         }
     };

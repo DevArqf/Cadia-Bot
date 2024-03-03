@@ -61,23 +61,22 @@ class UserCommand extends BeemoCommand {
                 const embed = new EmbedBuilder()
                     .setColor(`${color.success}`)   
                     .setTitle(`${emojis.reg.success} Unban Successful`)
-                    .setDescription(`**${user.username}** has been **unbanned** from the server.`)
-                    .addFields({ name: '**• Reason:**', value: reason })
+                    .setDescription(`**${user.username}** has been **Unbanned**! \n\n**• Reason**\n ${emojis.custom.replyend} \`${reason}\``)
                     .setTimestamp()
-                    .setFooter({ text: `**Unbanned** by ${interaction.user.tag}`, iconURL: interaction.user.displayAvatarURL() });
+                    .setFooter({ text: `Moderated by ${interaction.user.tag}`, iconURL: interaction.user.displayAvatarURL() });
 
                 interaction.reply({ content: '', embeds: [embed] });
             })
             .catch(error => {
                 console.error(error);
-                const errorEmbed = new EmbedBuilder()
-                    .setColor(`${color.fail}`)
-                    .setTitle(`${emojis.reg.fail} Error Unbanning User`)
-                    .setDescription(`I have **Failed** to unban the user from the server.`)
-                    .setTimestamp()
-                    .setFooter({ text: 'Uh Oh... I have encountered an error', iconURL: interaction.user.displayAvatarURL() });
+        	    const errorEmbed = new EmbedBuilder()
+            	    .setColor(`${color.fail}`)
+            	    .setTitle(`${emojis.custom.fail} Unban Command Error`)
+            	    .setDescription(`${emojis.custom.fail} I have encountered an error! Please try again later.`)
+            	    .setTimestamp();
 
-                interaction.reply({ content: '', embeds: [errorEmbed] });
+        	    interaction.reply({ embeds: [errorEmbed], ephemeral: true });
+			    return;
             });
         
     }

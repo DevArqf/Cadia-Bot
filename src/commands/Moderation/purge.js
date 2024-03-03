@@ -52,7 +52,7 @@ class UserCommand extends BeemoCommand {
 			// Building and sending embed for invalid amount error
 			const invalidAmountEmbed = new EmbedBuilder()
 				.setColor(`${color.fail}`)
-				.setFooter({ text: `${interaction.user.displayName}`, iconURL: interaction.user.displayAvatarURL() })
+				.setFooter({ text: `Requested by ${interaction.user.displayName}`, iconURL: interaction.user.displayAvatarURL() })
 				.setTitle(`${emojis.reg.fail} Invalid Amount`)
 				.setDescription('Please specify a valid number of messages to purge (1-100).')
 				.setTimestamp();
@@ -96,9 +96,9 @@ class UserCommand extends BeemoCommand {
 				// Building and sending embed for no messages to purge
 				const noMessagesEmbed = new EmbedBuilder()
 					.setColor(`${color.fail}`)
-					.setFooter({ text: `${interaction.user.displayName}`, iconURL: interaction.user.displayAvatarURL() })
+					.setFooter({ text: `Requested by ${interaction.user.displayName}`, iconURL: interaction.user.displayAvatarURL() })
 					.setTitle(`${emojis.reg.fail} No Messages to Purge`)
-					.setDescription('Uh Oh... There are no messages in the channel to purge.')
+					.setDescription(`${emojis.custom.fail} Uh Oh... There are no messages in the channel to purge.`)
 					.setTimestamp();
 
 				return interaction.reply({ embeds: [noMessagesEmbed], ephemeral: true });
@@ -108,23 +108,23 @@ class UserCommand extends BeemoCommand {
 			await channel.bulkDelete([...messages.values()], true);
 			const purgeSuccessEmbed = new EmbedBuilder()
 				.setColor(`${color.success}`)
-				.setFooter({ text: `${interaction.user.displayName}`, iconURL: interaction.user.displayAvatarURL() })
+				.setFooter({ text: `Requested by ${interaction.user.displayName}`, iconURL: interaction.user.displayAvatarURL() })
 				.setTitle(`${emojis.reg.success} Purge Successful`)
-				.setDescription(`Successfully purged ${messages.size} message(s).`)
+				.setDescription(`${emojis.custom.success} Successfully purged **${messages.size}** message(s).`)
 				.setTimestamp();
 
 			interaction.reply({ embeds: [purgeSuccessEmbed], ephemeral: true });
 		} catch (error) {
 			// Handling errors occurred during the process
-			console.error(`${emojis.reg.fail} Error Purging Messages:`, error);
-			const purgeErrorEmbed = new EmbedBuilder()
-				.setFooter({ text: `${interaction.user.displayName}`, iconURL: interaction.user.displayAvatarURL() })
-				.setColor(`${color.fail}`)
-				.setTitle(`${emojis.reg.fail} Error Purging Messages`)
-				.setDescription('Uh Oh... I have **encountered** an **error** while purging messages.')
-				.setTimestamp();
+			console.error(error);
+        	const errorEmbed = new EmbedBuilder()
+            	.setColor(`${color.fail}`)
+            	.setTitle(`${emojis.custom.fail} Purge Command Error`)
+            	.setDescription(`${emojis.custom.fail} I have encountered an error! Please try again later.`)
+            	.setTimestamp();
 
-			interaction.reply({ embeds: [purgeErrorEmbed], ephemeral: true });
+        	await interaction.reply({ embeds: [errorEmbed], ephemeral: true });
+			return;
 		}
 	}
 }

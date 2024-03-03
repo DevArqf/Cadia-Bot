@@ -39,19 +39,28 @@ class UserCommand extends BeemoCommand {
 				const { url, title, ups, num_comments } = memeData;
 
 				const embed = new EmbedBuilder()
-					.setColor(`${color.default}`)
+					.setColor(`${color.random}`)
 					.setTitle(title)
 					.setURL(`https://www.reddit.com${memeData.permalink}`)
 					.setImage(url)
 					.setTimestamp()
-					.setFooter({ text: `${interaction.user.displayName} • 👍 ${ups}  |  💬 ${num_comments || 0}`, iconURL: interaction.user.displayAvatarURL() });
+					.setFooter({ text: `Requested by ${interaction.user.displayName} • 👍 ${ups}  |  💬 ${num_comments || 0}`, iconURL: interaction.user.displayAvatarURL() });
 
 				await interaction.reply({ embeds: [embed] });
 			} else {
 				await interaction.reply(`${emojis.custom.fail} Failed to fetch a meme. Try again later.`);
 			}
 		} catch (error) {
-			await interaction.reply(`${emojis.custom.fail} I have **encountered** an **error**:\n \`\`\`js\n${error}\`\`\``);
+		console.error(error);
+
+        const errorEmbed = new EmbedBuilder()
+            .setColor(`${color.fail}`)
+            .setTitle(`${emojis.custom.fail} Meme Command Error`)
+            .setDescription(`${emojis.custom.fail} I have encountered an error! Please try again later.`)
+            .setTimestamp();
+
+        await interaction.reply({ embeds: [errorEmbed], ephemeral: true });
+		return;
 		}
 	}
 };

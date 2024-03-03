@@ -67,11 +67,9 @@ class UserCommand extends BeemoCommand {
 			const dmEmbed = {
 				color: `#ff5555`,
 				title: `\`🚫\` You have been kicked from **${interaction.guild.name}**`,
+				description: `• **Kicked by:** \n${emojis.custom.replyend} **${interaction.user.displayName}** \n\n• **Reason:** \n${emojis.custom.replyend} \`${reason}\``,
 				thumbnail: { url: interaction.guild.iconURL() },
-				fields: [
-					{ name: '• **Kicked by:**', value: interaction.user.tag },
-					{ name: '• **Reason:**', value: reason }
-				],
+				footer: { text: `Moderated by ${interaction.user.tag}`, iconURL: interaction.user.displayAvatarURL() },
 				timestamp: new Date()
 			};
 
@@ -81,10 +79,9 @@ class UserCommand extends BeemoCommand {
 			const kickConfirmationEmbed = {
 				color: `${color.success}`,
 				title: `${emojis.reg.success} Kick Successful`,
-				description: `**${userToKick.tag}** has been **kicked** from the server.`,
-				fields: [{ name: '**Reason:**', value: reason }],
+				description: `**${userToKick.tag}** has been **Kicked**! \n\n**• Reason**\n ${emojis.custom.replyend} \`${reason}\``,
 				timestamp: new Date(),
-				footer: { text: `**Kicked** by ${interaction.user.tag}`, iconURL: interaction.user.displayAvatarURL() }
+				footer: { text: `Moderated by ${interaction.user.tag}`, iconURL: interaction.user.displayAvatarURL() }
 			};
 
 			// Kick Failed
@@ -92,17 +89,15 @@ class UserCommand extends BeemoCommand {
 			await interaction.reply({ content: '', embeds: [kickConfirmationEmbed] });
 
 		} catch (error) {
-
 			console.error(error);
+        	const errorEmbed = new EmbedBuilder()
+            	.setColor(`${color.fail}`)
+            	.setTitle(`${emojis.custom.fail} Kick Command Error`)
+            	.setDescription(`${emojis.custom.fail} I have encountered an error! Please try again later.`)
+            	.setTimestamp();
 
-			const errorEmbed = {
-				color: `${color.fail}`,
-				title: `${emojis.reg.fail} Error Kicking User',
-				description: `I have **Failed** to kick **${userToKick.tag}** from the server.`,
-				timestamp: new Date(),
-				footer: { text: 'Uh Oh... I have **encountered** an **error**', iconURL: interaction.client.user.displayAvatarURL() }
-			};
-			await interaction.reply({ content: '', embeds: [errorEmbed] });
+        	await interaction.reply({ embeds: [errorEmbed], ephemeral: true });
+			return;
 		}
 	}
 }
