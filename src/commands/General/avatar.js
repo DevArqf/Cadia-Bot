@@ -5,37 +5,37 @@ const { color, emojis } = require('../../config')
 
 
 class UserCommand extends BeemoCommand {
-	/**
-	 * @param {BeemoCommand.Context} context
-	 * @param {BeemoCommand.Options} options
-	 */
-	constructor(context, options) {
-		super(context, {
-			...options,
-			description: 'Get a users avatar'
-		});
-	}
+        /**
+         * @param {BeemoCommand.Context} context
+         * @param {BeemoCommand.Options} options
+         */
+        constructor(context, options) {
+                super(context, {
+                        ...options,
+                        description: 'Get a users avatar'
+                });
+        }
 
-	/**
-	 * @param {BeemoCommand.Registry} registry
-	 */
-	registerApplicationCommands(registry) {
-		registry.registerChatInputCommand((builder) =>
-			builder //
-				.setName('avatar')
-				.setDescription(this.description)
-				.addUserOption(option => 
+        /**
+         * @param {BeemoCommand.Registry} registry
+         */
+        registerApplicationCommands(registry) {
+                registry.registerChatInputCommand((builder) =>
+                        builder //
+                                .setName('avatar')
+                                .setDescription(this.description)
+                                .addUserOption(option => 
                     option.setName('user')
                         .setDescription('The user to get the avatar of')
                         .setRequired(false)),
-		);
-	}
+                );
+        }
 
-	/**
-	 * @param {BeemoCommand.ChatInputCommandInteraction} interaction
-	 */
-	async chatInputRun(interaction) {
-		// Defining Things
+        /**
+         * @param {BeemoCommand.ChatInputCommandInteraction} interaction
+         */
+        async chatInputRun(interaction) {
+                // Defining Things
         const user = interaction.options.getUser('user') || interaction.user;            
         const userID = await interaction.guild.members.fetch(user.id);
 
@@ -43,7 +43,6 @@ class UserCommand extends BeemoCommand {
 
         const embed = new EmbedBuilder()
         .setColor(`${color.default}`)
-        .setTitle(`${emojis.reg.success} User's Profile Fetched`)
         .setDescription(`${user}\'s Profile Picture`)
         .setImage(`${avatarURL}`)
         .setTimestamp()
@@ -54,5 +53,5 @@ class UserCommand extends BeemoCommand {
 };
 
 module.exports = {
-	UserCommand
+        UserCommand
 };
