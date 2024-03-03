@@ -91,7 +91,7 @@ class UserCommand extends BeemoCommand {
                 { name: 'Rishaune\'s Time:', value: `${emojis.custom.reply_start} ${get_time('EST')}`, inline: false }
 			)
 			.setTimestamp()
-			.setFooter({ text: `${interaction.user.displayName}`, iconURL: interaction.user.displayAvatarURL() });
+			.setFooter({ text: `Requested by ${interaction.user.displayName}`, iconURL: interaction.user.displayAvatarURL() });
 
 		return interaction.reply({ embeds: [embed] });
 	}
