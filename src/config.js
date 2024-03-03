@@ -63,7 +63,9 @@ const emojis = {
 		online: '<:bl_online:1206434279312195594>',
 		js: '<:bl_js:1206438112490692618>',
 		tada: '<:bl_tada:1207462996859682918>',
-		loading: '<a:bl_loading:1206433137928708146>'
+		loading: '<a:bl_loading:1206433137928708146>',
+		reply_start: '<:bl_Reply_start:1212047774204301372>',
+		reply: '<:bl_Reply:1212047469014425650>'
 	}
 };
 
