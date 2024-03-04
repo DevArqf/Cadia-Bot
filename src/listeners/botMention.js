@@ -33,7 +33,7 @@ class UserEvent extends Listener {
                     { name: "`🌐` **Total Servers:**", value: `<:bl_Reply:1212047469014425650> **${servers}**`, inline: true }
                 )
                 .setTimestamp()
-                .setFooter({ text: `${message.author.username}`, iconURL: message.author.displayAvatarURL() });
+                .setFooter({ text: `Requested by ${message.author.username}`, iconURL: message.author.displayAvatarURL() });
 
             const buttons = new ActionRowBuilder()
                 .addComponents(
