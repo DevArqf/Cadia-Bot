@@ -1,3 +1,4 @@
+import { PrismaClient } from '@prisma/client';
 import { ArrayString } from '@skyra/env-utilities';
 import mongoose from 'mongoose';
 
@@ -12,7 +13,9 @@ declare module '@skyra/env-utilities' {
 }
 
 declare module '@sapphire/pieces' {
-	interface Container {}
+	interface Container {
+		db: PrismaClient;
+	}
 }
 
 declare module '@sapphire/framework' {
