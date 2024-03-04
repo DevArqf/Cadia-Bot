@@ -54,7 +54,7 @@ class UserCommand extends BeemoCommand {
 			.setColor(`${color.default}`)
 			.setTitle('`⚡` Rock, Paper, Scissors!')
 			.setDescription(`It's currently ${player2}'s turn.`)
-			.setTimestamp(new Date())
+			.setTimestamp()
 			.setFooter({ text: `${interaction.user.displayName}`, iconURL: interaction.user.displayAvatarURL() });
 
 		const buttons = choices.map((choice) => {
@@ -117,7 +117,7 @@ class UserCommand extends BeemoCommand {
 		}
 
 		gameEmbed.setDescription(
-			`${player1} picked ${player1Choice.name + player1Choice.emoji}\n${player2} picked ${player2Choice.name + player2Choice.emoji}\n\n${result}`
+			`${player1} picked\n ${emojis.custom.replyend} ${player1Choice.name + player1Choice.emoji}\n ${player2} picked\n ${emojis.custom.replyend} ${player2Choice.name + player2Choice.emoji}\n\n ${result}`
 		);
 		game.edit({ content: 'The Game has ended!', embeds: [gameEmbed], components: [] });
 	}
