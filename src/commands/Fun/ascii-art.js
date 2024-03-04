@@ -1,7 +1,6 @@
 const BeemoCommand = require('../../lib/structures/commands/BeemoCommand');
 const { PermissionLevels } = require('../../lib/types/Enums');
 const { emojis } = require('../../config')
-const { EmbedBuilder } = require('discord.js');
 const ascii = require('ascii-art');
 
 class UserCommand extends BeemoCommand {
@@ -39,7 +38,16 @@ class UserCommand extends BeemoCommand {
 
         ascii.font(text, 'Doom', (err, rendered) => {
             if (err) {
-                interaction.reply(`${emojis.custom.fail} I have **encountered** an **error**:\n \`\`\`js\n${err}\`\`\``);
+				console.error(err)
+
+        		const errorEmbed = new EmbedBuilder()
+            		.setColor(`${color.fail}`)
+            		.setTitle(`${emojis.custom.fail} Ascii Command Error`)
+            		.setDescription(`${emojis.custom.fail} I have encountered an error! Please try again later.`)
+            		.setTimestamp();
+
+        		interaction.reply({ embeds: [errorEmbed], ephemeral: true });
+
             } else {
                 interaction.reply(`\`\`\`${rendered}\`\`\``);
             }

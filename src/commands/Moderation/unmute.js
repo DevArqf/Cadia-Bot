@@ -68,22 +68,21 @@ async function handleUnmute(interaction, userToUnmute, unmuteMember, reason) {
 		const unmuteConfirmationEmbed = new EmbedBuilder()
 			.setColor(`${color.success}`)
 			.setTitle(`${emojis.reg.success} Successfully Unmuted User`)
-			.setDescription(`**${userToUnmute.tag}** has been **Unmuted**! \n\n**• Reason:**\n > \`${reason}\``)
+			.setDescription(`**${userToUnmute.tag}** has been **Unmuted**! \n\n**• Reason:**\n ${emojis.custom.replyend} \`${reason}\``)
 			.setTimestamp()
-			.setFooter({ text: `Unmuted by ${interaction.user.tag}`, iconURL: interaction.user.displayAvatarURL() });
+			.setFooter({ text: `Moderated by ${interaction.user.tag}`, iconURL: interaction.user.displayAvatarURL() });
 
 		return interaction.reply({ embeds: [unmuteConfirmationEmbed], ephemeral: false });
 	} catch (error) {
 		console.error(error);
+        const errorEmbed = new EmbedBuilder()
+            .setColor(`${color.fail}`)
+            .setTitle(`${emojis.custom.fail} Unmute Command Error`)
+            .setDescription(`${emojis.custom.fail} I have encountered an error! Please try again later.`)
+            .setTimestamp();
 
-		const errorEmbed = new EmbedBuilder()
-			.setColor(`${color.fail}`)
-			.setTitle(`${emojis.reg.fail} Error Unmuting User'`)
-			.setDescription('I have encountered an **error** while trying to **unmute** the user.')
-			.setTimestamp()
-			.setFooter({ text: 'Uh Oh... I have encountered an error', iconURL: interaction.user.displayAvatarURL() });
-
-		return interaction.reply({ embeds: [errorEmbed] });
+        await interaction.reply({ embeds: [errorEmbed], ephemeral: true });
+		return;
 	}
 }
 

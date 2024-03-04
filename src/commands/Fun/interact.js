@@ -115,9 +115,9 @@ class UserCommand extends BeemoCommand {
 						.setColor(`${color.default}`)
 						.setTimestamp()
 						.setTitle('`🤗` Gave a Hug!')
-						.setFooter({ text: `${interaction.user.displayName}`, iconURL: interaction.user.displayAvatarURL() })
+						.setFooter({ text: `Requested by ${interaction.user.displayName}`, iconURL: interaction.user.displayAvatarURL() })
 						.setImage(hug[randomizer])
-						.addFields({ name: `**• Hug Given**`, value: `> ${interaction.user} has given \n> ${displayuser} a hug! \`❤️\`` });
+						.addFields({ name: `⠀`, value: `${emojis.custom.replystart} ${interaction.user} has given \n${emojis.custom.replyend} ${displayuser} a hug! \`❤️\`` });
 
 					await interaction.reply({ embeds: [hugembed], content: `${displayuser}` });
 
@@ -169,22 +169,22 @@ class UserCommand extends BeemoCommand {
 					const statembed = new EmbedBuilder()
 						.setColor(`${color.default}`)
 						.setTimestamp()
-						.setFooter({ text: `${interaction.user.displayName}`, iconURL: interaction.user.displayAvatarURL() })
-						.setTitle(`> ${displayuser.username}'s Profile`)
+						.setFooter({ text: `Requested by ${interaction.user.displayName}`, iconURL: interaction.user.displayAvatarURL() })
+						.setTitle(`${emojis.custom.right} ${displayuser.username}'s Profile ${emojis.custom.left}`)
 						.addFields(
 							{
-								name: `| **• Statistics Received**`,
-								value: `> • **Hugs**: \`${interactdata.Hug}\` \n> • **Slaps**: \`${interactdata.Slap}\` \n> • **Kills**: \`${interactdata.Kill}\` \n> • **Kisses**: \`${interactdata.Kiss}\``,
+								name: `**Statistics Received**`,
+								value: `${emojis.custom.replystart} • **Hugs**: \`${interactdata.Hug}\` \n${emojis.custom.replycontinue} **Slaps**: \`${interactdata.Slap}\` \n${emojis.custom.replycontinue} **Kills**: \`${interactdata.Kill}\` \n${emojis.custom.replyend} **Kisses**: \`${interactdata.Kiss}\``,
 								inline: false
 							},
 							{
-								name: `| **• Statistics Given**`,
-								value: `> • **Hugs**: \`${interactdata.HugGive}\` \n> • **Slaps**: \`${interactdata.SlapGive}\` \n> • **Kills**: \`${interactdata.KillGive}\` \n> • **Kisses**: \`${interactdata.KissGive}\``,
+								name: `**Statistics Given**`,
+								value: `${emojis.custom.replystart} **Hugs**: \`${interactdata.HugGive}\` \n${emojis.custom.replycontinue} **Slaps**: \`${interactdata.SlapGive}\` \n${emojis.custom.replycontinue} **Kills**: \`${interactdata.KillGive}\` \n${emojis.custom.replyend} **Kisses**: \`${interactdata.KissGive}\``,
 								inline: true
 							},
 							{
-								name: `| **• Failures**`,
-								value: `> • **Fails**: \`${interactdata.Fail}\` \n> • **Real Errors**: \`${interactdata.Err}\``,
+								name: `**Failures**`,
+								value: `${emojis.custom.replystart} **Fails**: \`${interactdata.Fail}\` \n${emojis.custom.replyend} **Real Errors**: \`${interactdata.Err}\``,
 								inline: false
 							}
 						);
@@ -222,29 +222,29 @@ class UserCommand extends BeemoCommand {
 					const results = [
 						{ name: `${interaction.user} **slapped** ${displayuser}!`, result: `s` },
 						{
-							name: `${interaction.user} **slapped** ${displayuser}, \n> but ${displayuser} responded with an \n> **explosive** punch!`,
+							name: `${interaction.user} **slapped** ${displayuser}, \n${emojis.custom.replystart} but ${displayuser} responded with an \n${emojis.custom.replyend} **explosive** punch!`,
 							result: `f`
 						},
 						{
-							name: `${interaction.user} triggered raging mode, \n> ${displayuser}'s **attempts** to avoid \n> the **slap** went unoticed.`,
+							name: `${interaction.user} triggered raging mode, \n${emojis.custom.replystart} ${displayuser}'s **attempts** to avoid \n${emojis.custom.replyend} the **slap** went unoticed.`,
 							result: `s`
 						},
 						{
-							name: `${interaction.user} tried to **slap** ${displayuser} but \n> ${displayuser} dodged the **attack**, \n> what a fail! (oh yeah, ${displayuser} slapped \n> you back)`,
+							name: `${interaction.user} tried to **slap** ${displayuser} but \n${emojis.custom.replystart} ${displayuser} dodged the **attack**, \n${emojis.custom.replycontinue} what a fail! (oh yeah, ${displayuser} slapped \n${emojis.custom.replyend} you back)`,
 							result: `f`
 						},
 						{
-							name: `${interaction.user} **couldn't** slap ${displayuser} at \n> first, but **Beemo** helped \n> them out! **What a save :o**`,
+							name: `${interaction.user} **couldn't** slap ${displayuser} at \n${emojis.custom.replystart} first, but **Cadia Bot** helped \n${emojis.custom.replyend} them out! **What a save :o**`,
 							result: `s`
 						},
 						{
-							name: `${interaction.user} tried to **slap** ${displayuser}, \n> but **Beemo** felt mercy and \n> **slapped** ${interaction.user} instead :(`,
+							name: `${interaction.user} tried to **slap** ${displayuser}, \n${emojis.custom.replystart} but **Cadia Bot** felt mercy and \n${emojis.custom.replyend} **slapped** ${interaction.user} instead :(`,
 							result: `f`
 						},
 						{ name: `${interaction.user} **slapped** ${displayuser}, \n> they will **remember** that..`, result: `s` },
 						{ name: `${interaction.user} **slapped** ${displayuser}, \n> how rudeful!`, result: `s` },
 						{
-							name: `Looks like an **error** occured, hm.. \n> perhaps the **GIF** generator is in \n> another **castle**!`,
+							name: `Looks like an **error** occured, hm.. \n${emojis.custom.replystart} perhaps the **GIF** generator is in \n${emojis.custom.replyend} another **castle**!`,
 							result: `e`
 						},
 						{ name: `${interaction.user} **slapped** ${displayuser}, \n> lol.. **W** play \`😎\``, result: `s` },
@@ -258,19 +258,19 @@ class UserCommand extends BeemoCommand {
 						.setColor(`${color.default}`)
 						.setTimestamp()
 						.setTitle('`👋` Ooo, a SLAP!')
-						.setFooter({ text: `${interaction.user.displayName}`, iconURL: interaction.user.displayAvatarURL() })
+						.setFooter({ text: `Requested by ${interaction.user.displayName}`, iconURL: interaction.user.displayAvatarURL() })
 						.setImage(slap[randomizer]);
 
 					if (results[failchance].result === 'f') {
-						slapembed.addFields({ name: `**• Slap Given**`, value: `> ${results[failchance].name}` });
+						slapembed.addFields({ name: `⠀`, value: `\n > ${results[failchance].name}` });
 					}
 
 					if (results[failchance].result === 's') {
-						slapembed.addFields({ name: `**• Slap Given**`, value: `> ${results[failchance].name}` });
+						slapembed.addFields({ name: `⠀`, value: `\n > ${results[failchance].name}` });
 					}
 
 					if (results[failchance].result === 'e') {
-						slapembed.addFields({ name: `**• Slap Error?**`, value: `> ${results[failchance].name}` });
+						slapembed.addFields({ name: `⠀`, value: `\n > ${results[failchance].name}` });
 						slapembed.setImage('https://cdn.discordapp.com/icons/1078641070180675665/c3ee76cdd52c2bba8492027dfaafa15d.webp?size=1024');
 
 						if (!data) {
@@ -403,30 +403,30 @@ class UserCommand extends BeemoCommand {
 					const results = [
 						{ name: `${interaction.user} **killed** ${displayuser}!`, result: `s` },
 						{
-							name: `${interaction.user} **tried to kill** ${displayuser}, \n> but ${displayuser} responded with an \n> **explosive** punch!`,
+							name: `${interaction.user} **tried to kill** ${displayuser}, \n${emojis.custom.replystart} but ${displayuser} responded with an \n${emojis.custom.replyend} **explosive** punch!`,
 							result: `f`
 						},
 						{
-							name: `${interaction.user} triggered raging mode, \n> ${displayuser}'s **attempts** to avoid \n> the **knife** went unoticed.`,
+							name: `${interaction.user} triggered raging mode, \n${emojis.custom.replystart} ${displayuser}'s **attempts** to avoid \n${emojis.custom.replyend} the **knife** went unoticed.`,
 							result: `s`
 						},
 						{
-							name: `${interaction.user} tried to **kill** ${displayuser} but \n> ${displayuser} dodged the **attack**, \n> what a fail! (oh yeah, ${displayuser} killed \n> you)`,
+							name: `${interaction.user} tried to **kill** ${displayuser} but \n${emojis.custom.replystart} ${displayuser} dodged the **attack**, \n${emojis.custom.replycontinue} what a fail! (oh yeah, ${displayuser} killed \n${emojis.custom.replyend} you)`,
 							result: `f`
 						},
 						{
-							name: `${interaction.user} **couldn't** kill ${displayuser} at \n> first, but **Beemo** helped \n> them out! **Group murder babbyyy!**`,
+							name: `${interaction.user} **couldn't** kill ${displayuser} at \n${emojis.custom.replystart} first, but **Cadia Bot** helped \n${emojis.custom.replyend} them out! **Group murder babbyyy!**`,
 							result: `s`
 						},
 						{
-							name: `${interaction.user} tried to **kill** ${displayuser}, \n> but **Beemo** felt mercy and \n> **killed** ${interaction.user} instead :(`,
+							name: `${interaction.user} tried to **kill** ${displayuser}, \n${emojis.custom.replystart} but **Cadia Bot** felt mercy and \n${emojis.custom.replyend} **killed** ${interaction.user} instead :(`,
 							result: `f`
 						},
 						{ name: `${interaction.user} **killed** ${displayuser}, \n> they will **remember** that..`, result: `s` },
 						{ name: `${interaction.user} **killed** ${displayuser}, \n> how evil!`, result: `s` },
 						{ name: `${interaction.user} **killed** ${displayuser}, \n> lol.. **skill issue** \`😎\``, result: `s` },
 						{
-							name: `${interaction.user} **killed** ${displayuser}, \n> will they take their **revenge** (they won't, \n> they are dead)`,
+							name: `${interaction.user} **killed** ${displayuser}, \n${emojis.custom.replystart} will they take their **revenge** (they won't, \n${emojis.custom.replyend} they are dead)`,
 							result: `s`
 						}
 					];
@@ -438,15 +438,15 @@ class UserCommand extends BeemoCommand {
 						.setColor('DarkRed')
 						.setTimestamp()
 						.setTitle('`🔪` A murder!')
-						.setFooter({ text: `${interaction.user.displayName}`, iconURL: interaction.user.displayAvatarURL() })
+						.setFooter({ text: `Requested by ${interaction.user.displayName}`, iconURL: interaction.user.displayAvatarURL() })
 						.setImage(kill[randomizer]);
 
 					if (results[failchance].result === 'f') {
-						killembed.addFields({ name: `**• Kill Confirmed**`, value: `> ${results[failchance].name}` });
+						killembed.addFields({ name: `⠀`, value: `\n > ${results[failchance].name}` });
 					}
 
 					if (results[failchance].result === 's') {
-						killembed.addFields({ name: `**• Murder Failed**`, value: `> ${results[failchance].name}` });
+						killembed.addFields({ name: `⠀`, value: `\n > ${results[failchance].name}` });
 					}
 
 					await interaction.reply({ embeds: [killembed], content: `${displayuser}` });
@@ -559,23 +559,23 @@ class UserCommand extends BeemoCommand {
 					const results = [
 						{ name: `${interaction.user} **kissed** ${displayuser}!`, result: `s` },
 						{
-							name: `${interaction.user} **tried to kiss** ${displayuser}, \n> but ${displayuser} responded with an \n> **explosive** slap to the face!`,
+							name: `${interaction.user} **tried to kiss** ${displayuser}, \n${emojis.custom.replystart} but ${displayuser} responded with an \n${emojis.custom.replyend} **explosive** slap to the face!`,
 							result: `f`
 						},
 						{
-							name: `${interaction.user} triggered raging mode, \n> ${displayuser}'s **attempts** to avoid \n> the **kiss** went unnoticed.`,
+							name: `${interaction.user} triggered raging mode, \n${emojis.custom.replystart} ${displayuser}'s **attempts** to avoid \n${emojis.custom.replyend} the **kiss** went unnoticed.`,
 							result: `s`
 						},
 						{
-							name: `${interaction.user} tried to **kiss** ${displayuser} but \n> ${displayuser} dodged their **mouth**, \n> what a fail! (oh yeah, ${displayuser} reported \n> you for sexual harassment)`,
+							name: `${interaction.user} tried to **kiss** ${displayuser} but \n${emojis.custom.replystart} ${displayuser} dodged their **mouth**, \n${emojis.custom.replycontinue} what a fail! (oh yeah, ${displayuser} reported \n${emojis.custom.replyend} you for sexual harassment)`,
 							result: `f`
 						},
 						{
-							name: `${interaction.user} **couldn't** kiss ${displayuser} at \n> first, but **Beemo** helped \n> them out! **We all need a little help!**`,
+							name: `${interaction.user} **couldn't** kiss ${displayuser} at \n${emojis.custom.replystart} first, but **Cadia Bot** helped \n${emojis.custom.replyend} them out! **We all need a little help!**`,
 							result: `s`
 						},
 						{
-							name: `${interaction.user} tried to **kill** ${displayuser}, \n> but **Beemo** felt mercy and \n> **kissed** ${interaction.user} instead, what`,
+							name: `${interaction.user} tried to **kiss** ${displayuser}, \n${emojis.custom.replystart} but **Cadia Bot** felt mercy and \n${emojis.custom.replyend} **kissed** ${interaction.user} instead, what`,
 							result: `f`
 						},
 						{ name: `${interaction.user} **kissed** ${displayuser}, \n> they **liked** that..`, result: `s` },
@@ -591,16 +591,16 @@ class UserCommand extends BeemoCommand {
 						.setColor('DarkRed')
 						.setTimestamp()
 						.setTitle('`💋` A wonderful kiss!')
-						.setFooter({ text: `${interaction.user.displayName}`, iconURL: interaction.client.user.displayAvatarURL() })
+						.setFooter({ text: `Requested by ${interaction.user.displayName}`, iconURL: interaction.client.user.displayAvatarURL() })
 						.setThumbnail(interaction.client.user.displayAvatarURL())
 						.setImage(kiss[randomizer]);
 
 					if (results[failchance].result === 'f') {
-						kissembed.addFields({ name: `**• You were rejected**`, value: `> ${results[failchance].name}` });
+						kissembed.addFields({ name: `⠀`, value: `\n > ${results[failchance].name}` });
 					}
 
 					if (results[failchance].result === 's') {
-						kissembed.addFields({ name: `**• You kissed someone**`, value: `> ${results[failchance].name}` });
+						kissembed.addFields({ name: `⠀`, value: `\n > ${results[failchance].name}` });
 					}
 
 					await interaction.reply({ embeds: [kissembed], content: `${displayuser}` });

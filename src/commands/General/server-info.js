@@ -44,19 +44,19 @@ class UserCommand extends BeemoCommand {
 					.setColor(`${color.default}`)
 					.setTitle(`\`⚙️\` Server Information`)
 					.addFields(
-						{ name: '**Server Name:**', value: `${emojis.custom.reply} \`${interaction.guild.name}\`` },
-						{ name: '**Owner:**', value: `${emojis.custom.reply} ${await interaction.guild.fetchOwner()}` },
-						{ name: '**Boost Tier:**', value: `${emojis.custom.reply} \`${boostLevel}\`` },
-						{ name: '**Member Count:**', value: `${emojis.custom.reply} \`${interaction.guild.memberCount}\`` },
-						{ name: '**Channel Count:**', value: `${emojis.custom.reply} \`${interaction.guild.channels.cache.size}\`` },
-						{ name: '**Role Count:**', value: `${emojis.custom.reply} \`${interaction.guild.roles.cache.size}\`` },
-						{ name: '**Regular Emojis:**', value: `${emojis.custom.reply} \`${emoji_reg}/${maxEmojis}\`` },
-						{ name: '**Animated Emojis:**', value: `${emojis.custom.reply} \`${emoji_animated}/${maxEmojis}\`` },
-						{ name: '**Server Icon:**', value: `${emojis.custom.reply} \`None\`` },
-						{ name: '**Server Creation:**', value: `${emojis.custom.reply} <t:${server_made}:R>` }
+						{ name: '**Server Name:**', value: `${emojis.custom.replyend} \`${interaction.guild.name}\`` },
+						{ name: '**Owner:**', value: `${emojis.custom.replyend} ${await interaction.guild.fetchOwner()}` },
+						{ name: '**Boost Tier:**', value: `${emojis.custom.replyend} \`${boostLevel}\`` },
+						{ name: '**Member Count:**', value: `${emojis.custom.replyend} \`${interaction.guild.memberCount}\`` },
+						{ name: '**Channel Count:**', value: `${emojis.custom.replyend} \`${interaction.guild.channels.cache.size}\`` },
+						{ name: '**Role Count:**', value: `${emojis.custom.replyend} \`${interaction.guild.roles.cache.size}\`` },
+						{ name: '**Regular Emojis:**', value: `${emojis.custom.replyend} \`${emoji_reg}/${maxEmojis}\`` },
+						{ name: '**Animated Emojis:**', value: `${emojis.custom.replyend} \`${emoji_animated}/${maxEmojis}\`` },
+						{ name: '**Server Icon:**', value: `${emojis.custom.replyend} \`None\`` },
+						{ name: '**Server Creation:**', value: `${emojis.custom.replyend} <t:${server_made}:R>` }
 					)
 					.setTimestamp()
-					.setFooter({ text: `${interaction.user.displayName}`, iconURL: interaction.user.displayAvatarURL() });
+					.setFooter({ text: `Requested by ${interaction.user.displayName}`, iconURL: interaction.user.displayAvatarURL() });
 
 				await interaction.reply({
 					embeds: [embed]
@@ -66,20 +66,20 @@ class UserCommand extends BeemoCommand {
 					.setColor(`${color.default}`)
 					.setTitle(`\`⚙️\` Server Information`)
 					.addFields(
-						{ name: '**Server Name:**', value: `${emojis.custom.reply} \`${interaction.guild.name}\`` },
-						{ name: '**Owner:**', value: `${emojis.custom.reply} ${await interaction.guild.fetchOwner()}` },
-						{ name: '**Boost Tier:**', value: `${emojis.custom.reply} \`${boostLevel}\`` },
-						{ name: '**Member Count:**', value: `${emojis.custom.reply} \`${interaction.guild.memberCount}\`` },
-						{ name: '**Channel Count:**', value: `${emojis.custom.reply} \`${interaction.guild.channels.cache.size}\`` },
-						{ name: '**Role Count:**', value: `${emojis.custom.reply} \`${interaction.guild.roles.cache.size}\`` },
-						{ name: '**Regular Emojis:**', value: `${emojis.custom.reply} \`${emoji_reg}/${maxEmojis}\`` },
-						{ name: '**Animated Emojis:**', value: `${emojis.custom.reply} \`${emoji_animated}/${maxEmojis}\`` },
-						{ name: '**Server Icon:**', value: `${emojis.custom.reply} [Click Here](${server_icon})` },
-						{ name: '**Server Creation:**', value: `${emojis.custom.reply} <t:${server_made}:R>` }
+						{ name: '**Server Name:**', value: `${emojis.custom.replyend} \`${interaction.guild.name}\`` },
+						{ name: '**Owner:**', value: `${emojis.custom.replyend} ${await interaction.guild.fetchOwner()}` },
+						{ name: '**Boost Tier:**', value: `${emojis.custom.replyend} \`${boostLevel}\`` },
+						{ name: '**Member Count:**', value: `${emojis.custom.replyend} \`${interaction.guild.memberCount}\`` },
+						{ name: '**Channel Count:**', value: `${emojis.custom.replyend} \`${interaction.guild.channels.cache.size}\`` },
+						{ name: '**Role Count:**', value: `${emojis.custom.replyend} \`${interaction.guild.roles.cache.size}\`` },
+						{ name: '**Regular Emojis:**', value: `${emojis.custom.replyend} \`${emoji_reg}/${maxEmojis}\`` },
+						{ name: '**Animated Emojis:**', value: `${emojis.custom.replyend} \`${emoji_animated}/${maxEmojis}\`` },
+						{ name: '**Server Icon:**', value: `${emojis.custom.replyend} [Click Here](${server_icon})` },
+						{ name: '**Server Creation:**', value: `${emojis.custom.replyend} <t:${server_made}:R>` }
 					)
 					.setTimestamp()
 					.setThumbnail(server_icon)
-					.setFooter({ text: `${interaction.user.displayName}`, iconURL: interaction.user.displayAvatarURL() });
+					.setFooter({ text: `Requested by ${interaction.user.displayName}`, iconURL: interaction.user.displayAvatarURL() });
 
 				await interaction.reply({
 					embeds: [embed_with_icon]
@@ -87,13 +87,14 @@ class UserCommand extends BeemoCommand {
 			}
 		} catch (error) {
 			console.error(error);
-			const errorEmbed = new EmbedBuilder()
-				.setColor(`${color.fail}`)
-				.setTitle(`${emojis.default.fail} Error Getting Information`)
-				.setDescription(`${emojis.custom.fail} I have **encountered** an **error** while getting Information`)
-				.setTimestamp()
-				.setFooter({ text: `${interaction.user.displayName}`, iconURL: interaction.user.displayAvatarURL() });
-			await interaction.reply({ content: '', embeds: [errorEmbed] });
+        	const errorEmbed = new EmbedBuilder()
+            	.setColor(`${color.fail}`)
+            	.setTitle(`${emojis.custom.fail} Server Info Error`)
+            	.setDescription(`${emojis.custom.fail} I have encountered an error! Please try again later.`)
+            	.setTimestamp();
+
+        	await interaction.reply({ embeds: [errorEmbed], ephemeral: true });
+			return;
 		}
 	}
 }

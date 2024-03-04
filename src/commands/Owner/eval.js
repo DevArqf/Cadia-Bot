@@ -5,7 +5,7 @@ const { inspect } = require('util');
 const beautify = require('beautify');
 const { EmbedBuilder } = require('discord.js');
 
-class UserCommand extends BeemoCommand {
+class BotOwner extends BeemoCommand {
 	/**
 	 * @param {BeemoCommand.Context} context
 	 * @param {BeemoCommand.Options} options
@@ -13,7 +13,6 @@ class UserCommand extends BeemoCommand {
 	constructor(context, options) {
 		super(context, {
 			...options,
-			permissionLevel: PermissionLevels.BotOwner,
 			description: 'Evaluates Javascript Code (DEV ONLY)'
 		});
 	}
@@ -72,7 +71,7 @@ class UserCommand extends BeemoCommand {
 			const embed = new EmbedBuilder()
 				.setColor(`${color.default}`)
 				.setTitle('`🔍` Evaluated Code')
-				.setFooter({ text: `${interaction.user.displayName}`, iconURL: interaction.user.displayAvatarURL() })
+				.setFooter({ text: `Requested by ${interaction.user.displayName}`, iconURL: interaction.user.displayAvatarURL() })
 				.setDescription(
 					`**• Input:**\n\`\`\`js\n${evaluatedCode}\n\`\`\`\n**• Output:**\n\`\`\`${output.replaceAll("'", '')}\`\`\`\n**Operation took** \`${end?.getTime() - start?.getTime()}\` **millisecond**${end?.getTime() - start?.getTime() > 1 ? 's' : ''}.`
 				)
@@ -110,11 +109,19 @@ class UserCommand extends BeemoCommand {
 			});
 		} catch (error) {
 			// If an error occurs, send the error message to the channel
-			interaction.channel.send({ content: ` ${emojis.custom.fail} I have **encountered** an **error**:\n \`\`\`js\n${err}\`\`\` ` });
+			console.error(error);
+        	const errorEmbed = new EmbedBuilder()
+            	.setColor(`${color.fail}`)
+            	.setTitle(`${emojis.custom.fail} Eval Command Error`)
+            	.setDescription(`${emojis.custom.fail} I have encountered an error! Please try again later.`)
+            	.setTimestamp();
+
+        	await interaction.reply({ embeds: [errorEmbed], ephemeral: true });
+			return;
 		}
 	}
 }
 
 module.exports = {
-	UserCommand
+	BotOwner
 };

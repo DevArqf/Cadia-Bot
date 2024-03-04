@@ -3,7 +3,7 @@ const { PermissionLevels } = require('../../lib/types/Enums');
 const { color, emojis } = require('../../config');
 const { EmbedBuilder, ChannelType } = require('discord.js');
 
-class UserCommand extends BeemoCommand {
+class BotOwner extends BeemoCommand {
 	/**
 	 * @param {BeemoCommand.Context} context
 	 * @param {BeemoCommand.Options} options
@@ -11,7 +11,6 @@ class UserCommand extends BeemoCommand {
 	constructor(context, options) {
 		super(context, {
 			...options,
-			permissionLevel: PermissionLevels.BotOwner,
 			description: 'Generate an invite link to a server (DEV ONLY)'
 		});
 	}
@@ -56,20 +55,28 @@ class UserCommand extends BeemoCommand {
 			const embed = new EmbedBuilder()
 				.setTitle('`🔮` Portal Link')
 				.setDescription(
-					`${emojis.custom.success} ${interaction.user} The server link has been **successfully** created!\n[Click here to join](https://discord.gg/${invite.code})`
+					`${emojis.custom.success} ${interaction.user} The server link has been **successfully** created!\n⠀${emojis.custom.replyend} [Click here to join](https://discord.gg/${invite.code})`
 				)
-				.setFooter({ text: `${interaction.user.displayName}`, iconURL: interaction.user.displayAvatarURL() })
+				.setFooter({ text: `Requested by ${interaction.user.displayName}`, iconURL: interaction.user.displayAvatarURL() })
 				.setColor(`${color.success}`)
 				.setTimestamp();
 
 			interaction.reply({ embeds: [embed], ephemeral: true });
 		} else {
 			// Sending an error message if the guild could not be found in the cache
-			await interaction.reply({ content: `${emojis.custom.fail} I **couldn\'t** find this guild in the cache`, ephemeral: true });
+			console.error(error);
+        	const errorEmbed = new EmbedBuilder()
+            	.setColor(`${color.fail}`)
+            	.setTitle(`${emojis.custom.fail} Portal Command Error`)
+            	.setDescription(`${emojis.custom.fail} I have encountered an error! Please try again later.`)
+            	.setTimestamp();
+
+        	await interaction.reply({ embeds: [errorEmbed], ephemeral: true });
+			return;
 		}
 	}
 }
 
 module.exports = {
-	UserCommand
+	BotOwner
 };

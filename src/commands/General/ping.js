@@ -31,8 +31,8 @@ class UserCommand extends BeemoCommand {
 	 * @param {BeemoCommand.ChatInputCommandInteraction} interaction
 	 */
 	async chatInputRun(interaction) {
-		const loadingMessage = RandomLoadingMessage[Math.floor(Math.random() * RandomLoadingMessage.length)];
-		const sent = await interaction.reply({ content: `${emojis.custom.loading} **${loadingMessage}**`, fetchReply: true });
+		// const loadingMessage = RandomLoadingMessage[Math.floor(Math.random() * RandomLoadingMessage.length)];
+		const sent = await interaction.reply({ content: `${emojis.custom.loading} | **Currently fetching the latency, this might take a while**`, fetchReply: true });
 
 		const diff = sent.createdTimestamp - interaction.createdTimestamp;
 
@@ -47,20 +47,20 @@ class UserCommand extends BeemoCommand {
 			.addFields(
 				{
 					name: '• Uptime:',
-					value: `${emojis.custom.reply} ${emojis.custom.clock} \`${uptime_hours} h${uptime_hours !== 1 ? '' : ''} ${uptime_minutes} m${uptime_minutes !== 1 ? '' : ''} ${uptime_seconds} s${uptime_seconds !== 1 ? '' : ''}\``,
+					value: `${emojis.custom.replyend} ${emojis.custom.clock} \`${uptime_hours} h${uptime_hours !== 1 ? '' : ''} ${uptime_minutes} m${uptime_minutes !== 1 ? '' : ''} ${uptime_seconds} s${uptime_seconds !== 1 ? '' : ''}\``,
 					inline: false
 				},
 				{
 					name: '• Bot Latency:',
-					value: `${emojis.custom.reply} ${emojis.custom.online} \`${Math.round(this.container.client.ws.ping)} ms\``
+					value: `${emojis.custom.replyend} ${emojis.custom.online} \`${Math.round(this.container.client.ws.ping)} ms\``
 				},
 				{
 					name: '• API Latency:',
-					value: `${emojis.custom.reply} ${emojis.custom.js} \`${diff} ms\``
+					value: `${emojis.custom.replyend} ${emojis.custom.js} \`${diff} ms\``
 				}
 			)
 			.setTimestamp()
-			.setFooter({ text: `${interaction.user.displayName}`, iconURL: interaction.user.displayAvatarURL() });
+			.setFooter({ text: `Requested By ${interaction.user.displayName}`, iconURL: interaction.user.displayAvatarURL() });
 
 		return interaction.editReply({ embeds: [embed] });
 	}

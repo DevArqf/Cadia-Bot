@@ -70,14 +70,22 @@ class UserCommand extends BeemoCommand {
 				.setColor(`${color.success}`)
 				.setTitle(`${emojis.reg.success} Name Successfully Moderated`)
 				.setDescription(
-					`**${userToModerate.tag}**'s name has been **moderated**! \n\n• **New Nickname:**\n ${emojis.custom.reply}\`${nickname}\` \n\n• **Reason:**\n ${emojis.custom.reply}>\`${reason}\``
+					`**${userToModerate.tag}**'s name has been **moderated**! \n\n• **New Nickname:**\n ${emojis.custom.replyend} \`${nickname}\` \n\n• **Reason:**\n ${emojis.custom.replyend} \`${reason}\``
 				)
 				.setTimestamp()
-				.setFooter({ text: `${interaction.user.displayName}`, iconURL: interaction.user.displayAvatarURL() });
+				.setFooter({ text: `Moderated by ${interaction.user.displayName}`, iconURL: interaction.user.displayAvatarURL() });
 
 			return interaction.reply({ embeds: [completed], ephemeral: false });
 		} catch (error) {
-			interaction.channel.send({ content: ` ${emojis.custom.fail} I have **encountered** an **error**:\n \`\`\`js\n${error}\`\`\` ` });
+			console.error(error);
+        	const errorEmbed = new EmbedBuilder()
+            	.setColor(`${color.fail}`)
+            	.setTitle(`${emojis.custom.fail} Moderate Name Error`)
+            	.setDescription(`${emojis.custom.fail} I have encountered an error! Please try again later.`)
+            	.setTimestamp();
+
+        	await interaction.reply({ embeds: [errorEmbed], ephemeral: true });
+			return;
 		}
 	}
 }

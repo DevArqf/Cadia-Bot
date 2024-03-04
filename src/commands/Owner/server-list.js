@@ -4,7 +4,7 @@ const { color, emojis } = require('../../config');
 const { EmbedBuilder } = require('discord.js');
 const sourcebin = require('sourcebin_js');
 
-class UserCommand extends BeemoCommand {
+class BotOwner extends BeemoCommand {
 	/**
 	 * @param {BeemoCommand.Context} context
 	 * @param {BeemoCommand.Options} options
@@ -12,7 +12,6 @@ class UserCommand extends BeemoCommand {
 	constructor(context, options) {
 		super(context, {
 			...options,
-			permissionLevel: PermissionLevels.BotOwner,
 			description: 'Shows all of the servers I am in (DEV ONLY)'
 		});
 	}
@@ -48,8 +47,8 @@ class UserCommand extends BeemoCommand {
 			.then((src) => {
 				const embed = new EmbedBuilder()
 					.setTitle('`📁` Server List')
-					.setDescription(`${emojis.custom.success} The Server List has been **successfully** generated!\n[Click here to view](${src.url})`)
-					.setFooter({ text: `${interaction.user.displayName}`, iconURL: interaction.user.displayAvatarURL() })
+					.setDescription(`${emojis.custom.success} The Server List has been **successfully** generated!\n⠀${emojis.custom.replyend} [Click here to view](${src.url})`)
+					.setFooter({ text: `Requested by ${interaction.user.displayName}`, iconURL: interaction.user.displayAvatarURL() })
 					.setColor(`${color.success}`)
 					.setTimestamp();
 
@@ -59,5 +58,5 @@ class UserCommand extends BeemoCommand {
 }
 
 module.exports = {
-	UserCommand
+	BotOwner
 };
