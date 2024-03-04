@@ -1,0 +1,251 @@
+const { Command, ApplicationCommandRegistry } = require('@sapphire/framework');
+const { ChatInputCommandInteraction, TextChannel, EmbedBuilder, ChannelType } = require('discord.js');
+const { emojis, color } = require('../../config');
+
+class countingCommand extends Command {
+	constructor(context, options) {
+		super(context, {
+			...options,
+			description: 'Setup the counting game for your server'
+		});
+	}
+
+	/**
+	 *
+	 * @param {ApplicationCommandRegistry} registry
+	 */
+	registerApplicationCommands(registry) {
+		registry.registerChatInputCommand((builder) =>
+			builder //
+				.setName(this.name)
+				.setDescription(this.description)
+				// Setup Subcommand
+				.addSubcommand((subcommand) =>
+					subcommand //
+						.setName('setup')
+						.setDescription('(re)Setup the counting game for your server')
+						.addChannelOption((option) =>
+							option //
+								.setName('channel')
+								.setDescription('The channel to setup the counting game in')
+								.setRequired(true)
+								.addChannelTypes(ChannelType.GuildText)
+						)
+						.addIntegerOption((option) =>
+							option //
+								.setName('goal')
+								.setDescription('The goal for the counting game')
+								.setMaxValue(100_000)
+								.setMinValue(1)
+								.setRequired(true)
+						)
+				)
+				// Add reward subcommand
+				.addSubcommand((subcommand) =>
+					subcommand //
+						.setName('reward')
+						.setDescription('Setup a reward for the counting game')
+						.addIntegerOption((option) =>
+							option //
+								.setName('count')
+								.setDescription('The count the user must reach to get the reward')
+								.setMaxValue(100_000)
+								.setRequired(true)
+								.setMinValue(1)
+						)
+						.addIntegerOption((option) =>
+							option //
+								.setName('amount')
+								.setDescription('The amount of coins to give the user')
+								.setMinValue(1)
+						)
+				)
+				// View leaderboard subcommand
+				.addSubcommandGroup((sg) =>
+					sg //
+						.setName('leaderboard')
+						.setDescription('View the leaderboard for the counting game')
+						.addSubcommand((subcommand) =>
+							subcommand //
+								.setName('global')
+								.setDescription('View the global leaderboard for the counting game')
+						)
+						.addSubcommand((subcommand) =>
+							subcommand //
+								.setName('local')
+								.setDescription('View the local leaderboard for the counting game')
+						)
+				)
+		);
+	}
+
+	/**
+	 * @param {ChatInputCommandInteraction} interaction
+	 */
+	async chatInputRun(interaction) {
+		const subcommand = interaction.options.getSubcommand();
+		if (subcommand === 'setup') {
+			const channel = interaction.options.getChannel('channel', true);
+			const goal = interaction.options.getInteger('goal', true);
+
+			if (!channel.isTextBased()) {
+				await interaction.reply({ content: `${emojis.custom.fail} The channel must be a text channel`, ephemeral: true });
+				return;
+			}
+
+			await this.container.db.guild.upsert({
+				where: {
+					id: interaction.guildId
+				},
+				update: {
+					countChannel: channel.id,
+					countGoal: goal,
+					countLastUser: null,
+					countLastScore: 0
+				},
+				create: {
+					id: interaction.guildId,
+					countChannel: channel.id,
+					countGoal: goal,
+					countLastUser: null,
+					countLastScore: 0
+				}
+			});
+
+			await interaction.reply({ content: `${emojis.custom.success} The counting game has been setup in ${channel}`, ephemeral: true });
+		}
+
+		if (subcommand === 'reward') {
+			const count = interaction.options.getInteger('count', true);
+			let amount = interaction.options.getInteger('amount') ?? 1000;
+
+			await this.container.db.countingReward.upsert({
+				where: {
+					guildId: interaction.guildId,
+					count: count
+				},
+				update: {
+					amount
+				},
+				create: {
+					guildId: interaction.guildId,
+					count,
+					amount
+				}
+			});
+
+			const data = await this.container.db.guild.findFirst({
+				where: {
+					id: interaction.guildId
+				}
+			});
+
+			if (data.countChannel === null) {
+				await interaction.reply({ content: `${emojis.custom.fail} The counting game has not been setup yet`, ephemeral: true });
+				return;
+			}
+
+			const countingChannel = interaction.guild.channels.cache.get(data.countChannel);
+
+			if (!countingChannel || !countingChannel.isTextBased()) {
+				await interaction.reply({ content: `${emojis.custom.fail} The counting game has not been setup yet`, ephemeral: true });
+				return;
+			}
+
+			countingChannel.send({
+				embeds: [
+					new EmbedBuilder()
+						.setTitle('Counting Game Reward')
+						.setDescription(`The reward for reaching \`${count}\` counts has been set as \`${amount}\` coins`)
+						.setColor(color.success)
+				]
+			});
+
+			await interaction.reply({
+				content: `${emojis.custom.success} The \`${amount}\` reward has been setup for ${count} counts`,
+				ephemeral: true
+			});
+		}
+
+		if (subcommand === 'global') {
+			const data = await this.container.db.guild.findMany({
+				where: {
+					count: {
+						not: 0
+					}
+				},
+				orderBy: {
+					count: 'desc'
+				},
+				take: 10
+			});
+
+			if (!data.length) {
+				await interaction.reply({ content: `${emojis.custom.fail} No guild has counted yet`, ephemeral: true });
+				return;
+			}
+
+			// Global leaderboard of guilds
+			const leaderboard = data
+				.map((g, index) => {
+					const guild = this.container.client.guilds.cache.get(g.id);
+					const guildName = guild ? guild.name : 'Unknown Guild';
+					return `${index + 1}. ${guildName} - ${g.count}`;
+				})
+				.join('\n');
+
+			await interaction.reply({
+				embeds: [new EmbedBuilder().setTitle('Counting Game Global Leaderboard').setDescription(leaderboard).setColor(color.success)]
+			});
+		}
+
+		if (subcommand === 'local') {
+			const data = await this.container.db.guild.findUnique({
+				where: {
+					id: interaction.guildId
+				}
+			});
+
+			if (!data) {
+				await interaction.reply({ content: `${emojis.custom.fail} The counting game has not been setup yet`, ephemeral: true });
+				return;
+			}
+
+			const localLeaderboard = await this.container.db.countActivity.findMany({
+				where: {
+					AND: {
+						count: {
+							not: 0
+						},
+						guildId: interaction.guildId
+					}
+				},
+				orderBy: {
+					count: 'desc'
+				},
+				take: 10
+			});
+
+			if (!localLeaderboard.length) {
+				await interaction.reply({ content: `${emojis.custom.fail} No member has counted yet`, ephemeral: true });
+				return;
+			}
+
+			const leaderboard = localLeaderboard
+				.map((user, index) => {
+					const member = interaction.guild.members.cache.get(user.userId);
+					const username = member ? member.user.username : 'Unknown User';
+					return `${index + 1}. ${username} (${member}) - ${user.count}`;
+				})
+				.join('\n');
+
+			await interaction.reply({
+				embeds: [new EmbedBuilder().setTitle('Counting Game Server Leaderboard').setDescription(leaderboard).setColor(color.success)]
+			});
+		}
+	}
+}
+
+module.exports = {
+	countingCommand
+};

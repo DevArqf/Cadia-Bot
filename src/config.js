@@ -80,4 +80,8 @@ const color = {
 	random: 'Random'
 };
 
-module.exports = { ClientConfig, color, emojis };
+const channels = {
+	commandLogging: '1214165393615364176'
+};
+
+module.exports = { ClientConfig, color, emojis, channels };

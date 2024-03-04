@@ -87,7 +87,6 @@ class UserCommand extends BeemoCommand {
 			// Kick Failed
 			await interaction.guild.members.kick(userToKick, { reason: `**Kicked** by ${interaction.user.tag}: ${reason}` });
 			await interaction.reply({ content: '', embeds: [kickConfirmationEmbed] });
-
 		} catch (error) {
 			console.error(error);
         	const errorEmbed = new EmbedBuilder()
@@ -95,9 +94,6 @@ class UserCommand extends BeemoCommand {
             	.setTitle(`${emojis.custom.fail} Kick Command Error`)
             	.setDescription(`${emojis.custom.fail} I have encountered an error! Please try again later.`)
             	.setTimestamp();
-
-        	await interaction.reply({ embeds: [errorEmbed], ephemeral: true });
-			return;
 		}
 	}
 }
