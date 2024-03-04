@@ -60,6 +60,12 @@ class countingCommand extends Command {
 								.setMinValue(1)
 						)
 				)
+				// View leaderboard subcommand
+				.addSubcommand((subcommand) =>
+					subcommand //
+						.setName('leaderboard')
+						.setDescription('View the global leaderboard for the counting game')
+				)
 		);
 	}
 
@@ -148,6 +154,38 @@ class countingCommand extends Command {
 			await interaction.reply({
 				content: `${emojis.custom.success} The \`${amount}\` reward has been setup for ${count} counts`,
 				ephemeral: true
+			});
+		}
+
+		if (subcommand === 'leaderboard') {
+			const data = await this.container.db.guild.findMany({
+				where: {
+					count: {
+						not: 0
+					}
+				},
+				orderBy: {
+					count: 'desc'
+				},
+				take: 10
+			});
+
+			if (!data.length) {
+				await interaction.reply({ content: `${emojis.custom.fail} No guild has counted yet`, ephemeral: true });
+				return;
+			}
+
+			// Global leaderboard of guilds
+			const leaderboard = data
+				.map((g, index) => {
+					const guild = this.container.client.guilds.cache.get(g.id);
+					const guildName = guild ? guild.name : 'Unknown Guild';
+					return `${index + 1}. ${guildName} - ${g.count}`;
+				})
+				.join('\n');
+
+			await interaction.reply({
+				embeds: [new EmbedBuilder().setTitle('Counting Game Global Leaderboard').setDescription(leaderboard).setColor(color.success)]
 			});
 		}
 	}
