@@ -1,13 +1,34 @@
-const { Listener, LogLevel } = require('@sapphire/framework');
+const { Listener, LogLevel, Command } = require('@sapphire/framework');
 const { cyan } = require('colorette');
+const { Message, EmbedBuilder } = require('discord.js');
+const { channels } = require('../../config');
 
 class UserEvent extends Listener {
-	run({ message, command }) {
+	/**
+	 *
+	 * @param {{message: Message, command: Command}} param0
+	 */
+	async run({ message, command }) {
 		const shard = this.shard(message.guild?.shardId ?? 0);
 		const commandName = this.command(command);
 		const author = this.author(message.author);
 		const sentAt = message.guild ? this.guild(message.guild) : this.direct();
 		this.container.logger.debug(`${shard} - ${commandName} ${author} ${sentAt}`);
+
+		const sentIn = message.guild ? `**${message.guild.name}** - \`${message.guild.id}\`` : '**Direct Messages**';
+		const channel = message.channel.name;
+		const time = message.createdTimestamp;
+
+		const loggingChannel = this.container.client.channels.cache.get(channels.commandLogging);
+		if (!loggingChannel) return;
+
+		const embed = new EmbedBuilder()
+			.setTimestamp(time)
+			.setColor('Random')
+			.setAuthor({ name: `${message.author.tag} (${message.author.id})`, iconURL: message.author.displayAvatarURL() })
+			.setDescription(`**Command:** ${commandName}\n**Sent In:** ${sentIn}\n**Channel:** ${channel}`);
+
+		await loggingChannel.send({ embeds: [embed] });
 	}
 
 	onLoad() {
