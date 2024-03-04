@@ -81,8 +81,10 @@ class UserEvent extends Listener {
 
 		await this.container.db.countActivity.upsert({
 			where: {
-				guildId: guild.id,
-				userId: message.author.id
+				userId_guildId: {
+					guildId: guild.id,
+					userId: message.author.id
+				}
 			},
 			update: {
 				count: {
