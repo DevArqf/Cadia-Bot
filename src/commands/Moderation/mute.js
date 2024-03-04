@@ -75,22 +75,21 @@ class UserCommand extends BeemoCommand {
 			const muteConfirmationEmbed = new EmbedBuilder()
 				.setColor(`${color.success}`)
 				.setTitle(`${emojis.reg.success} Successfully Muted User`)
-				.setDescription(`**${userToMute.tag}** has been **Muted**! \n\n**• Reason:**\n > \`${reason}\``)
+				.setDescription(`**${userToMute.tag}** has been **Muted**! \n\n**• Reason:**\n ${emojis.custom.replyend} \`${reason}\``)
 				.setTimestamp()
-				.setFooter({ text: `Muted by ${interaction.user.tag}`, iconURL: interaction.user.displayAvatarURL() });
+				.setFooter({ text: `Moderated by ${interaction.user.tag}`, iconURL: interaction.user.displayAvatarURL() });
 
 			return interaction.reply({ embeds: [muteConfirmationEmbed], ephemeral: false });
 		} catch (error) {
 			console.error(error);
+        	const errorEmbed = new EmbedBuilder()
+            	.setColor(`${color.fail}`)
+            	.setTitle(`${emojis.custom.fail} Mute Command Error`)
+            	.setDescription(`${emojis.custom.fail} I have encountered an error! Please try again later.`)
+            	.setTimestamp();
 
-			const errorEmbed = new EmbedBuilder()
-				.setColor(`${color.fail}`)
-				.setTitle(`${emojis.reg.fail} Error Muting User'`)
-				.setDescription('I have encountered an **error** while trying to **mute** the user.')
-				.setTimestamp()
-				.setFooter({ text: 'Uh Oh... I have encountered an error', iconURL: interaction.user.displayAvatarURL() });
-
-			return interaction.reply({ embeds: [errorEmbed] });
+        	await interaction.reply({ embeds: [errorEmbed], ephemeral: true });
+			return;
 		}
 	}
 }

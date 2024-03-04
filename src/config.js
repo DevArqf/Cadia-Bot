@@ -58,12 +58,16 @@ const emojis = {
 		success: '<:bl_check_mark:1206436519498354738>',
 		fail: '<:bl_x_mark:1206436599794241576>',
 		warning: '<:bl_warning:1206435135701123073>',
-		reply: '<:bl_Reply:1212047469014425650>',
+		replystart: '<:bl_Reply_start:1212047774204301372>',
+		replycontinue: '<:bl_Reply_continue:1212047673188679720>',
+		replyend: '<:bl_Reply_end:1212047469014425650>',
 		clock: '<:bl_clock:1206612806560915547>',
 		online: '<:bl_online:1206434279312195594>',
 		js: '<:bl_js:1206438112490692618>',
 		tada: '<:bl_tada:1207462996859682918>',
-		loading: '<a:bl_loading:1206433137928708146>'
+		loading: '<a:bl_loading:1206433137928708146>',
+		right: '<:bl_right:1213888472813674546>',
+		left: '<:bl_left:1213888437132730368>'
 	}
 };
 
@@ -71,7 +75,9 @@ const color = {
 	default: '#50a090',
 	success: '#3bb143',
 	fail: '#ff2626',
-	warning: '#e9d502'
+	warning: '#e9d502',
+	invis: '#2b2d31',
+	random: 'Random'
 };
 
 const channels = {

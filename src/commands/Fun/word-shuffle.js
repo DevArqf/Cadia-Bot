@@ -73,7 +73,8 @@ class UserCommand extends BeemoCommand {
 			.setDescription(
 				`**Guess the word!**\n\nThe Shuffled Word: \`${shuffledWord}\`\n\n*You have **30 seconds** to guess! Type your guess in the chat.*`
 			)
-			.setFooter({ text: `${interaction.user.displayName}`, iconURL: interaction.user.displayAvatarURL() });
+			.setTimestamp()
+			.setFooter({ text: `Requested by ${interaction.user.displayName}`, iconURL: interaction.user.displayAvatarURL() });
 
 		await interaction.reply({ embeds: [startEmbed] });
 
@@ -89,14 +90,14 @@ class UserCommand extends BeemoCommand {
 					.setTitle(`${emojis.custom.tada} **Congratulations**, that was the **correct** answer!`)
 					.setDescription(`You guessed the word **correctly**!\n\nThe word was: \`${selectedWord}\``)
 					.setTimestamp()
-					.setFooter({ text: `${interaction.user.displayName}`, iconURL: interaction.user.displayAvatarURL() });
+					.setFooter({ text: `Requested by ${interaction.user.displayName}`, iconURL: interaction.user.displayAvatarURL() });
 			} else {
 				resultEmbed
 					.setColor(`${color.fail}`)
 					.setTitle(`${emojis.reg.fail} Incorrect Answer`)
-					.setDescription(`**Unfrotunately**, that's the **incorrect** word!\n\nThe **correct** word was: \`${selectedWord}\``)
+					.setDescription(`**Unfortunately**, that's the **incorrect** word!\n\nThe **correct** word was:\n ${emojis.custom.replyend} \`${selectedWord}\``)
 					.setTimestamp()
-					.setFooter({ text: `${interaction.user.displayName}`, iconURL: interaction.user.displayAvatarURL() });
+					.setFooter({ text: `Requested by ${interaction.user.displayName}`, iconURL: interaction.user.displayAvatarURL() });
 			}
 
 			await interaction.followUp({ embeds: [resultEmbed] });
@@ -109,7 +110,7 @@ class UserCommand extends BeemoCommand {
 					.setTitle('`⏰` Times Up!')
 					.setDescription('You ran out of time! Better luck next time!')
 					.setTimestamp()
-					.setFooter({ text: `${interaction.user.displayName}`, iconURL: interaction.user.displayAvatarURL() });
+					.setFooter({ text: `Requested by ${interaction.user.displayName}`, iconURL: interaction.user.displayAvatarURL() });
 				interaction.followUp({ embeds: [timeoutEmbed] });
 			}
 		});

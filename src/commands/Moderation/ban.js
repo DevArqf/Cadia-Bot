@@ -92,23 +92,23 @@ class UserCommand extends BeemoCommand {
             const banConfirmationEmbed = new EmbedBuilder()
                 .setColor(`${color.success}`)
                 .setTitle(`${emojis.reg.success} Ban Successful`)
-                .setDescription(`**${userToBan.tag}** has been **banned** from the server.`)
-                .addFields({ name: '**• Reason:**', value: reason })
+                .setDescription(`**${userToBan.tag}** has been **Banned**! \n\n**• Reason:**\n ${emojis.custom.replyend} \`${reason}\``)
                 .setTimestamp()
-                .setFooter({ text: `Banned by ${interaction.user.tag}`, iconURL: interaction.user.displayAvatarURL() });
+                .setFooter({ text: `Moderated by ${interaction.user.tag}`, iconURL: interaction.user.displayAvatarURL() });
 
             //Ban Failed
-            await interaction.guild.members.ban(userToBan, { reason: `Banned by ${interaction.user.tag}: ${reason}` });
+            await interaction.guild.members.ban(userToBan, { reason: `Moderated by ${interaction.user.tag}: ${reason}` });
             await interaction.reply({ content: '', embeds: [banConfirmationEmbed] });
         } catch (error) {
             console.error(error);
-            const errorEmbed = new EmbedBuilder()
-                .setColor(`${color.fail}`)
-                .setTitle(`${emojis.reg.fail} Error Banning User`)
-                .setDescription(`I have **Failed** to ban **${userToBan.tag}** from the server.`)
-                .setTimestamp()
-                .setFooter({ text: 'Uh Oh... I have encountered an error', iconURL: interaction.user.displayAvatarURL() });
-            await interaction.reply({ content: '', embeds: [errorEmbed] });
+        	const errorEmbed = new EmbedBuilder()
+            	.setColor(`${color.fail}`)
+            	.setTitle(`${emojis.custom.fail} Ban Command Error`)
+            	.setDescription(`${emojis.custom.fail} I have encountered an error! Please try again later.`)
+            	.setTimestamp();
+
+        	await interaction.reply({ embeds: [errorEmbed], ephemeral: true });
+			return;
         }
     }
 };

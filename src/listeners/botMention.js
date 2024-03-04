@@ -28,9 +28,9 @@ class UserEvent extends Listener {
                 .setDescription(
                     `Hey there **${message.author.username}**! Here is some **information** on how to **use** me!\n\n \`🔑\` **Commands**\nUse the </help:1206974259528728677> command to view a list of all my existing commands!`)
                 .addFields(
-                    { name: "`💡` **Total Commands:**", value: `<:bl_Reply:1212047469014425650> **${commands}**`, inline: true },
-                    { name: "`👤` **Total Users:**", value: `<:bl_Reply:1212047469014425650> **${members}**`, inline: true },
-                    { name: "`🌐` **Total Servers:**", value: `<:bl_Reply:1212047469014425650> **${servers}**`, inline: true }
+                    { name: "`💡` **Total Commands:**", value: `${emojis.custom.replyend} **${commands}**`, inline: true },
+                    { name: "`👤` **Total Users:**", value: `${emojis.custom.replyend} **${members}**`, inline: true },
+                    { name: "`🌐` **Total Servers:**", value: `${emojis.custom.replyend} **${servers}**`, inline: true }
                 )
                 .setTimestamp()
                 .setFooter({ text: `Requested by ${message.author.username}`, iconURL: message.author.displayAvatarURL() });
@@ -65,7 +65,15 @@ class UserEvent extends Listener {
                     try {
                         await interaction.message.delete();
                     } catch (error) {
-                        interaction.channel.send({ content: ` ${emojis.custom.fail} I have **encountered** an **error**:\n \`\`\`js\n${error}\`\`\` ` });
+                        console.error(error);
+        	            const errorEmbed = new EmbedBuilder()
+            	            .setColor(`${color.fail}`)
+            	            .setTitle(`${emojis.custom.fail} Bot Mention Error`)
+            	            .setDescription(`${emojis.custom.fail} I have encountered an error! Please try again later.`)
+            	            .setTimestamp();
+
+        	            await interaction.reply({ embeds: [errorEmbed], ephemeral: true });
+			            return;
                     }
                 }   
             });

@@ -42,11 +42,11 @@ class UserCommand extends BeemoCommand {
 		];
 
 		if (player1.id == player2.id) {
-			await interaction.reply({ content: `${emojis.custom.fail} You can not play the game with yourself!`, ephemeral: true });
+			await interaction.reply({ content: `${emojis.custom.fail} You cannot play the game with yourself!`, ephemeral: true });
 			return;
 		}
 		if (player2.bot) {
-			await interaction.reply({ content: `${emojis.custom.fail} You can not play the game with a bot!`, ephemeral: true });
+			await interaction.reply({ content: `${emojis.custom.fail} You cannot play the game with a bot!`, ephemeral: true });
 			return;
 		}
 
@@ -54,8 +54,6 @@ class UserCommand extends BeemoCommand {
 			.setColor(`${color.default}`)
 			.setTitle('`⚡` Rock, Paper, Scissors!')
 			.setDescription(`It's currently ${player2}'s turn.`)
-			.setTimestamp()
-			.setFooter({ text: `${interaction.user.displayName}`, iconURL: interaction.user.displayAvatarURL() });
 
 		const buttons = choices.map((choice) => {
 			return new ButtonBuilder().setLabel(choice.name).setCustomId(choice.name).setEmoji(choice.emoji).setStyle(ButtonStyle.Primary);

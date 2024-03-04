@@ -1,7 +1,7 @@
 const BeemoCommand = require('../../lib/structures/commands/BeemoCommand');
 const { PermissionLevels } = require('../../lib/types/Enums');
 const { color, emojis } = require('../../config');
-const { CommandInteraction, EmbedBuilder } = require('discord.js');
+const { EmbedBuilder } = require('discord.js');
 
 class UserCommand extends BeemoCommand {
 	/**
@@ -36,8 +36,8 @@ class UserCommand extends BeemoCommand {
 			'Trixie and Veronica, our two cats, just love to play with their pink ball of yarn.',
 			'We climbed to the top of the mountain in just under two hours; isn’t that great?',
 			'In order to keep up at that pace, Zack Squeve would have to work all night.',
-			"Beemo is my best friend. He's always there when I need him.",
-			'Beemo was made on Jan, 26th, 2024 by Malik and Navin.S'
+			"Cadia Bot is my best friend. He's always there when I need him.",
+			'Cadia Bot was made on Jan, 26th, 2024 by Malik and Navin.'
 		];
 		const selectedSentence = sentences[Math.floor(Math.random() * sentences.length)];
 
@@ -47,7 +47,7 @@ class UserCommand extends BeemoCommand {
 			.setDescription('`⚡` **Are you ready to showcase your typing speed?**')
 			.addFields({
 				name: '`📜` Your Challenge:',
-				value: `> *"${selectedSentence}"*`
+				value: `${emojis.custom.replyend} *"${selectedSentence}"*`
 			})
 			.setFooter({
 				text: 'You have 15 seconds. Ready... Set... Go!',
@@ -69,7 +69,7 @@ class UserCommand extends BeemoCommand {
 					.setColor(`${color.success}`)
 					.setTitle(`${emojis.custom.tada} Congratulations, You Won!`)
 					.setDescription(`${m.author}, you completed the challenge in **${timeTaken / 1000}s**!`)
-					.setFooter({ text: `${interaction.user.displayName}`, iconURL: interaction.user.displayAvatarURL() })
+					.setFooter({ text: `Requested by ${interaction.user.displayName}`, iconURL: interaction.user.displayAvatarURL() })
 					.setTimestamp();
 
 				interaction.editReply({ embeds: [successEmbed] });
@@ -83,7 +83,7 @@ class UserCommand extends BeemoCommand {
 					.setColor(`${color.fail}`)
 					.setTitle('`⏰` Times Up!')
 					.setDescription('You ran out of time! Better luck next time!')
-					.setFooter({ text: `${interaction.user.displayName}`, iconURL: interaction.user.displayAvatarURL() })
+					.setFooter({ text: `Requested by ${interaction.user.displayName}`, iconURL: interaction.user.displayAvatarURL() })
 					.setTimestamp();
 
 				interaction.editReply({ embeds: [failEmbed] });
