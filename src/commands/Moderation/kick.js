@@ -1,4 +1,5 @@
 const { emojis, color } = require('../../config');
+const { EmbedBuilder } = require('discord.js');
 const BeemoCommand = require('../../lib/structures/commands/BeemoCommand');
 
 class UserCommand extends BeemoCommand {
@@ -36,7 +37,7 @@ class UserCommand extends BeemoCommand {
 		// Permissions
 		// if (!interaction.member.permissions.has(PermissionsBitField.Flags.KickMembers)) {
 		// 	return await interaction.reply({
-		// 		content: `${emojis.custom.fail} You are not **authorzied** to **execute** this command!`,
+		// 		content: `${emojis.custom.fail} You are not **authorized** to **execute** this command!`,
 		// 		ephemeral: true
 		// 	});
 		// }
@@ -64,25 +65,23 @@ class UserCommand extends BeemoCommand {
 
 		// DM Message
 		try {
-			const dmEmbed = {
-				color: `#ff5555`,
-				title: `\`🚫\` You have been kicked from **${interaction.guild.name}**`,
-				description: `• **Kicked by:** \n${emojis.custom.replyend} **${interaction.user.displayName}** \n\n• **Reason:** \n${emojis.custom.replyend} \`${reason}\``,
-				thumbnail: { url: interaction.guild.iconURL() },
-				footer: { text: `Moderated by ${interaction.user.tag}`, iconURL: interaction.user.displayAvatarURL() },
-				timestamp: new Date()
-			};
+			const dmEmbed = EmbedBuilder()
+				.setColor(`${color.default}`)
+				.setTitle(`\`🚫\` You have been kicked from **${interaction.guild.name}**`)
+				.setDescription(`• **Kicked by:** \n${emojis.custom.replyend} **${interaction.user.displayName}** \n\n• **Reason:** \n${emojis.custom.replyend} \`${reason}\``)
+				.setThumbnail({ url: interaction.guild.iconURL() })
+				.setFooter({ text: `Moderated by ${interaction.user.tag}`, iconURL: interaction.user.displayAvatarURL() })
+				.setTimestamp();
 
 			await userToKick.send({ embeds: [dmEmbed] }).catch((error) => console.error(`I couldn\`t send a DM to ${userToKick.tag}.`, error));
 
 			// Kick Successful
-			const kickConfirmationEmbed = {
-				color: `${color.success}`,
-				title: `${emojis.reg.success} Kick Successful`,
-				description: `**${userToKick.tag}** has been **Kicked**! \n\n**• Reason**\n ${emojis.custom.replyend} \`${reason}\``,
-				timestamp: new Date(),
-				footer: { text: `Moderated by ${interaction.user.tag}`, iconURL: interaction.user.displayAvatarURL() }
-			};
+			const kickConfirmationEmbed = EmbedBuilder()
+				.setColor(`${color.success}`)
+				.setTitle(`${emojis.reg.success} Kick Successful`)
+				.setDescription(`**${userToKick.tag}** has been **Kicked**! \n\n**• Reason**\n ${emojis.custom.replyend} \`${reason}\``)
+				.setFooter({ text: `Moderated by ${interaction.user.tag}`, iconURL: interaction.user.displayAvatarURL() })
+				.setTimestamp();
 
 			// Kick Failed
 			await interaction.guild.members.kick(userToKick, { reason: `**Kicked** by ${interaction.user.tag}: ${reason}` });
