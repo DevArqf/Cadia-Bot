@@ -14,7 +14,7 @@ class UserEvent extends Listener {
 		const interaction = payload.interaction;
 		const sentIn = guild ? `\`${guild.name}\` - \`${guild.id}\`` : '**Direct Messages**';
 
-		const loggingChannel = this.container.client.channels.cache.get('1211218525050511360');
+		const loggingChannel = this.container.client.channels.cache.get(channels.commandLogging);
 		if (!loggingChannel) return;
 
 		const embed = new EmbedBuilder()
