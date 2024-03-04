@@ -44,3 +44,13 @@ model CountingReward {
   milestone Int
   reward    Int
 }
+
+model CountActivity {
+  id      String @id @default(uuid())
+  userId  String
+  guildId String
+  count   Int
+
+  @@unique([userId, guildId])
+  @@index([userId, guildId])
+}

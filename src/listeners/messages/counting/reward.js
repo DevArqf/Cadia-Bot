@@ -1,4 +1,4 @@
-const { Listener, Events } = require('@sapphire/framework');
+const { Listener } = require('@sapphire/framework');
 const { Message } = require('discord.js');
 
 class UserEvent extends Listener {

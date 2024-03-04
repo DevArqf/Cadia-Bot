@@ -62,6 +62,9 @@ class UserEvent extends Listener {
 			return;
 		}
 
+		message.react('✅');
+		this.container.client.emit('successfulCount', message, currentNumber);
+
 		const oldHighscore = data.countHighscore;
 		const newHighscore = data.count > oldHighscore ? data.count : oldHighscore;
 
@@ -76,14 +79,27 @@ class UserEvent extends Listener {
 			}
 		});
 
-		message.react('✅');
+		await this.container.db.countActivity.upsert({
+			where: {
+				guildId: guild.id,
+				userId: message.author.id
+			},
+			update: {
+				count: {
+					increment: 1
+				}
+			},
+			create: {
+				guildId: guild.id,
+				userId: message.author.id,
+				count: 1
+			}
+		});
 
 		if (data.countGoal === currentNumber) {
 			message.reply({ content: `Congratulations! You reached the goal of ${currentNumber}!` });
 			message.pinnable && message.pin();
 		}
-
-		this.container.client.emit('successfulCount', message, currentNumber);
 	}
 }
 

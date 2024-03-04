@@ -61,10 +61,20 @@ class countingCommand extends Command {
 						)
 				)
 				// View leaderboard subcommand
-				.addSubcommand((subcommand) =>
-					subcommand //
+				.addSubcommandGroup((sg) =>
+					sg //
 						.setName('leaderboard')
-						.setDescription('View the global leaderboard for the counting game')
+						.setDescription('View the leaderboard for the counting game')
+						.addSubcommand((subcommand) =>
+							subcommand //
+								.setName('global')
+								.setDescription('View the global leaderboard for the counting game')
+						)
+						.addSubcommand((subcommand) =>
+							subcommand //
+								.setName('local')
+								.setDescription('View the local leaderboard for the counting game')
+						)
 				)
 		);
 	}
@@ -157,7 +167,7 @@ class countingCommand extends Command {
 			});
 		}
 
-		if (subcommand === 'leaderboard') {
+		if (subcommand === 'global') {
 			const data = await this.container.db.guild.findMany({
 				where: {
 					count: {
@@ -186,6 +196,51 @@ class countingCommand extends Command {
 
 			await interaction.reply({
 				embeds: [new EmbedBuilder().setTitle('Counting Game Global Leaderboard').setDescription(leaderboard).setColor(color.success)]
+			});
+		}
+
+		if (subcommand === 'local') {
+			const data = await this.container.db.guild.findUnique({
+				where: {
+					id: interaction.guildId
+				}
+			});
+
+			if (!data) {
+				await interaction.reply({ content: `${emojis.custom.fail} The counting game has not been setup yet`, ephemeral: true });
+				return;
+			}
+
+			const localLeaderboard = await this.container.db.countActivity.findMany({
+				where: {
+					AND: {
+						count: {
+							not: 0
+						},
+						guildId: interaction.guildId
+					}
+				},
+				orderBy: {
+					count: 'desc'
+				},
+				take: 10
+			});
+
+			if (!localLeaderboard.length) {
+				await interaction.reply({ content: `${emojis.custom.fail} No member has counted yet`, ephemeral: true });
+				return;
+			}
+
+			const leaderboard = localLeaderboard
+				.map((user, index) => {
+					const member = interaction.guild.members.cache.get(user.userId);
+					const username = member ? member.user.username : 'Unknown User';
+					return `${index + 1}. ${username} (${member}) - ${user.count}`;
+				})
+				.join('\n');
+
+			await interaction.reply({
+				embeds: [new EmbedBuilder().setTitle('Counting Game Server Leaderboard').setDescription(leaderboard).setColor(color.success)]
 			});
 		}
 	}
