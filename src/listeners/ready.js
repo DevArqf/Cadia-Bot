@@ -71,7 +71,7 @@ ${line09}
 		const commandCount = this.container.stores.get('commands').size;
 		const totalMembers = client.guilds.cache.reduce((acc, guild) => acc + guild.memberCount, 0);
 		const totalGuilds = client.guilds.cache.size;
-		const botVersion = 'Sapphire Beta 1.0.0';
+		const botVersion = 'Cadia Alpha 1.5.0';
 		const botOwner = 'Malik & Navin';
 
 		console.log(blue('=================================='));
@@ -84,7 +84,7 @@ ${line09}
 		console.log(cyan(`Total RAM: ${Math.round(os.totalmem() / 1024 / 1024)} MB`));
 		console.log(green(`CPU: ${os.cpus()[0].model}`));
 		console.log(red(`Beemo's Founders: ${botOwner}`));
-		console.log(magenta(`Beemo's Developers: Coming Soon`));
+		console.log(magenta(`Beemo's Developers: Oreo, Rishaune & Rudi`));
 		console.log(blue('=================================='));
 	}
 
