@@ -39,7 +39,6 @@ class UserCommand extends BeemoCommand {
 			const boostLevel = interaction.guild.premiumTier;
 			const maxEmojis = 50 + boostLevel * 50;
 
-			if (server_icon === null) {
 				const embed = new EmbedBuilder()
 					.setColor(`${color.default}`)
 					.setTitle(`\`⚙️\` Server Information`)
@@ -52,39 +51,16 @@ class UserCommand extends BeemoCommand {
 						{ name: '**Role Count:**', value: `${emojis.custom.replyend} \`${interaction.guild.roles.cache.size}\`` },
 						{ name: '**Regular Emojis:**', value: `${emojis.custom.replyend} \`${emoji_reg}/${maxEmojis}\`` },
 						{ name: '**Animated Emojis:**', value: `${emojis.custom.replyend} \`${emoji_animated}/${maxEmojis}\`` },
-						{ name: '**Server Icon:**', value: `${emojis.custom.replyend} \`None\`` },
+						{ name: '**Server Icon:**', value: `${emojis.custom.replyend} ${server_icon ? `[Click Here](${server_icon})` : '\`None\`'}` },
 						{ name: '**Server Creation:**', value: `${emojis.custom.replyend} <t:${server_made}:R>` }
 					)
 					.setTimestamp()
+					.setThumbnail(server_icon ? server_icon : null)
 					.setFooter({ text: `Requested by ${interaction.user.displayName}`, iconURL: interaction.user.displayAvatarURL() });
 
 				await interaction.reply({
 					embeds: [embed]
 				});
-			} else {
-				const embed_with_icon = new EmbedBuilder()
-					.setColor(`${color.default}`)
-					.setTitle(`\`⚙️\` Server Information`)
-					.addFields(
-						{ name: '**Server Name:**', value: `${emojis.custom.replyend} \`${interaction.guild.name}\`` },
-						{ name: '**Owner:**', value: `${emojis.custom.replyend} ${await interaction.guild.fetchOwner()}` },
-						{ name: '**Boost Tier:**', value: `${emojis.custom.replyend} \`${boostLevel}\`` },
-						{ name: '**Member Count:**', value: `${emojis.custom.replyend} \`${interaction.guild.memberCount}\`` },
-						{ name: '**Channel Count:**', value: `${emojis.custom.replyend} \`${interaction.guild.channels.cache.size}\`` },
-						{ name: '**Role Count:**', value: `${emojis.custom.replyend} \`${interaction.guild.roles.cache.size}\`` },
-						{ name: '**Regular Emojis:**', value: `${emojis.custom.replyend} \`${emoji_reg}/${maxEmojis}\`` },
-						{ name: '**Animated Emojis:**', value: `${emojis.custom.replyend} \`${emoji_animated}/${maxEmojis}\`` },
-						{ name: '**Server Icon:**', value: `${emojis.custom.replyend} [Click Here](${server_icon})` },
-						{ name: '**Server Creation:**', value: `${emojis.custom.replyend} <t:${server_made}:R>` }
-					)
-					.setTimestamp()
-					.setThumbnail(server_icon)
-					.setFooter({ text: `Requested by ${interaction.user.displayName}`, iconURL: interaction.user.displayAvatarURL() });
-
-				await interaction.reply({
-					embeds: [embed_with_icon]
-				});
-			}
 		} catch (error) {
 			console.error(error);
         	const errorEmbed = new EmbedBuilder()
@@ -93,8 +69,8 @@ class UserCommand extends BeemoCommand {
             	.setDescription(`${emojis.custom.fail} I have encountered an error! Please try again later.`)
             	.setTimestamp();
 
-        	await interaction.reply({ embeds: [errorEmbed], ephemeral: true });
-			return;
+        	return await interaction.reply({ embeds: [errorEmbed], ephemeral: true });
+			
 		}
 	}
 }
