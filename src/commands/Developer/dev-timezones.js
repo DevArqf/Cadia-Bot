@@ -73,7 +73,17 @@ class Developers extends BeemoCommand {
 					const ast_ampm = ast_hours >= 12 ? 'PM' : 'AM';
 					const ast_formattedHours = ast_hours % 12 || 12;
 					return `The current time in **AST** is **${ast_formattedHours}:${ast_minutes} ${ast_ampm}**\n ${emojis.custom.replyend} **Date:** ${astTime.toDateString()}`;	
-
+				
+                case 'IST':
+					const istTime = new Date(utcTime);
+                    istTime.setMinutes(istTime.getMinutes() + 30);
+					istTime.setHours(istTime.getHours() + 13);
+					const ist_hours = istTime.getHours();
+					const ist_minutes = istTime.getMinutes().toString().padStart(2, '0');
+					const ist_ampm = ist_hours >= 12 ? 'PM' : 'AM';
+					const ist_formattedHours = ist_hours % 12 || 12;
+					return `The current time in **IST** is **${ist_formattedHours}:${ist_minutes} ${ist_ampm}**\n ${emojis.custom.replyend} **Date:** ${istTime.toDateString()}`;
+                    
 				default:
 					return 'No date or time found'
 			}
@@ -87,7 +97,8 @@ class Developers extends BeemoCommand {
 				{ name: 'Malik\'s Time:', value: `${emojis.custom.replystart} ${get_time('AST')}`, inline: false },
 				{ name: 'Navin\'s Time:', value: `${emojis.custom.replystart} ${get_time('EST')}`, inline: false },
 				{ name: 'Oreo\'s Time:', value: `${emojis.custom.replystart} ${get_time('GMT +5')}`, inline: false },
-                { name: 'Rishaune\'s Time:', value: `${emojis.custom.replystart} ${get_time('EST')}`, inline: false }
+                { name: 'Rishaune\'s Time:', value: `${emojis.custom.replystart} ${get_time('EST')}`, inline: false },
+                { name: 'Rudi\'s Time:', value: `${emojis.custom.replystart} ${get_time('IST')}`, inline: false }
 			)
 			.setTimestamp()
 			.setFooter({ text: `Requested by ${interaction.user.displayName}`, iconURL: interaction.user.displayAvatarURL() });
