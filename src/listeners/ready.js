@@ -19,22 +19,24 @@ class UserEvent extends Listener {
 	async run(client) {
 		this.container.client = client;
 
-		this._printBanner(true);
+		const info = this._connectDb();
+
+		this._printBanner(info);
 		this._printStoreDebugInformation();
 		this._displayAdvancedConsole();
 	}
 
 	/**
 	 *
-	 * @param {boolean} dbConnected Whether or nor the db was connected
+	 * @param {{error: boolean; message: string}} dbInfo Whether or nor the db was connected
 	 */
-	_printBanner(dbConnected) {
+	_printBanner(dbInfo) {
 		const success = green('+');
 		const fail = red('-');
 
 		const llc = dev ? magentaBright : white;
 		const blc = dev ? magenta : blue;
-		const db = dbConnected ? `[${success}] Database Connected` : `[${fail}] Database Not Connected`;
+		const db = dbInfo.error ? `[${fail}] Database Not Connected (${dbInfo.message})` : `[${success}] Database Connected`;
 
 		const line01 = llc(String.raw` ███████████                                            `);
 		const line02 = llc(String.raw`░░███░░░░░███                                           `);
@@ -63,6 +65,17 @@ ${line08}
 ${line09}
 		`.trim()
 		);
+	}
+
+	_connectDb() {
+		try {
+			mongoose.connect(envParseString('MONGO_URL'));
+			return { error: false, message: 'Database Connected' };
+		} catch (error) {
+			this.container.logger.fatal('- Database Not Connected');
+			this.container.logger.error(error);
+			return { error: true, message: error };
+		}
 	}
 
 	_displayAdvancedConsole() {
