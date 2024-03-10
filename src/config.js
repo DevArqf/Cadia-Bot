@@ -5,6 +5,9 @@ const { LogLevel, BucketScope } = require('@sapphire/framework');
 
 const { GatewayIntentBits, Partials } = require('discord.js');
 
+/**
+ * @type {Config}
+ */
 const config = {
 	intents: [
 		GatewayIntentBits.DirectMessageReactions,
@@ -30,9 +33,15 @@ const config = {
 	partials: [Partials.GuildMember, Partials.Message, Partials.User, Partials.Channel],
 	logger: {
 		level: LogLevel.Info
+	},
+	api: {
+		port: 4090
 	}
 };
 
+/**
+ * @type {import('discord.js').ClientOptions}
+ */
 const ClientConfig = {
 	intents: config.intents,
 	defaultPrefix: config.default_prefix,
@@ -45,7 +54,8 @@ const ClientConfig = {
 	loadMessageCommandListeners: true,
 	typing: false,
 	disableMentionPrefix: false,
-	preventFailedToFetchLogForGuilds: true
+	preventFailedToFetchLogForGuilds: true,
+	api: config.api
 };
 
 const emojis = {
@@ -85,3 +95,16 @@ const channels = {
 };
 
 module.exports = { ClientConfig, color, emojis, channels };
+
+/**
+ * @typedef {Object} Config
+ * @property {GatewayIntentBits[]} intents
+ * @property {import('@sapphire/framework').CooldownOptions} cooldown_options
+ * @property {import('discord.js').MessageMentionOptions} mentions
+ * @property {Partials[]} partials
+ * @property {import('@sapphire/framework').ClientLoggerOptions} logger
+ * @property {import('discord.js').PresenceData} presence
+ * @property {import('@sapphire/framework').SapphirePrefix} default_prefix
+ * @property {ScheduledTaskHandlerOptions} tasks
+ * @property {import('@sapphire/plugin-api').ServerOptions} api
+ */
