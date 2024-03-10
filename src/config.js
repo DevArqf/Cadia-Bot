@@ -35,7 +35,7 @@ const config = {
 		level: LogLevel.Info
 	},
 	api: {
-		port: 4090
+		port: 4050
 	}
 };
 
