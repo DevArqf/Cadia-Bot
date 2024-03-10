@@ -117,7 +117,7 @@ class UserCommand extends BeemoCommand {
 						.setTitle('`🤗` Gave a Hug!')
 						.setFooter({ text: `Requested by ${interaction.user.displayName}`, iconURL: interaction.user.displayAvatarURL() })
 						.setImage(hug[randomizer])
-						.addFields({ name: `⠀`, value: `${emojis.custom.replystart} ${interaction.user} has given \n${emojis.custom.replyend} ${displayuser} a hug! \`❤️\`` });
+						.addFields({ name: `**• Hug Given**`, value: `${emojis.custom.replystart} ${interaction.user} has given \n${emojis.custom.replyend} ${displayuser} a hug! \`❤️\`` });
 
 					await interaction.reply({ embeds: [hugembed], content: `${displayuser}` });
 
@@ -262,15 +262,15 @@ class UserCommand extends BeemoCommand {
 						.setImage(slap[randomizer]);
 
 					if (results[failchance].result === 'f') {
-						slapembed.addFields({ name: `⠀`, value: `\n > ${results[failchance].name}` });
+						slapembed.addFields({ name: `**• Slap Given**`, value: `\n > ${results[failchance].name}` });
 					}
 
 					if (results[failchance].result === 's') {
-						slapembed.addFields({ name: `⠀`, value: `\n > ${results[failchance].name}` });
+						slapembed.addFields({ name: `**• Slap Given**`, value: `\n > ${results[failchance].name}` });
 					}
 
 					if (results[failchance].result === 'e') {
-						slapembed.addFields({ name: `⠀`, value: `\n > ${results[failchance].name}` });
+						slapembed.addFields({ name: `**• Slap Error?**`, value: `\n > ${results[failchance].name}` });
 						slapembed.setImage('https://cdn.discordapp.com/icons/1078641070180675665/c3ee76cdd52c2bba8492027dfaafa15d.webp?size=1024');
 
 						if (!data) {
@@ -442,11 +442,11 @@ class UserCommand extends BeemoCommand {
 						.setImage(kill[randomizer]);
 
 					if (results[failchance].result === 'f') {
-						killembed.addFields({ name: `⠀`, value: `\n > ${results[failchance].name}` });
+						killembed.addFields({ name: `**• Kill Confirmed**`, value: `\n > ${results[failchance].name}` });
 					}
 
 					if (results[failchance].result === 's') {
-						killembed.addFields({ name: `⠀`, value: `\n > ${results[failchance].name}` });
+						killembed.addFields({ name: `**• Murder Failed**`, value: `\n > ${results[failchance].name}` });
 					}
 
 					await interaction.reply({ embeds: [killembed], content: `${displayuser}` });
@@ -596,11 +596,11 @@ class UserCommand extends BeemoCommand {
 						.setImage(kiss[randomizer]);
 
 					if (results[failchance].result === 'f') {
-						kissembed.addFields({ name: `⠀`, value: `\n > ${results[failchance].name}` });
+						kissembed.addFields({ name: `**• You were rejected**`, value: `\n > ${results[failchance].name}` });
 					}
 
 					if (results[failchance].result === 's') {
-						kissembed.addFields({ name: `⠀`, value: `\n > ${results[failchance].name}` });
+						kissembed.addFields({ name: `**• You kissed someone**`, value: `\n > ${results[failchance].name}` });
 					}
 
 					await interaction.reply({ embeds: [kissembed], content: `${displayuser}` });
