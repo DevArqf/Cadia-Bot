@@ -5,7 +5,7 @@ const { inspect } = require('util');
 const beautify = require('beautify');
 const { EmbedBuilder } = require('discord.js');
 
-class BotOwner extends BeemoCommand {
+class UserCommand extends BeemoCommand {
 	/**
 	 * @param {BeemoCommand.Context} context
 	 * @param {BeemoCommand.Options} options
@@ -13,6 +13,7 @@ class BotOwner extends BeemoCommand {
 	constructor(context, options) {
 		super(context, {
 			...options,
+            permissionLevel: PermissionLevels.BotOwner,
 			description: 'Evaluates Javascript Code (DEV ONLY)'
 		});
 	}
@@ -123,5 +124,5 @@ class BotOwner extends BeemoCommand {
 }
 
 module.exports = {
-	BotOwner
+	UserCommand
 };
