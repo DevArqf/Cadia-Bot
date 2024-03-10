@@ -6,7 +6,6 @@
 	"license": "UNLICENSE",
 	"type": "commonjs",
 	"dependencies": {
-		"@prisma/client": "^5.10.2",
 		"@sapphire/discord-utilities": "^3.2.2",
 		"@sapphire/discord.js-utilities": "7.1.6",
 		"@sapphire/fetch": "^3.0.2",
