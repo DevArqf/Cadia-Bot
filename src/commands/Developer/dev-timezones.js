@@ -3,7 +3,7 @@ const { PermissionLevels } = require('../../lib/types/Enums');
 const { color, emojis } = require('../../config')
 const { EmbedBuilder } = require('discord.js');
 
-class Developers extends BeemoCommand {
+class UserCommand extends BeemoCommand {
 	/**
 	 * @param {BeemoCommand.Context} context
 	 * @param {BeemoCommand.Options} options
@@ -30,6 +30,13 @@ class Developers extends BeemoCommand {
 	 * @param {BeemoCommand.ChatInputCommandInteraction} interaction
 	 */
 	async chatInputRun(interaction) {
+        const { DEVELOPERS } = process.env;
+        const authorizedIDs = DEVELOPERS.split(" ");
+
+        // Check if the user executing the command is authorized
+        if (!authorizedIDs.includes(interaction.user.id)) {
+            return interaction.reply({ content: `${emojis.custom.fail} You are not **authorized** to **execute** this command!`, ephemeral: true });
+        }
 
 		function get_time(timezone) {
 			const utcTime = new Date().toUTCString();
@@ -108,5 +115,5 @@ class Developers extends BeemoCommand {
 }
 
 module.exports = {
-	Developers
+	UserCommand
 };

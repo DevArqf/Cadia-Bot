@@ -4,7 +4,7 @@ const { color, emojis } = require('../../config');
 const { EmbedBuilder } = require('discord.js');
 const sourcebin = require('sourcebin_js');
 
-class BotOwner extends BeemoCommand {
+class UserCommand extends BeemoCommand {
 	/**
 	 * @param {BeemoCommand.Context} context
 	 * @param {BeemoCommand.Options} options
@@ -12,6 +12,7 @@ class BotOwner extends BeemoCommand {
 	constructor(context, options) {
 		super(context, {
 			...options,
+            permissionLevel: PermissionLevels.BotOwner,
 			description: 'Shows all of the servers I am in (DEV ONLY)'
 		});
 	}
@@ -58,5 +59,5 @@ class BotOwner extends BeemoCommand {
 }
 
 module.exports = {
-	BotOwner
+	UserCommand
 };
