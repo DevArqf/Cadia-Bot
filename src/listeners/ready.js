@@ -38,15 +38,15 @@ class UserEvent extends Listener {
 		const blc = dev ? magenta : blue;
 		const db = dbInfo.error ? `[${fail}] Database Not Connected (${dbInfo.message})` : `[${success}] Database Connected`;
 
-		const line01 = llc(String.raw` ███████████                                            `);
-		const line02 = llc(String.raw`░░███░░░░░███                                           `);
-		const line03 = llc(String.raw` ░███    ░███  ██████   ██████  █████████████    ██████ `);
-		const line04 = llc(String.raw` ░██████████  ███░░███ ███░░███░░███░░███░░███  ███░░███`);
-		const line05 = llc(String.raw` ░███░░░░░███░███████ ░███████  ░███ ░███ ░███ ░███ ░███`);
-		const line06 = llc(String.raw` ░███    ░███░███░░░  ░███░░░   ░███ ░███ ░███ ░███ ░███`);
-		const line07 = llc(String.raw` ███████████ ░░██████ ░░██████  █████░███ █████░░██████ `);
-		const line08 = llc(String.raw`░░░░░░░░░░░   ░░░░░░   ░░░░░░  ░░░░░ ░░░ ░░░░░  ░░░░░░ `);
-		const line09 = llc(String.raw`                                                        `);
+		const line01 = llc(String.raw`   █████████                █████  ███           `);
+		const line02 = llc(String.raw`  ███░░░░░███              ░░███  ░░░            `);
+		const line03 = llc(String.raw` ███     ░░░   ██████    ███████  ████   ██████  `);
+		const line04 = llc(String.raw`░███          ░░░░░███  ███░░███ ░░███  ░░░░░███ `);
+		const line05 = llc(String.raw`░███           ███████ ░███ ░███  ░███   ███████ `);
+		const line06 = llc(String.raw`░░███     ███ ███░░███ ░███ ░███  ░███  ███░░███ `);
+		const line07 = llc(String.raw` ░░█████████ ░░████████░░████████ █████░░████████`);
+		const line08 = llc(String.raw`  ░░░░░░░░░   ░░░░░░░░  ░░░░░░░░ ░░░░░  ░░░░░░░░ `);
+		const line09 = llc(String.raw`                                                 `);
 
 		// Offset Pad
 		const pad = ' '.repeat(7);
