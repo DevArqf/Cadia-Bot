@@ -13,8 +13,8 @@ class UserCommand extends BeemoCommand {
 	constructor(context, options) {
 		super(context, {
 			...options,
-            permissionLevel: PermissionLevels.BotOwner,
-			description: 'Evaluates Javascript Code (DEV ONLY)'
+			description: 'Evaluates Javascript Code (DEV ONLY)',
+			permissionLevel: PermissionLevels.Developer
 		});
 	}
 
@@ -26,10 +26,7 @@ class UserCommand extends BeemoCommand {
 			builder //
 				.setName('eval')
 				.setDescription(this.description)
-				.addStringOption((option) => 
-					option.setName('code')
-						.setDescription('The code to evaluate')
-						.setRequired(true))
+				.addStringOption((option) => option.setName('code').setDescription('The code to evaluate').setRequired(true))
 		);
 	}
 
@@ -111,13 +108,13 @@ class UserCommand extends BeemoCommand {
 		} catch (error) {
 			// If an error occurs, send the error message to the channel
 			console.error(error);
-        	const errorEmbed = new EmbedBuilder()
-            	.setColor(`${color.fail}`)
-            	.setTitle(`${emojis.custom.fail} Eval Command Error`)
-            	.setDescription(`${emojis.custom.fail} I have encountered an error! Please try again later.`)
-            	.setTimestamp();
+			const errorEmbed = new EmbedBuilder()
+				.setColor(`${color.fail}`)
+				.setTitle(`${emojis.custom.fail} Eval Command Error`)
+				.setDescription(`${emojis.custom.fail} I have encountered an error! Please try again later.`)
+				.setTimestamp();
 
-        	await interaction.reply({ embeds: [errorEmbed], ephemeral: true });
+			await interaction.reply({ embeds: [errorEmbed], ephemeral: true });
 			return;
 		}
 	}

@@ -11,7 +11,7 @@ class UserCommand extends BeemoCommand {
 	constructor(context, options) {
 		super(context, {
 			...options,
-            permissionLevel: PermissionLevels.BotOwner,
+			permissionLevel: PermissionLevels.Developer,
 			description: 'Generate an invite link to a server (DEV ONLY)'
 		});
 	}
@@ -66,13 +66,13 @@ class UserCommand extends BeemoCommand {
 		} else {
 			// Sending an error message if the guild could not be found in the cache
 			console.error(error);
-        	const errorEmbed = new EmbedBuilder()
-            	.setColor(`${color.fail}`)
-            	.setTitle(`${emojis.custom.fail} Portal Command Error`)
-            	.setDescription(`${emojis.custom.fail} I have encountered an error! Please try again later.`)
-            	.setTimestamp();
+			const errorEmbed = new EmbedBuilder()
+				.setColor(`${color.fail}`)
+				.setTitle(`${emojis.custom.fail} Portal Command Error`)
+				.setDescription(`${emojis.custom.fail} I have encountered an error! Please try again later.`)
+				.setTimestamp();
 
-        	await interaction.reply({ embeds: [errorEmbed], ephemeral: true });
+			await interaction.reply({ embeds: [errorEmbed], ephemeral: true });
 			return;
 		}
 	}

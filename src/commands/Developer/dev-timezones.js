@@ -1,6 +1,6 @@
 const BeemoCommand = require('../../lib/structures/commands/BeemoCommand');
 const { PermissionLevels } = require('../../lib/types/Enums');
-const { color, emojis } = require('../../config')
+const { color, emojis } = require('../../config');
 const { EmbedBuilder } = require('discord.js');
 
 class UserCommand extends BeemoCommand {
@@ -11,7 +11,8 @@ class UserCommand extends BeemoCommand {
 	constructor(context, options) {
 		super(context, {
 			...options,
-			description: 'Get the timezones of Cadia Bot\'s Developers (DEV ONLY)'
+			permissionLevel: PermissionLevels.Developer,
+			description: "Get the timezones of Cadia Bot's Developers (DEV ONLY)"
 		});
 	}
 
@@ -30,13 +31,13 @@ class UserCommand extends BeemoCommand {
 	 * @param {BeemoCommand.ChatInputCommandInteraction} interaction
 	 */
 	async chatInputRun(interaction) {
-        const { DEVELOPERS } = process.env;
-        const authorizedIDs = DEVELOPERS.split(" ");
+		const { DEVELOPERS } = process.env;
+		const authorizedIDs = DEVELOPERS.split(' ');
 
-        // Check if the user executing the command is authorized
-        if (!authorizedIDs.includes(interaction.user.id)) {
-            return interaction.reply({ content: `${emojis.custom.fail} You are not **authorized** to **execute** this command!`, ephemeral: true });
-        }
+		// Check if the user executing the command is authorized
+		if (!authorizedIDs.includes(interaction.user.id)) {
+			return interaction.reply({ content: `${emojis.custom.fail} You are not **authorized** to **execute** this command!`, ephemeral: true });
+		}
 
 		function get_time(timezone) {
 			const utcTime = new Date().toUTCString();
@@ -69,8 +70,8 @@ class UserCommand extends BeemoCommand {
 					const est_minutes = estTime.getMinutes().toString().padStart(2, '0');
 					const est_ampm = est_hours >= 12 ? 'PM' : 'AM';
 					const est_formattedHours = est_hours % 12 || 12;
-					return `The current time in **EST** is **${est_formattedHours}:${est_minutes} ${est_ampm}**\n ${emojis.custom.replyend} **Date:** ${estTime.toDateString()}`;	
-				
+					return `The current time in **EST** is **${est_formattedHours}:${est_minutes} ${est_ampm}**\n ${emojis.custom.replyend} **Date:** ${estTime.toDateString()}`;
+
 				case 'AST':
 					const astTime = new Date(utcTime);
 					astTime.setHours(astTime.getHours() - -4);
@@ -79,33 +80,32 @@ class UserCommand extends BeemoCommand {
 					const ast_minutes = astTime.getMinutes().toString().padStart(2, '0');
 					const ast_ampm = ast_hours >= 12 ? 'PM' : 'AM';
 					const ast_formattedHours = ast_hours % 12 || 12;
-					return `The current time in **AST** is **${ast_formattedHours}:${ast_minutes} ${ast_ampm}**\n ${emojis.custom.replyend} **Date:** ${astTime.toDateString()}`;	
-				
-                case 'IST':
+					return `The current time in **AST** is **${ast_formattedHours}:${ast_minutes} ${ast_ampm}**\n ${emojis.custom.replyend} **Date:** ${astTime.toDateString()}`;
+
+				case 'IST':
 					const istTime = new Date(utcTime);
-                    istTime.setMinutes(istTime.getMinutes() + 30);
+					istTime.setMinutes(istTime.getMinutes() + 30);
 					istTime.setHours(istTime.getHours() + 13);
 					const ist_hours = istTime.getHours();
 					const ist_minutes = istTime.getMinutes().toString().padStart(2, '0');
 					const ist_ampm = ist_hours >= 12 ? 'PM' : 'AM';
 					const ist_formattedHours = ist_hours % 12 || 12;
 					return `The current time in **IST** is **${ist_formattedHours}:${ist_minutes} ${ist_ampm}**\n ${emojis.custom.replyend} **Date:** ${istTime.toDateString()}`;
-                    
-				default:
-					return 'No date or time found'
-			}
 
+				default:
+					return 'No date or time found';
+			}
 		}
 
 		const embed = new EmbedBuilder()
 			.setTitle(`${emojis.reg.success} Time\'s Fetched`)
 			.setColor(`${color.success}`)
 			.addFields(
-				{ name: 'Malik\'s Time:', value: `${emojis.custom.replystart} ${get_time('AST')}`, inline: false },
-				{ name: 'Navin\'s Time:', value: `${emojis.custom.replystart} ${get_time('EST')}`, inline: false },
-				{ name: 'Oreo\'s Time:', value: `${emojis.custom.replystart} ${get_time('GMT +5')}`, inline: false },
-                { name: 'Rishaune\'s Time:', value: `${emojis.custom.replystart} ${get_time('EST')}`, inline: false },
-                { name: 'Rudi\'s Time:', value: `${emojis.custom.replystart} ${get_time('IST')}`, inline: false }
+				{ name: "Malik's Time:", value: `${emojis.custom.replystart} ${get_time('AST')}`, inline: false },
+				{ name: "Navin's Time:", value: `${emojis.custom.replystart} ${get_time('EST')}`, inline: false },
+				{ name: "Oreo's Time:", value: `${emojis.custom.replystart} ${get_time('GMT +5')}`, inline: false },
+				{ name: "Rishaune's Time:", value: `${emojis.custom.replystart} ${get_time('EST')}`, inline: false },
+				{ name: "Rudi's Time:", value: `${emojis.custom.replystart} ${get_time('IST')}`, inline: false }
 			)
 			.setTimestamp()
 			.setFooter({ text: `Requested by ${interaction.user.displayName}`, iconURL: interaction.user.displayAvatarURL() });
