@@ -6,7 +6,6 @@
 	"license": "UNLICENSE",
 	"type": "commonjs",
 	"dependencies": {
-		"@prisma/client": "^5.10.2",
 		"@sapphire/discord-utilities": "^3.2.2",
 		"@sapphire/discord.js-utilities": "7.1.6",
 		"@sapphire/fetch": "^3.0.2",
@@ -34,8 +33,7 @@
 		"@sapphire/prettier-config": "^2.0.0",
 		"nodemon": "^3.0.3",
 		"npm-run-all2": "^6.1.1",
-		"prettier": "^3.2.4",
-		"prisma": "^5.10.2"
+		"prettier": "^3.2.4"
 	},
 	"scripts": {
 		"sapphire": "sapphire",

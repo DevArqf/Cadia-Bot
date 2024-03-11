@@ -1,5 +1,7 @@
 const { Listener } = require('@sapphire/framework');
 const { Message } = require('discord.js');
+const { CountingReward } = require('../../../lib/schemas/count');
+const { UserSchema } = require('../../../lib/schemas/user');
 
 class UserEvent extends Listener {
 	constructor(context, options) {
@@ -15,11 +17,9 @@ class UserEvent extends Listener {
 	 * @param {number} count The count the user reached
 	 */
 	async run(message, count) {
-		const reward = await this.container.db.countingReward.findFirst({
-			where: {
-				milestone: count,
-				guildId: message.guild.id
-			}
+		const reward = await CountingReward.findOne({
+			milestone: count,
+			guildId: message.guild.id
 		});
 
 		if (!reward) return;
@@ -27,25 +27,39 @@ class UserEvent extends Listener {
 		const member = await message.guild.members.fetch(message.author.id);
 		if (!member) return;
 
-		await this.container.db.user.update({
-			where: {
-				id: member.id
-			},
-			data: {
-				balance: {
-					increment: reward.reward
+		await UserSchema.updateOne(
+			{ id: member.id },
+			{
+				$inc: {
+					balance: reward.reward
 				}
 			}
-		});
+		);
+
+		// await this.container.db.user.update({
+		// 	where: {
+		// 		id: member.id
+		// 	},
+		// 	data: {
+		// 		balance: {
+		// 			increment: reward.reward
+		// 		}
+		// 	}
+		// });
 
 		message.channel.send({ content: `${message.author} has been rewarded with ${reward.reward} for reaching ${count}!` });
 
-		await this.container.db.countingReward.deleteMany({
-			where: {
-				milestone: count,
-				guildId: message.guild.id
-			}
+		await CountingReward.deleteMany({
+			milestone: count,
+			guildId: message.guild.id
 		});
+
+		// await this.container.db.countingReward.deleteMany({
+		// 	where: {
+		// 		milestone: count,
+		// 		guildId: message.guild.id
+		// 	}
+		// });
 	}
 }
 

@@ -1,5 +1,7 @@
 const { Listener, Events } = require('@sapphire/framework');
 const { Message } = require('discord.js');
+const { GuildSchema } = require('../../../lib/schemas/guild');
+const { CountActivity } = require('../../../lib/schemas/count');
 
 class UserEvent extends Listener {
 	constructor(context, options) {
@@ -17,11 +19,13 @@ class UserEvent extends Listener {
 		const guild = message.guild;
 		if (!guild) return;
 
-		const data = await this.container.db.guild.findUnique({
-			where: {
-				id: guild.id
-			}
-		});
+		const data = await GuildSchema.findOne({ id: guild.id });
+
+		// const data = await this.container.db.guild.findUnique({
+		// 	where: {
+		// 		id: guild.id
+		// 	}
+		// });
 
 		if (!data) return;
 		if (!data.countChannel) return;
@@ -42,16 +46,27 @@ class UserEvent extends Listener {
 		if (currentNumber - lastNumber !== 1) {
 			channel.send({ content: `${message.author} ruined the count at ${lastNumber}!` });
 
-			await this.container.db.guild.update({
-				where: {
-					id: guild.id
-				},
-				data: {
-					count: 0,
-					countLastUser: null,
-					countLastScore: data.count
+			await GuildSchema.updateOne(
+				{ id: guild.id },
+				{
+					$set: {
+						count: 0,
+						countLastUser: null,
+						countLastScore: data.count
+					}
 				}
-			});
+			);
+
+			// await this.container.db.guild.update({
+			// 	where: {
+			// 		id: guild.id
+			// 	},
+			// 	data: {
+			// 		count: 0,
+			// 		countLastUser: null,
+			// 		countLastScore: data.count
+			// 	}
+			// });
 
 			channel.send({ content: `The count has been reset to 0` });
 			return;
@@ -68,35 +83,61 @@ class UserEvent extends Listener {
 		const oldHighscore = data.countHighscore;
 		const newHighscore = data.count > oldHighscore ? data.count : oldHighscore;
 
-		await this.container.db.guild.update({
-			where: {
-				id: guild.id
-			},
-			data: {
-				count: currentNumber,
-				countLastUser: message.author.id,
-				countHighscore: newHighscore
+		await GuildSchema.updateOne(
+			{ id: guild.id },
+			{
+				$set: {
+					count: currentNumber,
+					countLastUser: message.author.id,
+					countHighscore: newHighscore
+				}
 			}
-		});
+		);
 
-		await this.container.db.countActivity.upsert({
-			where: {
-				userId_guildId: {
-					guildId: guild.id,
-					userId: message.author.id
-				}
-			},
-			update: {
-				count: {
-					increment: 1
-				}
-			},
-			create: {
-				guildId: guild.id,
+		// await this.container.db.guild.update({
+		// 	where: {
+		// 		id: guild.id
+		// 	},
+		// 	data: {
+		// 		count: currentNumber,
+		// 		countLastUser: message.author.id,
+		// 		countHighscore: newHighscore
+		// 	}
+		// });
+
+		// await this.container.db.countActivity.upsert({
+		// 	where: {
+		// 		userId_guildId: {
+		// 			guildId: guild.id,
+		// 			userId: message.author.id
+		// 		}
+		// 	},
+		// 	update: {
+		// 		count: {
+		// 			increment: 1
+		// 		}
+		// 	},
+		// 	create: {
+		// 		guildId: guild.id,
+		// 		userId: message.author.id,
+		// 		count: 1
+		// 	}
+		// });
+
+		await CountActivity.findOneAndUpdate(
+			{
 				userId: message.author.id,
-				count: 1
+				guildId: guild.id
+			},
+			{
+				$inc: {
+					count: 1
+				}
+			},
+			{
+				upsert: true
 			}
-		});
+		);
 
 		if (data.countGoal === currentNumber) {
 			message.reply({ content: `Congratulations! You reached the goal of ${currentNumber}!` });

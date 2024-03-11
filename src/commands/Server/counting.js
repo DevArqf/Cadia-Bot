@@ -1,6 +1,8 @@
 const { Command, ApplicationCommandRegistry } = require('@sapphire/framework');
-const { ChatInputCommandInteraction, TextChannel, EmbedBuilder, ChannelType } = require('discord.js');
+const { ChatInputCommandInteraction, EmbedBuilder, ChannelType } = require('discord.js');
 const { emojis, color } = require('../../config');
+const { GuildSchema } = require('../../lib/schemas/guild');
+const { CountActivity, CountingReward } = require('../../lib/schemas/count');
 
 class countingCommand extends Command {
 	constructor(context, options) {
@@ -93,24 +95,39 @@ class countingCommand extends Command {
 				return;
 			}
 
-			await this.container.db.guild.upsert({
-				where: {
+			await GuildSchema.findOneAndUpdate(
+				{
 					id: interaction.guildId
 				},
-				update: {
+				{
 					countChannel: channel.id,
 					countGoal: goal,
 					countLastUser: null,
 					countLastScore: 0
 				},
-				create: {
-					id: interaction.guildId,
-					countChannel: channel.id,
-					countGoal: goal,
-					countLastUser: null,
-					countLastScore: 0
+				{
+					upsert: true
 				}
-			});
+			);
+
+			// await this.container.db.guild.upsert({
+			// 	where: {
+			// 		id: interaction.guildId
+			// 	},
+			// 	update: {
+			// 		countChannel: channel.id,
+			// 		countGoal: goal,
+			// 		countLastUser: null,
+			// 		countLastScore: 0
+			// 	},
+			// 	create: {
+			// 		id: interaction.guildId,
+			// 		countChannel: channel.id,
+			// 		countGoal: goal,
+			// 		countLastUser: null,
+			// 		countLastScore: 0
+			// 	}
+			// });
 
 			await interaction.reply({ content: `${emojis.custom.success} The counting game has been setup in ${channel}`, ephemeral: true });
 		}
@@ -119,28 +136,45 @@ class countingCommand extends Command {
 			const count = interaction.options.getInteger('count', true);
 			let amount = interaction.options.getInteger('amount') ?? 1000;
 
-			await this.container.db.countingReward.upsert({
-				where: {
+			await CountingReward.findOneAndUpdate(
+				{
 					guildId: interaction.guildId,
-					count: count
+					milestone: count
 				},
-				update: {
-					amount
+				{
+					reward: amount
 				},
-				create: {
-					guildId: interaction.guildId,
-					count,
-					amount
+				{
+					upsert: true
 				}
+			);
+
+			// await this.container.db.countingReward.upsert({
+			// 	where: {
+			// 		guildId: interaction.guildId,
+			// 		count: count
+			// 	},
+			// 	update: {
+			// 		amount
+			// 	},
+			// 	create: {
+			// 		guildId: interaction.guildId,
+			// 		count,
+			// 		amount
+			// 	}
+			// });
+
+			const data = await GuildSchema.findOne({
+				id: interaction.guildId
 			});
 
-			const data = await this.container.db.guild.findFirst({
-				where: {
-					id: interaction.guildId
-				}
-			});
+			// const data = await this.container.db.guild.findFirst({
+			// 	where: {
+			// 		id: interaction.guildId
+			// 	}
+			// });
 
-			if (data.countChannel === null) {
+			if (!data.countChannel) {
 				await interaction.reply({ content: `${emojis.custom.fail} The counting game has not been setup yet`, ephemeral: true });
 				return;
 			}
@@ -168,19 +202,27 @@ class countingCommand extends Command {
 		}
 
 		if (subcommand === 'global') {
-			const data = await this.container.db.guild.findMany({
-				where: {
-					count: {
-						not: 0
-					}
-				},
-				orderBy: {
-					count: 'desc'
-				},
-				take: 10
-			});
+			const data = await GuildSchema.find({
+				count: {
+					$ne: 0
+				}
+			})
+				.sort({ count: -1 })
+				.limit(10);
 
-			if (!data.length) {
+			// const data = await this.container.db.guild.findMany({
+			// 	where: {
+			// 		count: {
+			// 			not: 0
+			// 		}
+			// 	},
+			// 	orderBy: {
+			// 		count: 'desc'
+			// 	},
+			// 	take: 10
+			// });
+
+			if (!data.length || data.length === 0) {
 				await interaction.reply({ content: `${emojis.custom.fail} No guild has counted yet`, ephemeral: true });
 				return;
 			}
@@ -200,10 +242,8 @@ class countingCommand extends Command {
 		}
 
 		if (subcommand === 'local') {
-			const data = await this.container.db.guild.findUnique({
-				where: {
-					id: interaction.guildId
-				}
+			const data = await GuildSchema.findOne({
+				id: interaction.guildId
 			});
 
 			if (!data) {
@@ -211,20 +251,26 @@ class countingCommand extends Command {
 				return;
 			}
 
-			const localLeaderboard = await this.container.db.countActivity.findMany({
-				where: {
-					AND: {
-						count: {
-							not: 0
-						},
-						guildId: interaction.guildId
-					}
-				},
-				orderBy: {
-					count: 'desc'
-				},
-				take: 10
-			});
+			const localLeaderboard = await CountActivity.find({
+				guildId: interaction.guildId
+			})
+				.sort({ count: -1 })
+				.limit(10);
+
+			// const localLeaderboard = await this.container.db.countActivity.findMany({
+			// 	where: {
+			// 		AND: {
+			// 			count: {
+			// 				not: 0
+			// 			},
+			// 			guildId: interaction.guildId
+			// 		}
+			// 	},
+			// 	orderBy: {
+			// 		count: 'desc'
+			// 	},
+			// 	take: 10
+			// });
 
 			if (!localLeaderboard.length) {
 				await interaction.reply({ content: `${emojis.custom.fail} No member has counted yet`, ephemeral: true });
