@@ -8,6 +8,14 @@ const { GuildMessage } = require('../../lib/types/Discord');
  * @extends {Precondition}
  */
 class BotOwnerPrecondition extends Precondition {
+	constructor(context, options) {
+		super(context, {
+			...options,
+			name: 'BotOwner',
+			position: 1
+		});
+	}
+
 	/**
 	 * @param {GuildMessage} message
 	 * @returns {import('@sapphire/framework').PreconditionResult}
