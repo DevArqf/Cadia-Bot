@@ -45,7 +45,7 @@ class BotOwnerPrecondition extends Precondition {
 	 * @param {import('discord.js').Snowflake} guildId The id of the guild you want to check
 	 */
 	isNotBlacklisted(guildId) {
-		return false; // TODO: Implement this
+		return true; // TODO: Implement this
 	}
 }
 
