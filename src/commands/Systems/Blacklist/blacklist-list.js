@@ -48,7 +48,7 @@ class UserCommand extends BeemoCommand {
 			for (const guild of blacklistedGuilds) {
 				fields.push({
 					name: `**__${guild.guildName}__**`,
-					value: `• Reason: ${emojis.custom.replyend} ${guild.reason}\n• Server ID: ${emojis.custom.replyend} \`${guild.guildId}\``
+					value: `• Reason:\n ${emojis.custom.replyend} ${guild.reason}\n• Server ID:\n ${emojis.custom.replyend} \`${guild.guildId}\``
 				});
 			}
 
