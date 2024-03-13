@@ -47,7 +47,7 @@ class UserCommand extends BeemoCommand {
             const logChannel = interaction.client.channels.cache.get(logChannelId);
 
             if (Number.isNaN(guildId)) {
-                return await interaction.reply(`${emojis.custom.fail} You ahve inputed a character that is not a number`);
+                return await interaction.reply(`${emojis.custom.fail} You have entered an character that is not a number`);
             }
 
             const existingGuild = await Guild.findOne({ guildId: targetGuild.id });
@@ -58,34 +58,31 @@ class UserCommand extends BeemoCommand {
             if (!targetGuild) {
                 await Guild.create({ guildName: 'No Name Found', guildId: guildId, reason: `${reason}, Bot not in guild` });
                 const logEmbed = new EmbedBuilder()
-                .setTitle('- Server Blacklisted')
+                .setTitle('`🚫` Server Blacklisted')
                 .setColor(`${color.random}`)
                 .setFooter({ text: `Requested by ${interaction.user.displayName}`, iconURL: interaction.user.displayAvatarURL() })
-                .setDescription(`**Server Name**\n ${emojis.custom.replyend} \`No Name Found\`\n -**Server ID**\n ${emojis.custom.replyend} \`${guildId}\`\n - **Owner ID**\n ${emojis.custom.replyend} \`Owner Id not found\`\n - **Reason**\n ${emojis.custom.replyend} \`${reason}, Bot not in guild\``)
+                .setDescription(`• **Server Name**\n ${emojis.custom.replyend} \`Server name cannot be found\`\n • **Server ID**\n ${emojis.custom.replyend} \`${guildId}\`\n • **Owner ID**\n ${emojis.custom.replyend} \`Owner ID cannot be found\`\n • **Reason**\n ${emojis.custom.replyend} \`${reason}, Bot is not within the server\``)
                 .setTimestamp();
 
-                return await interaction.reply(`${emojis.custom.warning} The server with the ID \`${guildId}\` has been successfully **added** to my blacklist!\n\n**- Reason:**\n${emojis.custom.replyend} \`${reason}, Bot not in guild\``);
+                return await interaction.reply(`${emojis.custom.warning} The server with the ID \`${guildId}\` has been successfully **added** to my blacklist!\n\n**• Reason:**\n${emojis.custom.replyend} \`${reason}, Bot not in guild\``);
             }
  
             const embed = new EmbedBuilder()
-                .setTitle('- You have been Blacklisted!')
+                .setTitle('`🚫` You have been Blacklisted!')
                 .setColor(`${color.default}`)
-                .setDescription(`${emojis.custom.warning} Your server has been **blacklisted** from using **${interaction.client.user.displayName}**!\n\n** - Server Name:**\n ${emojis.custom.replyend} \`${targetGuild.name}\`\n** - Reason:**\n ${emojis.custom.replyend} \`${reason}\``)
+                .setDescription(`${emojis.custom.warning} Your server has been **blacklisted** from using **${interaction.client.user.displayName}**!\n\n** • Server Name:**\n ${emojis.custom.replyend} \`${targetGuild.name}\`\n** • Reason:**\n ${emojis.custom.replyend} \`${reason}\``)
                 .setFooter({ text: `Requested by ${interaction.user.displayName}`, iconURL: interaction.user.displayAvatarURL() })
-                .setThumbnail(interaction.client.user.displayAvatarURL())
                 .setTimestamp();
  
             const ownerId = targetGuild.ownerId; // Get the owner ID
             const guildName = targetGuild.name;
             const logChannelId = '1208553649337405440'; // Change this to your log channel ID
-             
-
  
             const logEmbed = new EmbedBuilder()
-                .setTitle('- Server Blacklisted')
+                .setTitle('`🚫` Server Blacklisted')
                 .setColor(`${color.random}`)
                 .setFooter({ text: `Requested by ${interaction.user.displayName}`, iconURL: interaction.user.displayAvatarURL() })
-                .setDescription(`**Server Name**\n ${emojis.custom.replyend} \`${guildName}\`\n -**Server ID**\n ${emojis.custom.replyend} \`${targetGuild.id}\`\n - **Owner ID**\n ${emojis.custom.replyend} \`${ownerId}\`\n - **Reason**\n ${emojis.custom.replyend} \`${reason}\``)
+                .setDescription(`• **Server Name**\n ${emojis.custom.replyend} \`${guildName}\`\n • **Server ID**\n ${emojis.custom.replyend} \`${targetGuild.id}\`\n • **Owner ID**\n ${emojis.custom.replyend} \`${ownerId}\`\n • **Reason**\n ${emojis.custom.replyend} \`${reason}\``)
                 .setTimestamp();
  
             await logChannel.send({ embeds: [logEmbed] });
@@ -94,7 +91,7 @@ class UserCommand extends BeemoCommand {
  
             await interaction.user.send({ embeds: [embed] });
  
-            await interaction.reply(`${emojis.custom.warning} The server with the ID \`${targetGuild.id}\` has been successfully **added** to my blacklist!\n\n**- Reason:**\n${emojis.custom.replyend} \`${reason}\``);
+            await interaction.reply(`${emojis.custom.warning} The server with the ID \`${targetGuild.id}\` has been successfully **added** to my blacklist!\n\n**• Reason:**\n${emojis.custom.replyend} \`${reason}\``);
  
         } catch (error) {
             console.error(error);
