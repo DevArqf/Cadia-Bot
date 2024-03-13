@@ -55,7 +55,7 @@ class UserEvent extends Listener {
                 );
 
             const reply = await message.reply({ embeds: [pingEmbed], components: [buttons] });
-                    
+
             message.client.on('interactionCreate', async (interaction) => {
                 if (!interaction.isButton() || interaction.message.id !== reply.id) return;
 
@@ -66,14 +66,14 @@ class UserEvent extends Listener {
                         await interaction.message.delete();
                     } catch (error) {
                         console.error(error);
-        	            const errorEmbed = new EmbedBuilder()
-            	            .setColor(`${color.fail}`)
-            	            .setTitle(`${emojis.custom.fail} Bot Mention Error`)
-            	            .setDescription(`${emojis.custom.fail} I have encountered an error! Please try again later.`)
-            	            .setTimestamp();
+                            const errorEmbed = new EmbedBuilder()
+                                .setColor(`${color.fail}`)
+                                .setTitle(`${emojis.custom.fail} Bot Mention Error`)
+                                .setDescription(`${emojis.custom.fail} I have encountered an error! Please try again later.`)
+                                .setTimestamp();
 
-        	            await interaction.reply({ embeds: [errorEmbed], ephemeral: true });
-			            return;
+                            await interaction.reply({ embeds: [errorEmbed], ephemeral: true });
+                                    return;
                     }
                 }   
             });

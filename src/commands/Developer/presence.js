@@ -11,7 +11,7 @@ class UserCommand extends BeemoCommand {
 	constructor(context, options) {
 		super(context, {
 			...options,
-			permissionLevel: PermissionLevels.BotOwner,
+			permissionLevel: PermissionLevels.Developer,
 			description: 'Modify the Bot`s Presence'
 		});
 	}
