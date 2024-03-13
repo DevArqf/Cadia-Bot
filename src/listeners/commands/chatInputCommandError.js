@@ -11,7 +11,7 @@ class UserEvent extends Listener {
 	 */
 	async run(error, payload) {
 		const { context, message: content, identifier } = error;
-		const { interaction } = payload;
+		const { interaction, command } = payload;
 
 		// `context: { silent: true }` should make UserError silent:
 		if (Reflect.get(Object(context), 'silent')) return;
@@ -19,10 +19,12 @@ class UserEvent extends Listener {
         const errorEmbed = new EmbedBuilder()
 		.setColor(`${color.fail}`)
 		.setTitle(`${emojis.reg.fail} • An error has been detected by ${interaction.client.user.displayName}`)
-		.setDescription(`\`\`\`js${content}\`\`\``)
+		.setDescription(`\`\`\`js\n${content}\n\nError is in file:\n${command.location.name}\n\nRoute: ${command.location.full}\`\`\``)
 		.setTimestamp()
 
-		return await interaction.client.channels.cache.get(channels.errorLogging).send({ embeds: [errorEmbed] });
+		await interaction.client.channels.cache.get(channels.errorLogging).send({ embeds: [errorEmbed] });
+
+		return interaction.reply('An error has been detected');
 
 	}
 }
