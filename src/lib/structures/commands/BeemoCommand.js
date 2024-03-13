@@ -107,12 +107,16 @@ class BeemoCommand extends Command {
 			return;
 		}
 
+		if (options.permissionLevel === PermissionLevels.Developer) {
+			this.preconditions.append('DevOnly');
+			return;
+		}
+
 		const container = new PreconditionContainerArray(['BotOwner'], this.preconditions);
 		switch (options.permissionLevel || PermissionLevels.Everyone) {
 			case PermissionLevels.Everyone:
 				container.append('Everyone');
 				break;
-
 			case PermissionLevels.Staff:
 				container.append('Staff');
 				break;
