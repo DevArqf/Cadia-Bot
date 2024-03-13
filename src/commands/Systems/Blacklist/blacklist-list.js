@@ -36,7 +36,7 @@ class UserCommand extends BeemoCommand {
             const blacklistedGuilds = await Guild.find();
 
             if (blacklistedGuilds.length === 0) {
-                return await interaction.reply(`${emojis.custom.fail} No servers have been blacklisted.`);
+                return await interaction.reply(`${emojis.custom.fail} No blacklisted servers has been found!`);
             }
 
             let currentPage = 0;
@@ -44,15 +44,15 @@ class UserCommand extends BeemoCommand {
 
             const generateEmbed = () => {
                 const embed = new EmbedBuilder()
-                    .setTitle('Blacklisted Servers')
+                    .setTitle('`🔒` Blacklisted Servers')
                     .setColor(color.default)
                     .setDescription(
                         blacklistedGuilds
                         .slice(currentPage * 5, (currentPage + 1) * 5)
-                        .map(guild => `**${guild.guildName}** - ${guild.reason}`)
+                        .map(guild => `**__${guild.guildName}__**\n • Reason: ${emojis.custom.replyend} ${guild.reason}\n\n • Server ID: ${emojis.custom.replyend} ${interaction.guild.id}`)
                         .join('\n')
                     )
-                    .setFooter({ text: `Page ${currentPage + 1}/${totalPages}`, iconURL: interaction.user.displayAvatarURL() });
+                    .setFooter({ text: `Requested by ${interaction.user.displayName} • Page ${currentPage + 1}/${totalPages}`, iconURL: interaction.user.displayAvatarURL() });
                 return embed;
             };
 
