@@ -38,15 +38,15 @@ class UserEvent extends Listener {
 		const blc = dev ? magenta : blue;
 		const db = dbInfo.error ? `[${fail}] Database Not Connected (${dbInfo.message})` : `[${success}] Database Connected`;
 
-		const line01 = llc(String.raw`   █████████                █████  ███           `);
-		const line02 = llc(String.raw`  ███░░░░░███              ░░███  ░░░            `);
-		const line03 = llc(String.raw` ███     ░░░   ██████    ███████  ████   ██████  `);
-		const line04 = llc(String.raw`░███          ░░░░░███  ███░░███ ░░███  ░░░░░███ `);
-		const line05 = llc(String.raw`░███           ███████ ░███ ░███  ░███   ███████ `);
-		const line06 = llc(String.raw`░░███     ███ ███░░███ ░███ ░███  ░███  ███░░███ `);
-		const line07 = llc(String.raw` ░░█████████ ░░████████░░████████ █████░░████████`);
-		const line08 = llc(String.raw`  ░░░░░░░░░   ░░░░░░░░  ░░░░░░░░ ░░░░░  ░░░░░░░░ `);
-		const line09 = llc(String.raw`                                                 `);
+		const line01 = llc(String.raw` ███████████                                            `);
+		const line02 = llc(String.raw`░░███░░░░░███                                           `);
+		const line03 = llc(String.raw` ░███    ░███  ██████   ██████  █████████████    ██████ `);
+		const line04 = llc(String.raw` ░██████████  ███░░███ ███░░███░░███░░███░░███  ███░░███`);
+		const line05 = llc(String.raw` ░███░░░░░███░███████ ░███████  ░███ ░███ ░███ ░███ ░███`);
+		const line06 = llc(String.raw` ░███    ░███░███░░░  ░███░░░   ░███ ░███ ░███ ░███ ░███`);
+		const line07 = llc(String.raw` ███████████ ░░██████ ░░██████  █████░███ █████░░██████ `);
+		const line08 = llc(String.raw`░░░░░░░░░░░   ░░░░░░   ░░░░░░  ░░░░░ ░░░ ░░░░░  ░░░░░░ `);
+		const line09 = llc(String.raw`                                                        `);
 
 		// Offset Pad
 		const pad = ' '.repeat(7);
@@ -97,7 +97,7 @@ ${line09}
 		console.log(cyan(`Total RAM: ${Math.round(os.totalmem() / 1024 / 1024)} MB`));
 		console.log(green(`CPU: ${os.cpus()[0].model}`));
 		console.log(red(`Beemo's Founders: ${botOwner}`));
-		console.log(magenta(`Beemo's Developers: Oreo, Rishaune & Rudi`));
+		console.log(magenta(`Beemo's Developers: Oreo & Rishaune`));
 		console.log(blue('=================================='));
 	}
 
