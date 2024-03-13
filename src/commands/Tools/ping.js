@@ -63,18 +63,6 @@ class UserCommand extends BeemoCommand {
 			.setFooter({ text: `Requested By ${interaction.user.displayName}`, iconURL: interaction.user.displayAvatarURL() });
 
 		return interaction.editReply({ embeds: [embed] });
-		
-		} catch (error) {
-		console.error(error);
-			
-        	const errorEmbed = new EmbedBuilder()
-            	.setColor(`${color.fail}`)
-            	.setTitle(`${emojis.custom.fail} Ping Error`)
-            	.setDescription(`${emojis.custom.fail} I have encountered an error! Please try again later.`)
-            	.setTimestamp();
-
-        	await interaction.reply({ embeds: [errorEmbed], ephemeral: true });
-		return;
 	}
 }
 
