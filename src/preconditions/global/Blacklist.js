@@ -46,7 +46,8 @@ class BlacklistPrecondition extends Precondition {
      * @param {import('discord.js').Snowflake} guildId The id of the guild you want to check
      */
     async isNotBlacklisted(guildId) {
-        const find = await Guild.findOne({ guildId: guildId });
+    const find = await Guild.findOne({ guildId: guildId });
+		
 		if (find === null) {
 			return true;
 		} else {

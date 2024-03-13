@@ -3,99 +3,116 @@ const { EmbedBuilder, ButtonBuilder, ComponentType, ActionRowBuilder } = require
 const { PermissionLevels } = require('../../../lib/types/Enums');
 const { color, emojis } = require('../../../config');
 const Guild = require('../../../lib/schemas/blacklist');
+const { PaginatedMessageEmbedFields } = require('@sapphire/discord.js-utilities');
 
 class UserCommand extends BeemoCommand {
-    /**
-     * @param {BeemoCommand.Context} context
-     * @param {BeemoCommand.Options} options
-     */
-    constructor(context, options) {
-        super(context, {
-            ...options,
-            permissionLevel: PermissionLevels.BotOwner,
-            description: "View a list of all the blacklisted servers"
-        });
-    }
+	/**
+	 * @param {BeemoCommand.Context} context
+	 * @param {BeemoCommand.Options} options
+	 */
+	constructor(context, options) {
+		super(context, {
+			...options,
+			permissionLevel: PermissionLevels.BotOwner,
+			description: 'View a list of all the blacklisted servers'
+		});
+	}
 
-    /**
-     * @param {BeemoCommand.Registry} registry
-     */
-    registerApplicationCommands(registry) {
-        registry.registerChatInputCommand((builder) =>
-            builder //
-            .setName('blacklist-list')
-            .setDescription(this.description)
-        );
-    }
+	/**
+	 * @param {BeemoCommand.Registry} registry
+	 */
+	registerApplicationCommands(registry) {
+		registry.registerChatInputCommand((builder) =>
+			builder //
+				.setName('blacklist-list')
+				.setDescription(this.description)
+		);
+	}
 
-    /**
-     * @param {BeemoCommand.ChatInputCommandInteraction} interaction
-     */
-    async chatInputRun(interaction) {
-        try {
-            const blacklistedGuilds = await Guild.find();
+	/**
+	 * @param {BeemoCommand.ChatInputCommandInteraction} interaction
+	 */
+	async chatInputRun(interaction) {
+		try {
+			const blacklistedGuilds = await Guild.find();
 
-            if (blacklistedGuilds.length === 0) {
-                return await interaction.reply(`${emojis.custom.fail} No blacklisted servers has been found!`);
-            }
+			if (blacklistedGuilds.length === 0) {
+				return await interaction.reply(`${emojis.custom.fail} No blacklisted servers has been found!`);
+			}
 
-            let currentPage = 0;
-            const totalPages = Math.ceil(blacklistedGuilds.length / 5);
+			/**
+			 * @type {import('discord.js').EmbedField[]}
+			 */
+			const fields = [];
 
-            const generateEmbed = () => {
-                const embed = new EmbedBuilder()
-                    .setTitle('`🔒` Blacklisted Servers')
-                    .setColor(color.default)
-                    .setDescription(
-                        blacklistedGuilds
-                        .slice(currentPage * 5, (currentPage + 1) * 5)
-                        .map(guild => `**__${guild.guildName}__**\n • Reason: ${emojis.custom.replyend} ${guild.reason}\n\n • Server ID: ${emojis.custom.replyend} ${interaction.guild.id}`)
-                        .join('\n')
-                    )
-                    .setFooter({ text: `Requested by ${interaction.user.displayName} • Page ${currentPage + 1}/${totalPages}`, iconURL: interaction.user.displayAvatarURL() });
-                return embed;
-            };
+			for (const guild of blacklistedGuilds) {
+				fields.push({
+					name: `**__${guild.guildName}__**`,
+					value: `• Reason: ${emojis.custom.replyend} ${guild.reason}\n• Server ID: ${emojis.custom.replyend} \`${guild.guildId}\``
+				});
+			}
 
-            const previousButton = new ButtonBuilder()
-                .setCustomId('previous')
-                .setLabel('◀️')
-                .setStyle('Secondary');
+			const templateEmbed = new EmbedBuilder().setTitle('`🔒` Blacklisted Servers').setColor(color.default);
 
-            const nextButton = new ButtonBuilder()
-                .setCustomId('next')
-                .setLabel('▶️')
-                .setStyle('Secondary');
-			
-            const actionRow = new ActionRowBuilder().addComponents([previousButton, nextButton]);
-			const reply = await interaction.reply({ embeds: [generateEmbed()], components: [actionRow] });
+			new PaginatedMessageEmbedFields().setTemplate(templateEmbed).setItems(fields).setItemsPerPage(3).make().run(interaction);
 
-			const collector = reply.createMessageComponentCollector({
-                componentType: ComponentType.Button,
-                filter: (i) => i.user.id === interaction.user.id,
-            });
+			// let currentPage = 0;
+			// const totalPages = Math.ceil(blacklistedGuilds.length / 5);
 
-			collector.on('collect', async (interaction) => {
-                if (interaction.customId === 'previous') {
-                    currentPage = Math.max(currentPage - 1, 0);
-                } else if (interaction.customId === 'next') {
-                    currentPage = Math.min(currentPage + 1, totalPages - 1);
-                }
+			// const generateEmbed = () => {
+			//     const embed = new EmbedBuilder()
+			//         .setTitle('`🔒` Blacklisted Servers')
+			//         .setColor(color.default)
+			//         .setDescription(
+			//             blacklistedGuilds
+			//             .slice(currentPage * 5, (currentPage + 1) * 5)
+			//             .map(guild => `**__${guild.guildName}__**\n • Reason: ${emojis.custom.replyend} ${guild.reason}\n\n • Server ID: ${emojis.custom.replyend} ${interaction.guild.id}`)
+			//             .join('\n')
+			//         )
+			//         .setFooter({ text: `Requested by ${interaction.user.displayName} • Page ${currentPage + 1}/${totalPages}`, iconURL: interaction.user.displayAvatarURL() });
+			//     return embed;
+			// };
 
-                await interaction.update({ embeds: [generateEmbed()] });
-            });
+			// const previousButton = new ButtonBuilder()
+			//     .setCustomId('previous')
+			//     .setLabel('◀️')
+			//     .setStyle('Secondary');
 
-			collector.on('end', async () => {
-                await reply.edit({ components: [] });
-            });
+			// const nextButton = new ButtonBuilder()
+			//     .setCustomId('next')
+			//     .setLabel('▶️')
+			//     .setStyle('Secondary');
 
-            await reply.edit({ components: [actionRow] });
-        } catch (error) {
-            console.error(error);
-            await interaction.reply({ content: `${emojis.custom.fail} An error occurred while processing the command.`, ephemeral: true });
-        }
-    }
+			// const actionRow = new ActionRowBuilder().addComponents([previousButton, nextButton]);
+			// const reply = await interaction.reply({ embeds: [generateEmbed()], components: [actionRow] });
+
+			// const collector = reply.createMessageComponentCollector({
+			//     componentType: ComponentType.Button,
+			//     filter: (i) => i.user.id === interaction.user.id,
+			// });
+
+			// collector.on('collect', async (interaction) => {
+			//     if (interaction.customId === 'previous') {
+			//         currentPage = Math.max(currentPage - 1, 0);
+			//     } else if (interaction.customId === 'next') {
+			//         currentPage = Math.min(currentPage + 1, totalPages - 1);
+			//     }
+
+			//     await interaction.update({ embeds: [generateEmbed()] });
+			// });
+
+			// collector.on('end', async () => {
+			//     await reply.edit({ components: [] });
+			// });
+
+			// await reply.edit({ components: [actionRow] });
+		} catch (error) {
+			console.error(error);
+			await interaction.reply({ content: `${emojis.custom.fail} An error occurred while processing the command.`, ephemeral: true });
+		}
+	}
 }
 
 module.exports = {
-    UserCommand
+	UserCommand
 };
