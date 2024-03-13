@@ -2,9 +2,9 @@ const { EmbedBuilder } = require('discord.js');
 const Guild = require('../../../lib/schemas/blacklist');
 const { color, emojis } = require('../../../config')
 
-async function checkIfBlacklisted(guildId, interaction) {
+async function checkIfBlacklisted(interaction) {
     try {
-        const find = await Guild.findOne({ guildId: guildId });
+        const find = await Guild.findOne({ guildId: interaction.guild.id });
         if (find !== null) {
             const embed = new EmbedBuilder()
             .setColor(`${color.fail}`)
