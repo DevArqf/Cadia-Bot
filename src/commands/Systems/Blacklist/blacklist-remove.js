@@ -50,7 +50,7 @@ class UserCommand extends BeemoCommand {
 
             const embed = new EmbedBuilder()
                 .setColor(`${color.success}`)
-                .setDescription(`${emojis.custom.success} The Server with ID \`${removedGuild.guildId}\` has been successfully **removed** from my blacklist!`);
+                .setDescription(`${emojis.custom.success} The server with ID \`${removedGuild.guildId}\` has been successfully **removed** from my blacklist!`);
 
             await interaction.reply({ embeds: [embed] });
             
