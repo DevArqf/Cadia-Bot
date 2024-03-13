@@ -42,7 +42,8 @@ class UserCommand extends BeemoCommand {
             const reason = interaction.options.getString('reason') || 'No Reason Provided';
             const guildId = interaction.options.getString('server-id');
             const targetGuild = interaction.client.guilds.cache.get(guildId);
-            
+
+            const logChannelId = '1208553649337405440'; // Change this to your log channel ID
             const logChannel = interaction.client.channels.cache.get(logChannelId);
 
             if (Number.isNaN(guildId)) {
