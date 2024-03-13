@@ -7,11 +7,11 @@ const { GuildMessage } = require('../../lib/types/Discord');
  * @class
  * @extends {Precondition}
  */
-class BotOwnerPrecondition extends Precondition {
+class BlacklistPrecondition extends Precondition {
 	constructor(context, options) {
 		super(context, {
 			...options,
-			name: 'BotOwner',
+			name: 'Blacklist',
 			position: 1
 		});
 	}
@@ -49,4 +49,4 @@ class BotOwnerPrecondition extends Precondition {
 	}
 }
 
-module.exports = { BotOwnerPrecondition };
+module.exports = { BlacklistPrecondition };
