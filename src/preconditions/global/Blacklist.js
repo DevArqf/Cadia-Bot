@@ -2,6 +2,7 @@ const { Precondition } = require('@sapphire/framework');
 const { ChatInputCommandInteraction } = require('discord.js');
 const { envParseArray } = require('@skyra/env-utilities');
 const { GuildMessage } = require('../../lib/types/Discord');
+const Guild = require('../../lib/schemas/blacklist');
 
 /**
  * @class
@@ -44,8 +45,13 @@ class BotOwnerPrecondition extends Precondition {
 	 *
 	 * @param {import('discord.js').Snowflake} guildId The id of the guild you want to check
 	 */
-	isNotBlacklisted(guildId) {
-		return true; // TODO: Implement this
+	async isNotBlacklisted(guildId) {
+		const find = await Guild.findOne({ guildId: guildId });
+		if (find === null) {
+			return true;
+		} else {
+			return false;
+		};
 	}
 }
 
