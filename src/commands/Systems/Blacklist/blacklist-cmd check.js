@@ -9,7 +9,7 @@ async function checkIfBlacklisted(guildId, interaction) {
             const embed = new EmbedBuilder()
             .setColor(`${color.fail}`)
             .setTitle(`\`🚫\` Server Blacklisted!`)
-            .setDescription(`This server has been blacklisted. \n\n To find out more info or to appeal your blacklist, please contact join ${interaction.client.user.displayName} Discord Server: https://discord.gg/AXwAMsB7G5`)
+            .setDescription(`This server has been blacklisted. \n\n For more info or to appeal your blacklist, please contact us by joining our Support Server [here](https://discord.gg/AXwAMsB7G5)`)
             .setTimestamp()
             .setFooter({ text: `Requested by ${interaction.user.displayName}`, iconURL: interaction.user.displayAvatarURL() });
 
