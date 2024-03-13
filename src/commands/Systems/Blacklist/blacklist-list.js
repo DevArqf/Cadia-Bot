@@ -108,7 +108,15 @@ class UserCommand extends BeemoCommand {
 			// await reply.edit({ components: [actionRow] });
 		} catch (error) {
 			console.error(error);
-			await interaction.reply({ content: `${emojis.custom.fail} An error occurred while processing the command.`, ephemeral: true });
+			
+			const errorEmbed = new EmbedBuilder()
+            		.setColor(`${color.fail}`)
+            		.setTitle(`${emojis.custom.fail} Blacklist List Error`)
+            		.setDescription(`${emojis.custom.fail} I have encountered an error! Please try again later.`)
+            		.setTimestamp();
+ 
+            		await interaction.reply({ embeds: [errorEmbed], ephemeral: true });
+            		return;
 		}
 	}
 }
