@@ -59,7 +59,7 @@ class UserCommand extends BeemoCommand {
             if (!invite.guild || !invite.guild.vanityURLCode || invite.guild.vanityURLCode !== vanity)
             return await sendMessage(nInviteMsg);
 
-            await sendMessage(`${emojis.custom.warning} Looks like the vanity \`${vanity}\` is taken by: discord.gg/${vanity} \n\n**${invite.guild.name}'s Server Features:** \n Member Count:\n ${emojis.custom.replyend} \`${invite.memberCount}\` \nServer ID:\n ${emojis.custom.replyend} \`${invite.guild.id}\` \nServer Description:\n ${emojis.custom.replyend} \`${invite.guild.description??`None`}\` \n\n This server holds the invite \`${vanity}\` meaning it is not usable by anyone else.`, true);
+            await sendMessage(`${emojis.custom.warning} Looks like the vanity \`${vanity}\` is taken by: \`discord.gg/${vanity}\` \n\n**${invite.guild.name}'s Server Features:** \n> \n **• Member Count:**\n ${emojis.custom.replyend} \`${invite.memberCount}\` \n**• Server ID:**\n ${emojis.custom.replyend} \`${invite.guild.id}\` \n**• Server Description:**\n ${emojis.custom.replyend} \`${invite.guild.description??`None`}\` \n\n This server holds the invite \`${vanity}\` meaning it is **NOT** usable by anyone else.`, true);
         }
     }
 }
