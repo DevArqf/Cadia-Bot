@@ -25,7 +25,7 @@ class countingCommand extends Command {
 				.addSubcommand((subcommand) =>
 					subcommand //
 						.setName('setup')
-						.setDescription('(re)Setup the counting game for your server')
+						.setDescription('Setup the counting game for your server')
 						.addChannelOption((option) =>
 							option //
 								.setName('channel')
@@ -129,7 +129,7 @@ class countingCommand extends Command {
 			// 	}
 			// });
 
-			await interaction.reply({ content: `${emojis.custom.success} The counting game has been setup in ${channel}`, ephemeral: true });
+			await interaction.reply({ content: `${emojis.custom.success} The counting game has been **setup** in ${channel}`, ephemeral: true });
 		}
 
 		if (subcommand === 'reward') {
@@ -175,28 +175,28 @@ class countingCommand extends Command {
 			// });
 
 			if (!data.countChannel) {
-				await interaction.reply({ content: `${emojis.custom.fail} The counting game has not been setup yet`, ephemeral: true });
+				await interaction.reply({ content: `${emojis.custom.fail} The counting game has **not** been **setup** yet`, ephemeral: true });
 				return;
 			}
 
 			const countingChannel = interaction.guild.channels.cache.get(data.countChannel);
 
 			if (!countingChannel || !countingChannel.isTextBased()) {
-				await interaction.reply({ content: `${emojis.custom.fail} The counting game has not been setup yet`, ephemeral: true });
+				await interaction.reply({ content: `${emojis.custom.fail} The counting game has **not** been **setup** yet`, ephemeral: true });
 				return;
 			}
 
 			countingChannel.send({
 				embeds: [
 					new EmbedBuilder()
-						.setTitle('Counting Game Reward')
-						.setDescription(`The reward for reaching \`${count}\` counts has been set as \`${amount}\` coins`)
+						.setTitle('`🔢` Counting Game Reward')
+						.setDescription(`The reward for reaching \`${count}\` counts has been **successfully** set as \`${amount}\` coins`)
 						.setColor(color.success)
 				]
 			});
 
 			await interaction.reply({
-				content: `${emojis.custom.success} The \`${amount}\` reward has been setup for ${count} counts`,
+				content: `${emojis.custom.success} The \`${amount}\` reward has been **setup** for ${count} counts`,
 				ephemeral: true
 			});
 		}
@@ -237,7 +237,7 @@ class countingCommand extends Command {
 				.join('\n');
 
 			await interaction.reply({
-				embeds: [new EmbedBuilder().setTitle('Counting Game Global Leaderboard').setDescription(leaderboard).setColor(color.success)]
+				embeds: [new EmbedBuilder().setTitle('`🌎` Counting Global Leaderboard').setDescription(leaderboard).setColor(color.success)]
 			});
 		}
 
@@ -247,7 +247,7 @@ class countingCommand extends Command {
 			});
 
 			if (!data) {
-				await interaction.reply({ content: `${emojis.custom.fail} The counting game has not been setup yet`, ephemeral: true });
+				await interaction.reply({ content: `${emojis.custom.fail} The counting game has **not** been **setup** yet`, ephemeral: true });
 				return;
 			}
 
@@ -286,7 +286,7 @@ class countingCommand extends Command {
 				.join('\n');
 
 			await interaction.reply({
-				embeds: [new EmbedBuilder().setTitle('Counting Game Server Leaderboard').setDescription(leaderboard).setColor(color.success)]
+				embeds: [new EmbedBuilder().setTitle('`🔢` Counting Server Leaderboard').setDescription(leaderboard).setColor(color.success)]
 			});
 		}
 	}
