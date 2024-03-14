@@ -62,14 +62,16 @@ class UserCommand extends BeemoCommand {
 					embeds: [embed]
 				});
 		} catch (error) {
-			console.error(error);
+		console.error(error);
+			
         	const errorEmbed = new EmbedBuilder()
             	.setColor(`${color.fail}`)
             	.setTitle(`${emojis.custom.fail} Server Info Error`)
             	.setDescription(`${emojis.custom.fail} I have encountered an error! Please try again later.`)
             	.setTimestamp();
 
-        	return await interaction.reply({ embeds: [errorEmbed], ephemeral: true });
+        	await interaction.reply({ embeds: [errorEmbed], ephemeral: true });
+		return;
 			
 		}
 	}
