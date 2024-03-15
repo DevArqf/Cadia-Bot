@@ -33,7 +33,7 @@ class UserCommand extends BeemoCommand {
 	/**
 	 * @param {BeemoCommand.ChatInputCommandInteraction} interaction
 	 */
-	async chatInputRun(interaction, client) {
+	async chatInputRun(interaction) {
 		const { options } = interaction;
         const vanity = options.getString('vanity');
 
