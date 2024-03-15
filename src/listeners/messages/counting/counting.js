@@ -44,7 +44,7 @@ class UserEvent extends Listener {
 		const currentNumber = Number(message.content);
 
 		if (currentNumber - lastNumber !== 1) {
-			channel.send({ content: `${message.author} ruined the count at ${lastNumber}!` });
+			channel.send({ content: `${message.author} ruined the count at **${lastNumber}**!` });
 
 			await GuildSchema.updateOne(
 				{ id: guild.id },
@@ -68,7 +68,7 @@ class UserEvent extends Listener {
 			// 	}
 			// });
 
-			channel.send({ content: `The count has been reset to 0` });
+			channel.send({ content: `The count has been reset to **0**` });
 			return;
 		}
 
@@ -140,7 +140,7 @@ class UserEvent extends Listener {
 		);
 
 		if (data.countGoal === currentNumber) {
-			message.reply({ content: `Congratulations! You reached the goal of ${currentNumber}!` });
+			message.reply({ content: `Congratulations! You reached the goal of **${currentNumber}**!` });
 			message.pinnable && message.pin();
 		}
 	}

@@ -77,7 +77,8 @@ const emojis = {
 		tada: '<:bl_tada:1207462996859682918>',
 		loading: '<a:bl_loading:1206433137928708146>',
 		right: '<:bl_right:1213888472813674546>',
-		left: '<:bl_left:1213888437132730368>'
+		left: '<:bl_left:1213888437132730368>',
+		update: '<:bl_Update:1206442846907793418>'
 	}
 };
 

@@ -47,7 +47,7 @@ class UserEvent extends Listener {
 		// 	}
 		// });
 
-		message.channel.send({ content: `${message.author} has been rewarded with ${reward.reward} for reaching ${count}!` });
+		message.channel.send({ content: `${message.author} has been **rewarded** with **${reward.reward}** for reaching **${count}**!` });
 
 		await CountingReward.deleteMany({
 			milestone: count,
