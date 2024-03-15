@@ -43,9 +43,9 @@ class UserCommand extends BeemoCommand {
             .setDescription(message);
 
             if (send) {
-                await interaction.reply({ content: `discord.gg/${vanity}`, embeds: [embed], ephemeral: true});
+                await interaction.reply({ content: `discord.gg/${vanity}`, embeds: [embed] });
             } else {
-                await interaction.reply({ embeds: [embed], ephemeral: true });
+                await interaction.reply({ embeds: [embed], });
             }
         }
 
