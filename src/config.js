@@ -83,7 +83,7 @@ const emojis = {
 };
 
 const color = {
-	default: '#50a090',
+	default: '#674DF5',
 	success: '#3bb143',
 	fail: '#ff2626',
 	warning: '#e9d502',
