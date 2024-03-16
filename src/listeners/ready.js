@@ -97,7 +97,7 @@ ${line09}
 		console.log(cyan(`Total RAM: ${Math.round(os.totalmem() / 1024 / 1024)} MB`));
 		console.log(green(`CPU: ${os.cpus()[0].model}`));
 		console.log(red(`Beemo's Founders: ${botOwner}`));
-		console.log(magenta(`Beemo's Developers: Oreo & Rishaune`));
+		console.log(magenta(`Beemo's Developers: Oreo`));
 		console.log(blue('=================================='));
 	}
 
