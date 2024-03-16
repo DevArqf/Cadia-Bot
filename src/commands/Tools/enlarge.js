@@ -62,7 +62,7 @@ class UserCommand extends BeemoCommand {
         }
 
         const embed = new EmbedBuilder()
-        .setColor(`${color.random}`)
+        .setColor(`${color.default}`)
         .setDescription(`${emojis.custom.success} Your emoji has been **successfully** enlarged`)
         .setImage(emoji)
         .setFooter({ text: `Requested by ${interaction.user.displayName}`, iconURL: interaction.user.displayAvatarURL() })
