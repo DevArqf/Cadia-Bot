@@ -1,4 +1,4 @@
-## 👑 Cadia - A multipurpose and RPG Discord Bot | **35+** Commands and **5.2k** Members. __Growth is still commencing!__ 💪
+### 👑 Cadia - A multipurpose and RPG Discord Bot | **35+** Commands and **5.2k** Members. __Growth is still commencing!__ 💪
 
 💎 With Cadia, your Discord server becomes a playground with **endless** possibilities! Whether you're chatting with friends, managing your server, or want to jump into some mysterious and exciting **RPG-style** quests and gameplay, Cadia has you covered.
 
