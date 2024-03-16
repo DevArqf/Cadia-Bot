@@ -104,7 +104,6 @@ class UserCommand extends BeemoCommand {
 				{ name: 'Malik\'s Time:', value: `${emojis.custom.replystart} ${get_time('AST')}`, inline: false },
 				{ name: 'Navin\'s Time:', value: `${emojis.custom.replystart} ${get_time('EST')}`, inline: false },
 				{ name: 'Oreo\'s Time:', value: `${emojis.custom.replystart} ${get_time('GMT +5')}`, inline: false },
-        { name: 'Rishaune\'s Time:', value: `${emojis.custom.replystart} ${get_time('EST')}`, inline: false },
 			)
 			.setTimestamp()
 			.setFooter({ text: `Requested by ${interaction.user.displayName}`, iconURL: interaction.user.displayAvatarURL() });
