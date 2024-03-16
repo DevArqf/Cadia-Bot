@@ -24,7 +24,7 @@ class UserEvent extends Listener {
 
 		await interaction.client.channels.cache.get(channels.errorLogging).send({ embeds: [errorEmbed] });
 
-		return interaction.reply(`${emojis.custom.fail} I have encountered an error! Please try again later.`);
+		return interaction.reply(`${emojis.custom.fail} **I have encountered an error! Please try again later.**`);
 
 	}
 }
