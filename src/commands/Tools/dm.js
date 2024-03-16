@@ -47,7 +47,7 @@ class UserCommand extends BeemoCommand {
 	async chatInputRun(interaction) {
 		const user = interaction.options.getUser('user');
         const message = interaction.options.getString('message');
-        const reason = interaction.options.getString('reason');
+        const reason = interaction.options.getString('reason' || 'No reason provided');
  
         const embed = new EmbedBuilder()
             .setTitle('`📮` Direct Message Received')
@@ -55,18 +55,18 @@ class UserCommand extends BeemoCommand {
             .addFields(
                 { name: '`📝` Message', value: `${emojis.custom.replyend} ${message}` },
                 { name: '`💻` Server', value: `${emojis.custom.replyend} ${interaction.guild.name}` },
-                { name: '`🔨` Reason', value: `${emojis.custom.replyend} ${reason}` || 'No reason provided' },
+                { name: '`🔨` Reason', value: `${emojis.custom.replyend} ${reason}` },
                 { name: '`👷‍♂️` Operator', value: `${emojis.custom.replyend} ${interaction.user}` },
             )
-            .setFooter({ name: `${interaction.user.displayName}`, iconURL: interaction.user.avatarURL() })
+            .setFooter({ text: `${interaction.user.displayName}`, iconURL: interaction.user.avatarURL() })
             .setTimestamp();
  
             await user.send({ embeds: [embed] })
                 .then(() => {
-                    interaction.reply({ content: `${emojis.custom.success} The message was **successfully** sent to **${user.tag}**!` });
+                    interaction.reply({ content: `${emojis.custom.success} The message has been **successfully** sent to **${user.tag}**!` });
                 })
                 .catch(() => {
-                    interaction.reply({ content: `${emojis.custom.fail} **${user.tag}** has DMs **disabled**!` });
+                    interaction.reply({ content: `${emojis.custom.fail} **${user.tag}** has Direct Messages **disabled**!` });
                 });
 	}
 };
