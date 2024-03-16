@@ -18,7 +18,7 @@ class UserEvent extends Listener {
 
         const errorEmbed = new EmbedBuilder()
 		.setColor(`${color.fail}`)
-		.setTitle(`${emojis.reg.fail} • An error has been detected by ${interaction.client.user.displayName}`)
+		.setTitle(`${emojis.reg.fail} • An error has been detected by ${interaction.user.displayName}`)
 		.setDescription(`\`\`\`js\n${content}\n\nError is in file:\n${command.location.name}\n\nRoute: ${command.location.full}\`\`\``)
 		.setTimestamp()
 
