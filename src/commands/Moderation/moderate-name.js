@@ -80,8 +80,7 @@ class UserCommand extends BeemoCommand {
             	.setDescription(`${emojis.custom.fail} **I have encountered an error! Please try again later.**`)
             	.setTimestamp();
 
-        	await interaction.reply({ embeds: [errorEmbed], ephemeral: true });
-			return;
+        	return await interaction.reply({ embeds: [errorEmbed], ephemeral: true });
 		}
 	}
 }
