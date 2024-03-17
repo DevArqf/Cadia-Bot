@@ -24,6 +24,8 @@ class UserEvent extends Listener {
 		this._printBanner(info);
 		this._printStoreDebugInformation();
 		this._displayAdvancedConsole();
+
+		setBotActivities(client);
 	}
 
 	/**
@@ -119,6 +121,35 @@ ${line09}
 	_styleStore(store, last) {
 		return gray(`${last ? '└─' : '├─'} Loaded ${this.style(store.size.toString().padEnd(3, ' '))} ${store.name}.`);
 	}
+}
+
+const { ActivityType } = require('discord.js');
+
+function setBotActivities(client) {
+	const totalServers = client.guilds.cache.size;
+	const totalMembers = client.guilds.cache.reduce((total, guild) => total + guild.memberCount, 0);
+
+	client.user.setActivity({
+		type: ActivityType.Watching,
+		name: `${totalServers} Servers`
+	});
+
+	setTimeout(() => {
+		client.user.setActivity({
+			type: ActivityType.Listening,
+			name: '/𝗵𝗲𝗹𝗽'
+		});
+		setTimeout(() => {
+			client.user.setActivity({
+				type: ActivityType.Watching,
+				name: `${totalMembers} Total Members`
+			});
+
+			setTimeout(() => {
+				setBotActivities(client);
+			}, 20000);
+		}, 20000);
+	}, 20000);
 }
 
 module.exports = {
