@@ -60,7 +60,7 @@ class UserCommand extends BeemoCommand {
 					option
 						.setName('reason')
 						.setDescription('The reason of blacklisting the user')
-						.setRequired(true)))
+						.setRequired(false)))
 				
 				//Un-Blacklist
 				.addSubcommand((subcommand) =>
@@ -89,7 +89,7 @@ class UserCommand extends BeemoCommand {
 			};
 
 			const userId = interaction.options.getString('user-id');
-			const reason = interaction.options.getString('reason');
+			const reason = interaction.options.getString('reason') || 'No Reason Provided';
 
 			if (Number.isNaN(userId)) {
 				return await interaction.reply({ content: `${emojis.custom.fail} You have entered a character that is not a number.`, ephemeral: true });
