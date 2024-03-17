@@ -25,6 +25,10 @@ class UserCommand extends BeemoCommand {
 			builder //
 				.setName('ban')
 				.setDescription(this.description)
+                .addStringOption(option =>
+                    option.setName('userid')
+                        .setDescription('The ID of the user to ban')
+                        .setRequired(true))
                 .addUserOption(option => 
                     option.setName('user')
                         .setDescription('The user to ban')
@@ -36,10 +40,6 @@ class UserCommand extends BeemoCommand {
                 .addAttachmentOption(option =>
                     option.setName('evidence')
                         .setDescription('Attach a evidence related to the ban')
-                        .setRequired(false))
-                .addStringOption(option =>
-                    option.setName('userid')
-                        .setDescription('The ID of the user to ban')
                         .setRequired(false)),
 		);
 	}
@@ -127,7 +127,7 @@ class UserCommand extends BeemoCommand {
                 dmEmbed.addFields({ name: 'Related Image:', value: '`👇` See below `👇`' });
             }
 
-            await userToBan.send({ embeds: [dmEmbed] }).catch(error => console.error(`I **couldn\'t** send a DM to ${userToBan.tag}.`, error));
+            await userToBan.send({ embeds: [dmEmbed] }).catch(error => console.error(`I **cannot** send a Direct Message to ${userToBan.tag}.`, error));
             
             // Ban Successful
             const banConfirmationEmbed = new EmbedBuilder()
