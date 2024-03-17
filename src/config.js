@@ -94,7 +94,8 @@ const color = {
 const channels = {
 	commandLogging: '1218633186104311938',
 	errorLogging: '1206107929372135454',
-	blacklistLogging: '1218633358423363604'
+	blacklistLogging: '1218633358423363604',
+	bugReports: '1218386554729271326'
 };
 
 module.exports = { ClientConfig, color, emojis, channels };
