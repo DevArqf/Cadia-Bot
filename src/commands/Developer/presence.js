@@ -42,7 +42,7 @@ class UserCommand extends BeemoCommand {
 	/**
 	 * @param {BeemoCommand.ChatInputCommandInteraction} interaction
 	 */
-	async chatInputRun(interaction, client) {
+	async chatInputRun(interaction) {
 		try {
 			const presence = interaction.options.getString('type');
 

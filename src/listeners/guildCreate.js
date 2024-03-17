@@ -23,7 +23,7 @@ class UserEvent extends Listener {
 				.sort((a, b) => a.rawPosition - b.rawPosition || a.id - b.id)
 				.first();
 			const embed = new EmbedBuilder()
-				.setColor('#50a090')
+				.setColor(`${color.default}`)
 				.setTitle("`⚙️` Beemo's System Message")
 				.setDescription(
 					"**• Thank you for adding me to your server!**\n ┌ If you need any help, please feel free to join\n └ our support server.\n\n **• Important**\n ┌ Make sure the bot's role is at the highest position\n └ in the role hierarchy to prevent any bugs or issues."
@@ -67,7 +67,12 @@ class UserEvent extends Listener {
 			owner.send({ embeds: [embed], components: [dmbot] });
 			topChannel.send({ embeds: [embed], components: [channel] });
 		} catch (error) {
-			console.error(`Beemo was unable to send message to server owner for guild ${guild.name}.`, error);
+			console.error(error);
+			const errorEmbed = new EmbedBuilder()
+            	.setColor(`${color.fail}`)
+            	.setDescription(`${emojis.custom.fail} **I have encountered an error! Please try again later.**`)
+            	.setTimestamp();
+			await interaction.reply({ embeds: [errorEmbed], ephemeral: true });	
 		}
 	}
 }

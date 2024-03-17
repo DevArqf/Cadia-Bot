@@ -71,8 +71,7 @@ class UserCommand extends BeemoCommand {
                 console.error(error);
         	    const errorEmbed = new EmbedBuilder()
             	    .setColor(`${color.fail}`)
-            	    .setTitle(`${emojis.custom.fail} Unban Command Error`)
-            	    .setDescription(`${emojis.custom.fail} I have encountered an error! Please try again later.`)
+            	    .setDescription(`${emojis.custom.fail} **I have encountered an error! Please try again later.**`)
             	    .setTimestamp();
 
         	    return interaction.reply({ embeds: [errorEmbed], ephemeral: true });

@@ -24,6 +24,13 @@ class UserEvent extends Listener {
 			});
 		}
 
+		if (identifier === 'DevOnlyCommand') {
+			return message.reply({
+				content: `${emojis.custom.fail} You are not **authorized** to **execute** this command`,
+				ephemeral: true
+			});
+		}
+
 		return message.reply({
 			content: `${content ?? 'An error occurred while executing the command.'}`,
 			allowedMentions: { users: [interaction.user.id], roles: [] },

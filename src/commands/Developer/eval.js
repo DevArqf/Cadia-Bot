@@ -13,8 +13,8 @@ class UserCommand extends BeemoCommand {
 	constructor(context, options) {
 		super(context, {
 			...options,
-			description: 'Evaluates Javascript Code (DEV ONLY)',
-			permissionLevel: PermissionLevels.Developer
+			permissionLevel: PermissionLevels.BotOwner,
+			description: 'Evaluates Javascript Code (DEV ONLY)'
 		});
 	}
 

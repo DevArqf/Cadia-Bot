@@ -137,12 +137,12 @@ function setBotActivities(client) {
 	setTimeout(() => {
 		client.user.setActivity({
 			type: ActivityType.Listening,
-			name: '/𝗵𝗲𝗹𝗽'
+			name: '/help'
 		});
 		setTimeout(() => {
 			client.user.setActivity({
 				type: ActivityType.Watching,
-				name: `${totalMembers} Total Members`
+				name: `${totalMembers} Users`
 			});
 
 			setTimeout(() => {
