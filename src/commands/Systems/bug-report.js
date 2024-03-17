@@ -154,6 +154,7 @@ class UserCommand extends BeemoCommand {
 			{ name: '**Image:**', value: `${image ? `${emojis.custom.replyend} Please look below` : `${emojis.custom.replyend} No picture provided`}` },
 			])
 		.setTimestamp()
+		.setFooter({ text: `Submitted by ${interaction.user.displayName}`, iconURL: interaction.user.displayAvatarURL() })
 		.setImage(image ? image.url : null);
 			
 			const button = new ActionRowBuilder()
