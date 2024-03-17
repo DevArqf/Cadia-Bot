@@ -13,7 +13,7 @@ class BotOwnerPrecondition extends Precondition {
 	 * @returns {import('@sapphire/framework').PreconditionResult}
 	 */
 	messageRun(message) {
-		return this.isDeveloper(message.member.user.id) ? this.ok() : this.error({ context: { silent: true }, identifier: 'DevOnlyCommand' });
+		return this.isDeveloper(message.member.user.id) ? this.ok() : this.error({ context: { silent: false }, identifier: 'DevOnlyCommand' });
 	}
 
 	/**
@@ -21,7 +21,7 @@ class BotOwnerPrecondition extends Precondition {
 	 * @returns {import('@sapphire/framework').PreconditionResult}
 	 */
 	chatInputRun(interaction) {
-		return this.isDeveloper(interaction.member.user.id) ? this.ok() : this.error({ context: { silent: true }, identifier: 'DevOnlyCommand' });
+		return this.isDeveloper(interaction.member.user.id) ? this.ok() : this.error({ context: { silent: false }, identifier: 'DevOnlyCommand' });
 	}
 
 	/**
@@ -29,7 +29,7 @@ class BotOwnerPrecondition extends Precondition {
 	 * @returns {import('@sapphire/framework').PreconditionResult}
 	 */
 	contextMenuRun(interaction) {
-		return this.isDeveloper(interaction.member.user.id) ? this.ok() : this.error({ context: { silent: true }, identifier: 'DevOnlyCommand' });
+		return this.isDeveloper(interaction.member.user.id) ? this.ok() : this.error({ context: { silent: false }, identifier: 'DevOnlyCommand' });
 	}
 
 	/**
