@@ -22,7 +22,6 @@ class UserCommand extends BeemoCommand {
 				.setDescription(this.description)
 				.addUserOption((option) => option.setName('user').setDescription('The user to kick').setRequired(true))
 				.addStringOption((option) => option.setName('reason').setDescription('Reason for kicking the user').setRequired(false))
-				.addStringOption((option) => option.setName('userid').setDescription('The ID of the user to kick').setRequired(false))
 		);
 	}
 
@@ -31,7 +30,7 @@ class UserCommand extends BeemoCommand {
 	 */
 	async chatInputRun(interaction) {
 		// Defining Things
-		const userToKick = interaction.options.getUser('user') || await interaction.client.users.fetch(await interaction.options.getString('userid'));
+		const userToKick = interaction.options.getUser('user');
 		const kickMember = await interaction.guild.members.fetch(userToKick.id);
 		const reason = interaction.options.getString('reason') || 'No reason provided';
 

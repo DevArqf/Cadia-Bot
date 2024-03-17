@@ -26,7 +26,6 @@ class UserCommand extends BeemoCommand {
 				.setDescription(this.description)
 				.addUserOption((option) => option.setName('user').setDescription('The user to unmute').setRequired(true))
 				.addStringOption((option) => option.setName('reason').setDescription('Reason for the unmute').setRequired(false))
-				.addStringOption((option) => option.setName('userid').setDescription('The id of the user to unmute').setRequired(false))
 		);
 	}
 
@@ -35,7 +34,7 @@ class UserCommand extends BeemoCommand {
 	 */
 	async chatInputRun(interaction) {
 		// Defining Things
-		const userToUnmute = interaction.options.getUser('user') || await interaction.client.users.fetch(await interaction.options.getString('userid')) ;
+		const userToUnmute = interaction.options.getUser('user');
 		const unmuteMember = await interaction.guild.members.fetch(userToUnmute.id);
 		const reason = interaction.options.getString('reason') || 'No reason provided';
 

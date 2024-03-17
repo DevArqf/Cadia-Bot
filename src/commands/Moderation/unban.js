@@ -27,12 +27,12 @@ class UserCommand extends BeemoCommand {
 				.setDescription(this.description)
 				.addStringOption(option => 
                     option.setName('user')
-                        .setDescription('The user ID to unban')
+                        .setDescription('The user(id) to unban')
                         .setRequired(true))
                 .addStringOption(option =>
                     option.setName('reason')
                         .setDescription('Reason for unbanning the user')
-                        .setRequired(false)),
+                        .setRequired(true)),
 		);
 	}
 
@@ -42,7 +42,7 @@ class UserCommand extends BeemoCommand {
 	async chatInputRun(interaction) {
 		// Defining Things
         const userToUnban = interaction.options.getString('user');
-        const reason = interaction.options.getString('reason') || 'No reason provided';
+        const reason = interaction.options.getString('reason');
 
         // Permissions
         // if (!interaction.member.permissions.has(PermissionsBitField.Flags.BanMembers)) {
@@ -50,19 +50,20 @@ class UserCommand extends BeemoCommand {
         // }
         
         if (Number.isNaN(userToUnban)) {
-            return await interaction.reply({ content: `${emojis.custom.fail} You have entered something that is **not** a number!`, ephemeral: true });
+            return await interaction.reply({ content: `${emojis.custom.fail} You have inputted something that is not a number!`, ephemeral: true });
         }
         
-        const user = interaction.client.user.fetch(userToUnban);
+        const user = await interaction.client.users.fetch(userToUnban);
         
         // Unban the user
-        interaction.guild.bans.remove(userToUnban, reason)
+        await interaction.guild.bans.remove( user.id )
             .then(() => {
                 const embed = new EmbedBuilder()
                     .setColor(`${color.success}`)   
-                    .setDescription(`${emojis.custom.success} **${user.username}** has been successfully **Unbanned**! \n\n**• Reason**\n ${emojis.custom.replyend} \`${reason}\``)
-                    .setFooter({ text: `${userToUnban}` })
-                    .setTimestamp();
+                    .setTitle(`${emojis.reg.success} Unban Successful`)
+                    .setDescription(`**${user.username}** has been **Unbanned**! \n\n**• Reason**\n ${emojis.custom.replyend} \`${reason}\``)
+                    .setTimestamp()
+                    .setFooter({ text: `Moderated by ${interaction.user.tag}`, iconURL: interaction.user.displayAvatarURL() });
 
                 interaction.reply({ content: '', embeds: [embed] });
             })
@@ -70,13 +71,12 @@ class UserCommand extends BeemoCommand {
                 console.error(error);
         	    const errorEmbed = new EmbedBuilder()
             	    .setColor(`${color.fail}`)
-            	    .setDescription(`${emojis.custom.fail} **I have encountered an error! Please try again later.**`)
+            	    .setTitle(`${emojis.custom.fail} Unban Command Error`)
+            	    .setDescription(`${emojis.custom.fail} I have encountered an error! Please try again later.`)
             	    .setTimestamp();
 
-        	    interaction.reply({ embeds: [errorEmbed], ephemeral: true });
-			    return;
-            });
-        
+        	    return interaction.reply({ embeds: [errorEmbed], ephemeral: true });
+            });   
     }
 };
 

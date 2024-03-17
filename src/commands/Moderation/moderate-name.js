@@ -26,7 +26,6 @@ class UserCommand extends BeemoCommand {
 				.setDescription(this.description)
 				.addUserOption((option) => option.setName('user').setDescription('The user to moderate').setRequired(true))
 				.addStringOption((option) => option.setName('reason').setDescription('Reason for the name moderation of the user').setRequired(false))
-				.addStringOption((option) => option.setName('userid').setDescription('The ID of the user to moderate').setRequired(false))
 		);
 	}
 
@@ -35,7 +34,7 @@ class UserCommand extends BeemoCommand {
 	 */
 	async chatInputRun(interaction) {
 		// Defining Things
-		const userToModerate = await interaction.options.getUser('user') || await interaction.client.users.fetch(await interaction.options.getString('userid'));
+		const userToModerate = await interaction.options.getUser('user');
 		const ModerateUser = await interaction.guild.members.fetch(userToModerate.id);
 		const reason = interaction.options.getString('reason') || 'No reason provided';
 		const nickname = `Moderated Name ${Math.floor(Math.random() * 9999) + 1000}`;
