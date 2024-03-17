@@ -1,8 +1,8 @@
-const BeemoCommand = require('../../../lib/structures/commands/BeemoCommand');
-const { PermissionLevels } = require('../../../lib/types/Enums');
-const { color, emojis, channels } = require('../../../config')
+const BeemoCommand = require('../../lib/structures/commands/BeemoCommand');
+const { PermissionLevels } = require('../../lib/types/Enums');
+const { color, emojis, channels } = require('../../config')
 const { EmbedBuilder, PermissionsBitField, ButtonStyle, ButtonBuilder, ActionRowBuilder } = require('discord.js');
-const { BugReportBlacklist } = require('../../../lib/schemas/bug-report');
+const { BugReportBlacklist } = require('../../lib/schemas/bug-report');
 
 class UserCommand extends BeemoCommand {
 	/**
@@ -12,8 +12,7 @@ class UserCommand extends BeemoCommand {
 	constructor(context, options) {
 		super(context, {
 			...options,
-            name: 'Bug-Report',
-			description: 'Send a bug report to the Developers from your server',
+			description: 'Submit a bug report to the Developers of Cadia'
 		});
 	}
 
@@ -23,55 +22,55 @@ class UserCommand extends BeemoCommand {
 	registerApplicationCommands(registry) {
 		registry.registerChatInputCommand((builder) =>
 			builder //
-				.setName(this.name)
+				.setName('bug-report')
 				.setDescription(this.description)
 
 				// Main cmd
 				.addSubcommand((subcommand) =>
 					subcommand //
 						.setName('send')
-						.setDescription('Send a bug report to the Developers from your server')
+						.setDescription('Submit a bug report to the Developer of Cadia')
                 .addStringOption(option =>
                     option
                         .setName('issue')
-                        .setDescription('Discribe the issue your having')
+                        .setDescription('Describe the issue(s) you encountered')
                         .setRequired(true))
                 .addAttachmentOption(option =>
                     option
-                        .setName('picture')
-                        .setDescription('Attach a picture related to the issue your having')
+                        .setName('image')
+                        .setDescription('Attach a image related to the issue you encountered')
                         .setRequired(false))
                 .addStringOption(option =>
                     option
                         .setName('notes')
-                        .setDescription('Do you have any notes for the developers?')
+                        .setDescription('Do you have any additional note for the developers?')
                         .setRequired(false)))
 
 				//Blacklist
 				.addSubcommand((subcommand) =>
 					subcommand //
 						.setName('blacklist-user')
-						.setDescription('Blacklist a user from running the bug-report command')
+						.setDescription('Blacklist a user from executing the bug-report command')
 				.addStringOption(option =>
 					option
 						.setName('user-id')
-						.setDescription('The is of the user to blacklist')
+						.setDescription('The ID of the user')
 						.setRequired(true))
 				.addStringOption(option =>
 					option
 						.setName('reason')
-						.setDescription('Why are you blacklisting this user?')
+						.setDescription('The reason of blacklisting the user')
 						.setRequired(true)))
 				
 				//Un-Blacklist
 				.addSubcommand((subcommand) =>
 					subcommand //
 						.setName('unblacklist-user')
-						.setDescription('Un-blacklist a user from running the bug-report command')
+						.setDescription('Unblacklist a user from executing the bug-report command')
 				.addStringOption(option =>
 					option
 						.setName('user-id')
-						.setDescription('The is of the user to un-blacklist')
+						.setDescription('The ID of the user')
 						.setRequired(true))),
         );
 	}
@@ -93,15 +92,15 @@ class UserCommand extends BeemoCommand {
 			const reason = interaction.options.getString('reason');
 
 			if (Number.isNaN(userId)) {
-				return await interaction.reply({ content: `${emojis.custom.fail} You have inputed a character that is not a number.`, ephemeral: true });
+				return await interaction.reply({ content: `${emojis.custom.fail} You have entered a character that is not a number.`, ephemeral: true });
 			};
 			const find = await BugReportBlacklist.find({ userID: userId });
 
 			if (find.length === 0) {
 				await BugReportBlacklist.create({ userID: userId, reason });
-				return await interaction.reply({ content: `${emojis.reg.success} Blacklist Success!!\n UserId: ${userId} is now blacklisted from running the bug-report command.\nReason: \`${reason}\``, ephemeral: true});
+				return await interaction.reply({ content: `${emojis.reg.success} **Successfully Blacklisted!**\n UserID: \`${userId}\` has been **blacklisted** from executing the **bug-report** command\n**Reason:**\n ${emojis.custom.replyend} \`${reason}\``, ephemeral: true});
 			}
-			return await interaction.reply({ content: `${emojis.reg.success} Blacklist Fail!!\n UserId: ${userId} cant be blacklisted from running the bug-report command as they are blacklisted already.`, ephemeral: true});
+			return await interaction.reply({ content: `${emojis.reg.success} **Failed to Backlist!**\n UserID: \`${userId}\` **cannot** be **blacklisted** from executing the **bug-report** command as they have already been **blacklisted**`, ephemeral: true});
 
 		}
 
@@ -114,20 +113,19 @@ class UserCommand extends BeemoCommand {
 
 			if (find.length !== 0) {
 				await BugReportBlacklist.findOneAndDelete({ userID: userId });
-				return await interaction.reply({ content: `${emojis.reg.success} Success!!\n\n UserId: ${userId} was sucessfully un blacklisted`, ephemeral: true })
+				return await interaction.reply({ content: `${emojis.reg.success} **Successfully Unblacklisted!**\n\n UserID: \`${userId}\` has been **sucessfully** Unblacklisted`, ephemeral: true })
 			}
-			return await interaction.reply({ content: `${emojis.reg.success} Un-Blacklist Fail!!\n UserId: ${userId} cant be unblacklisted from running the bug-report command as they are not blacklisted.`, ephemeral: true});
+			return await interaction.reply({ content: `${emojis.reg.success} **Failed to Unblacklist!**\n UserID: \`${userId}\` **cannot** be **blacklisted** from **executing** the **bug-report** command as they have already been **blacklisted**`, ephemeral: true});
 
 		};
 
 		if (subcommand === 'send') {
 			const find = await BugReportBlacklist.find({ userID: interaction.user.id });
-console.log(find.length)
 			if (find.length !== 0) {
 				const blacklistEmbed = new EmbedBuilder()
 				.setColor(`${color.fail}`)
-				.setTitle(`${emojis.reg.fail} Error: Blacklisted`)
-				.setDescription(`You have been blacklisted from making bug reports.`)
+				.setTitle(`${emojis.reg.fail} Bug Report Blacklist`)
+				.setDescription(`${emojis.custom.fail} You have been blacklisted from running the bug-report command.\nPlease join our discord server fro more info.`)
 				.setTimestamp()
 				.setFooter({ text: `Requested by ${interaction.user.displayName}`, iconURL: interaction.user.displayAvatarURL() });
 
@@ -135,30 +133,29 @@ console.log(find.length)
 			};
 			
 			const issue = interaction.options.getString('issue');
-			const notes = interaction.options.getString('notes') || 'No Notes Provided';
-			const picture = interaction.options.getAttachment('picture');
+			const notes = interaction.options.getString('notes') || 'No notes provided';
+			const image = interaction.options.getAttachment('image');
 			
 			const BugReportChanel = interaction.client.channels.cache.get(channels.bugReports);
 
 		const sentEmbed = new EmbedBuilder()
 		.setColor(`${color.success}`)
-		.setTitle(`${emojis.reg.success} Bug Report`)
-		.setDescription(`Thank you for sending this bug report. \nOne our developers will look at this soon.\n\n**Issue:**\n${emojis.custom.replyend} \`${issue}\`\n\n**Notes:**\n${emojis.custom.replyend} \`${notes}\`\n\n**Picture:**\n ${picture ? `${emojis.custom.replyend} Please look below` : `${emojis.custom.replyend} \`No picuture provided\`	`}\n\n **NOTE:**\n${emojis.custom.replyend} \`Abusing this feature will result in you getting blacklisted\``)
-		.setImage(picture ? picture : null)
+		.setDescription(`${emojis.custom.success} **Thank you for submitting this bug report.** The Developers will **investigate** the bug **very** soon.\n\n **Issue:**\n${emojis.custom.replyend} ${issue}\n\n **Notes:**\n${emojis.custom.replyend} ${notes} \n\n**Image:**\n ${image ? `${emojis.custom.replyend} Please look below` : `${emojis.custom.replyend} No picture provided`}\n\n ***Abusing** this feature will **result** in you getting **blacklisted***!`)
+		.setImage(image ? image.url : null)
 		.setTimestamp()
         .setFooter({ text: `Requested by ${interaction.user.displayName}`, iconURL: interaction.user.displayAvatarURL() });
 
 		const devEmbed = new EmbedBuilder()
 		.setColor(`${color.default}`)
-		.setTitle('New Bug Report')
+		.setTitle('`🔔` New Bug Report')
 		.addFields([
 			{ name: '**User info:**', value: `${emojis.custom.replycontinue} **User ID:** ${interaction.user.id}\n${emojis.custom.replyend} **User:** <@${interaction.user.id}>` },
-			{ name: '**Issue:**', value: `${emojis.custom.replyend} \`${issue}\`` },
-			{ name: '**Notes:**', value: `${emojis.custom.replyend} \`${notes}\`` },
-			{ name: '**Picture:**', value: `${picture ? `${emojis.custom.replyend} Please look below` : `${emojis.custom.replyend} No picuture provided`}` },
+			{ name: '**Issue:**', value: `${emojis.custom.replyend} ${issue}` },
+			{ name: '**Notes:**', value: `${emojis.custom.replyend} ${notes}` },
+			{ name: '**Image:**', value: `${image ? `${emojis.custom.replyend} Please look below` : `${emojis.custom.replyend} No picture provided`}` },
 			])
 		.setTimestamp()
-		.setImage(picture ? picture : null);
+		.setImage(image ? image.url : null);
 			
 			const button = new ActionRowBuilder()
 			.addComponents(
