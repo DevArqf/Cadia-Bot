@@ -89,7 +89,7 @@ class UserCommand extends BeemoCommand {
 			};
 
 			const userId = interaction.options.getString('user-id');
-			const reason = interaction.options.getString('reason') || 'No Reason Provided';
+			const reason = interaction.options.getString('reason') || 'No reason provided';
 
 			if (Number.isNaN(userId)) {
 				return await interaction.reply({ content: `${emojis.custom.fail} You have entered a character that is not a number.`, ephemeral: true });
