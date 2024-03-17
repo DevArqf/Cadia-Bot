@@ -55,7 +55,7 @@ class UserCommand extends BeemoCommand {
         if (userid) {
             try {
             if (Number.isNaN(userid)) {
-                return await interaction.reply(`${emojis.custom.fail} You have entered the wrong ID or you have entered characters instead of numbers. Verify and check to see if the ID was correct!`);
+                return await interaction.reply(`${emojis.custom.fail} You have entered an **Invalid** user ID`);
             }
             if (interaction.member.id === userid) {
                 return interaction.reply({content: `${emojis.custom.fail} You **cannot** ban yourself!`, ephemeral: true});
@@ -63,12 +63,11 @@ class UserCommand extends BeemoCommand {
 
             const user = await interaction.client.users.fetch(userid);
             if (!user) {
-                return await interaction.reply('Invalaid user id')
+                return await interaction.reply(`${emojis.custom.fail} You have entered an **Invalid** user ID`)
             } else {
                 const banConfirmationEmbed = new EmbedBuilder()
                 .setColor(`${color.success}`)
-                .setTitle(`${emojis.reg.success} Ban Successful`)
-                .setDescription(`**${user.tag}** has been **Banned**! \n\n**• Reason:**\n ${emojis.custom.replyend} \`${reason}\``)
+                .setDescription(`${emojis.custom.success} **${user.tag}** has been successfully **Banned**! \n\n**• Reason:**\n ${emojis.custom.replyend} \`${reason}\``)
                 .setTimestamp()
                 .setFooter({ text: `Moderated by ${interaction.user.tag}`, iconURL: interaction.user.displayAvatarURL() });
 
