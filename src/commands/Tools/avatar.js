@@ -57,7 +57,7 @@ class UserCommand extends BeemoCommand {
                 console.error(error);
                 const errorEmbed = new EmbedBuilder()
                     .setColor(`${color.fail}`)
-                    .setTitle(`${emojis.custom.fail} 8 Ball Error`)
+                    .setTitle(`${emojis.custom.fail} Avatar Error`)
                     .setDescription(`${emojis.custom.fail} I have encountered an error! Please make sure the provided ID is **valid**.`)
                     .setTimestamp();
 

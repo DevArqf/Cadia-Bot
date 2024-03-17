@@ -41,7 +41,7 @@ class UserCommand extends BeemoCommand {
 	 */
 	async chatInputRun(interaction) {
 		// Defining Things
-        const userToUnban = interaction.options.getUser('user');
+        const userToUnban = interaction.options.getString('user');
         const reason = interaction.options.getString('reason');
 
         // Permissions
@@ -50,13 +50,13 @@ class UserCommand extends BeemoCommand {
         // }
         
         if (Number.isNaN(userToUnban)) {
-            return await interaction.reply({ content: `${emojis.custom.fail} You have inputed something that is not a number!`, ephemeral: true });
+            return await interaction.reply({ content: `${emojis.custom.fail} You have inputted something that is not a number!`, ephemeral: true });
         }
         
-        const user = interaction.client.user.fetch(userToUnban);
+        const user = await interaction.client.users.fetch(userToUnban);
         
         // Unban the user
-        interaction.guild.bans.remove(userToUnban, reason)
+        await interaction.guild.bans.remove( user.id )
             .then(() => {
                 const embed = new EmbedBuilder()
                     .setColor(`${color.success}`)   
@@ -75,10 +75,8 @@ class UserCommand extends BeemoCommand {
             	    .setDescription(`${emojis.custom.fail} I have encountered an error! Please try again later.`)
             	    .setTimestamp();
 
-        	    interaction.reply({ embeds: [errorEmbed], ephemeral: true });
-			    return;
-            });
-        
+        	    return interaction.reply({ embeds: [errorEmbed], ephemeral: true });
+            });   
     }
 };
 

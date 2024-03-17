@@ -25,17 +25,21 @@ class UserCommand extends BeemoCommand {
 			builder //
 				.setName('ban')
 				.setDescription(this.description)
-				.addUserOption(option => 
+                .addStringOption(option =>
+                    option.setName('userid')
+                        .setDescription('The ID of the user to ban')
+                        .setRequired(true))
+                .addUserOption(option => 
                     option.setName('user')
                         .setDescription('The user to ban')
-                        .setRequired(true))
+                        .setRequired(false))
                 .addStringOption(option =>
                     option.setName('reason')
-                        .setDescription('Reason for the banning the user')
-                        .setRequired(true))
+                        .setDescription('The reason for banning the user')
+                        .setRequired(false))
                 .addAttachmentOption(option =>
-                    option.setName('picture')
-                        .setDescription('Attach a picture related to the ban')
+                    option.setName('evidence')
+                        .setDescription('Attach a evidence related to the ban')
                         .setRequired(false)),
 		);
 	}
@@ -45,19 +49,60 @@ class UserCommand extends BeemoCommand {
 	 */
 	async chatInputRun(interaction) {
 		// Defining Things
+        const reason = interaction.options.getString('reason') || 'No reason provided';
+        const evidence = interaction.options.getAttachment('evidence') || 'No evidence provided';
+        const userid = interaction.options.getString('userid');
+        if (userid) {
+            try {
+            if (Number.isNaN(userid)) {
+                return await interaction.reply(`${emojis.custom.fail} You have entered something that is not a **number**. Please make sure you are entering a **valid** User ID!`);
+            }
+            if (interaction.member.id === userid) {
+                return interaction.reply({content: `${emojis.custom.fail} You **cannot** ban yourself!`, ephemeral: true});
+            }
+
+            const user = await interaction.client.users.fetch(userid);
+            if (!user) {
+                return await interaction.reply(`${emojis.custom.fail} You have entered an **Invalid** user ID. Please make sure the User ID is **valid**!`);
+            } else {
+                const banConfirmationEmbed = new EmbedBuilder()
+                .setColor(`${color.success}`)
+                .setDescription(`**${user.tag}** has been successfully **Banned**! \n\n**• Reason:**\n ${emojis.custom.replyend} \`${reason}\``)
+                .setFooter({ text: `${userid}` })
+                .setTimestamp();
+
+                await interaction.guild.members.ban(user, { reason: `${userid}: ${reason}` })
+                return await interaction.reply({ content: '', embeds: [banConfirmationEmbed] });
+                
+            }
+
+            } catch (error) {
+                console.error(error);
+                const errorEmbed = new EmbedBuilder()
+                    .setColor(`${color.fail}`)
+                    .setDescription(`${emojis.custom.fail} **I have encountered an error! Please try again later.**`)
+                    .setTimestamp();
+    
+                return await interaction.reply({ embeds: [errorEmbed], ephemeral: true });
+            };
+            return;
+        }
         const userToBan = interaction.options.getUser('user');
         const banMember = await interaction.guild.members.fetch(userToBan.id);
-        const reason = interaction.options.getString('reason');
-        const picture = interaction.options.getAttachment('picture');
 
         // Permissions
         // if (!interaction.member.permissions.has(PermissionsBitField.Flags.BanMembers)) {
-        //    return await interaction.reply({ content: `${emojis.custom.fail} You are not **authorized** to **execute** this command!`, ephemeral: true});
-        // }
+            //    return await interaction.reply({ content: `${emojis.custom.fail} You are not **authorized** to **execute** this command!`, ephemeral: true});
+            // }
+        
+            
+            if (!banMember) {
+                return await interaction.reply({ content:`${emojis.custom.fail} The **user** mentioned is no longer within the **server**!`, ephemeral: true});
+            }
 
-        if (!banMember) {
-            return await interaction.reply({ content:`${emojis.custom.fail} The **user** mentioned is no longer within the **server**!`, ephemeral: true});
-        }
+            if (banMember.permissions.has(PermissionsBitField.Flags.Administrator)) {
+                return interaction.reply({content: `${emojis.custom.fail} You **cannot** ban **staff** members or people with the **Administrator** permission!`, ephemeral: true});
+            }
 
         if (!banMember.kickable) {
             return await interaction.reply({ content: `${emojis.custom.fail} I **cannot** ban this user because they are either **higher** than me or you!`, ephemeral: true});
@@ -67,44 +112,38 @@ class UserCommand extends BeemoCommand {
             return interaction.reply({content: `${emojis.custom.fail} You **cannot** ban yourself!`, ephemeral: true});
         }
 
-        if (banMember.permissions.has(PermissionsBitField.Flags.Administrator)) {
-            return interaction.reply({content: `${emojis.custom.fail} You **cannot** ban **staff** members or people with the **Administrator** permission!`, ephemeral: true});
-        }
-
         // DM Message
         try {
             const dmEmbed = new EmbedBuilder()
                 .setColor(`${color.fail}`)
                 .setTitle(`\`🚫\` You have been banned from **${interaction.guild.name}**`)
-                .setDescription(`**• Server:**\n > \`${interaction.guild.name}\`\n**• Reason:**\n > \`${reason}\``)
+                .setDescription(`**• Banned by:**\n ${emojis.custom.replyend} \`${interaction.user.displayName}\`\n**• Reason:**\n ${emojis.custom.replyend} \`${reason}\``)
                 .setThumbnail(interaction.guild.iconURL())
-                .setTimestamp()
-                .setFooter({ text: `Banned by ${interaction.user.tag}`, iconURL: interaction.user.displayAvatarURL() });
+                .setFooter({ text: `${userid}` })
+                .setTimestamp();
 
-            if (picture) {
-                dmEmbed.setImage(picture.url);
+            if (evidence) {
+                dmEmbed.setImage(evidence.url);
                 dmEmbed.addFields({ name: 'Related Image:', value: '`👇` See below `👇`' });
             }
 
-            await userToBan.send({ embeds: [dmEmbed] }).catch(error => console.error(`I **couldn\'t** send a DM to ${userToBan.tag}.`, error));
+            await userToBan.send({ embeds: [dmEmbed] }).catch(error => console.error(`I **cannot** send a Direct Message to ${userToBan.tag}.`, error));
             
             // Ban Successful
             const banConfirmationEmbed = new EmbedBuilder()
                 .setColor(`${color.success}`)
-                .setTitle(`${emojis.reg.success} Ban Successful`)
-                .setDescription(`**${userToBan.tag}** has been **Banned**! \n\n**• Reason:**\n ${emojis.custom.replyend} \`${reason}\``)
-                .setTimestamp()
-                .setFooter({ text: `Moderated by ${interaction.user.tag}`, iconURL: interaction.user.displayAvatarURL() });
+                .setDescription(`**${userToBan.tag}** has been successfully **Banned**! \n\n**• Reason:**\n ${emojis.custom.replyend} \`${reason}\``)
+                .setFooter({ text: `${userid}` })
+                .setTimestamp();
 
             //Ban Failed
-            await interaction.guild.members.ban(userToBan, { reason: `Moderated by ${interaction.user.tag}: ${reason}` });
+            await interaction.guild.members.ban(userToBan, { reason: `${userid}: ${reason}` });
             await interaction.reply({ content: '', embeds: [banConfirmationEmbed] });
         } catch (error) {
             console.error(error);
         	const errorEmbed = new EmbedBuilder()
             	.setColor(`${color.fail}`)
-            	.setTitle(`${emojis.custom.fail} Ban Command Error`)
-            	.setDescription(`${emojis.custom.fail} I have encountered an error! Please try again later.`)
+            	.setDescription(`${emojis.custom.fail} **I have encountered an error! Please try again later.**`)
             	.setTimestamp();
 
         	await interaction.reply({ embeds: [errorEmbed], ephemeral: true });

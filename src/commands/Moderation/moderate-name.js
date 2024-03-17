@@ -12,7 +12,7 @@ class UserCommand extends BeemoCommand {
 		super(context, {
 			...options,
 			requiredUserPermissions: ['ManageNicknames'],
-			description: 'Moderate a user`s name'
+			description: 'Moderate a user\'s name'
 		});
 	}
 
@@ -36,7 +36,7 @@ class UserCommand extends BeemoCommand {
 		// Defining Things
 		const userToModerate = await interaction.options.getUser('user');
 		const ModerateUser = await interaction.guild.members.fetch(userToModerate.id);
-		const reason = interaction.options.getString('reason') || 'No Reason Provided';
+		const reason = interaction.options.getString('reason') || 'No reason provided';
 		const nickname = `Moderated Name ${Math.floor(Math.random() * 9999) + 1000}`;
 
 		// Permissions
@@ -68,24 +68,19 @@ class UserCommand extends BeemoCommand {
 
 			const completed = new EmbedBuilder()
 				.setColor(`${color.success}`)
-				.setTitle(`${emojis.reg.success} Name Successfully Moderated`)
-				.setDescription(
-					`**${userToModerate.tag}**'s name has been **moderated**! \n\n• **New Nickname:**\n ${emojis.custom.replyend} \`${nickname}\` \n\n• **Reason:**\n ${emojis.custom.replyend} \`${reason}\``
-				)
-				.setTimestamp()
-				.setFooter({ text: `Moderated by ${interaction.user.displayName}`, iconURL: interaction.user.displayAvatarURL() });
+				.setDescription(`**${userToModerate.tag}**'s name has been **moderated**! \n\n• **New Nickname:**\n ${emojis.custom.replyend} \`${nickname}\` \n\n• **Reason:**\n ${emojis.custom.replyend} \`${reason}\``)
+				.setFooter({ text: `${userToModerate.id}` })
+				.setTimestamp();
 
 			return interaction.reply({ embeds: [completed], ephemeral: false });
 		} catch (error) {
 			console.error(error);
         	const errorEmbed = new EmbedBuilder()
             	.setColor(`${color.fail}`)
-            	.setTitle(`${emojis.custom.fail} Moderate Name Error`)
-            	.setDescription(`${emojis.custom.fail} I have encountered an error! Please try again later.`)
+            	.setDescription(`${emojis.custom.fail} **I have encountered an error! Please try again later.**`)
             	.setTimestamp();
 
-        	await interaction.reply({ embeds: [errorEmbed], ephemeral: true });
-			return;
+        	return await interaction.reply({ embeds: [errorEmbed], ephemeral: true });
 		}
 	}
 }
