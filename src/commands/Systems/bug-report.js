@@ -98,9 +98,9 @@ class UserCommand extends BeemoCommand {
 
 			if (find.length === 0) {
 				await BugReportBlacklist.create({ userID: userId, reason });
-				return await interaction.reply({ content: `${emojis.reg.success} **Successfully Blacklisted!**\n UserID: \`${userId}\` has been **blacklisted** from executing the **bug-report** command\n**Reason:**\n ${emojis.custom.replyend} \`${reason}\``, ephemeral: true});
+				return await interaction.reply({ content: `${emojis.reg.success} **Successfully Blacklisted!**\n\`${userId}\` has been **blacklisted** from executing the **bug-report** command\n\n**Reason:**\n ${emojis.custom.replyend} \`${reason}\``, ephemeral: true});
 			}
-			return await interaction.reply({ content: `${emojis.reg.success} **Failed to Backlist!**\n UserID: \`${userId}\` **cannot** be **blacklisted** from executing the **bug-report** command as they have already been **blacklisted**`, ephemeral: true});
+			return await interaction.reply({ content: `${emojis.reg.success} **Failed to Backlist!**\n\n\`${userId}\` **cannot** be **blacklisted** from executing the **bug-report** command as they have already been **blacklisted**`, ephemeral: true});
 
 		}
 
@@ -113,9 +113,9 @@ class UserCommand extends BeemoCommand {
 
 			if (find.length !== 0) {
 				await BugReportBlacklist.findOneAndDelete({ userID: userId });
-				return await interaction.reply({ content: `${emojis.reg.success} **Successfully Unblacklisted!**\n\n UserID: \`${userId}\` has been **sucessfully** Unblacklisted`, ephemeral: true })
+				return await interaction.reply({ content: `${emojis.reg.success} **Successfully Unblacklisted!**\n\`${userId}\` has been **sucessfully** Unblacklisted`, ephemeral: true })
 			}
-			return await interaction.reply({ content: `${emojis.reg.success} **Failed to Unblacklist!**\n UserID: \`${userId}\` **cannot** be **blacklisted** from **executing** the **bug-report** command as they have already been **blacklisted**`, ephemeral: true});
+			return await interaction.reply({ content: `${emojis.reg.success} **Failed to Unblacklist!**\n\n\`${userId}\` **cannot** be **blacklisted** from **executing** the **bug-report** command as they have already been **blacklisted**`, ephemeral: true});
 
 		};
 
@@ -124,8 +124,7 @@ class UserCommand extends BeemoCommand {
 			if (find.length !== 0) {
 				const blacklistEmbed = new EmbedBuilder()
 				.setColor(`${color.fail}`)
-				.setTitle(`${emojis.reg.fail} Bug Report Blacklist`)
-				.setDescription(`${emojis.custom.fail} You have been blacklisted from running the bug-report command.\nPlease join our discord server fro more info.`)
+				.setDescription(`${emojis.custom.warning} You have been **blacklisted** from **executing** the bug-report command! Please join our discord server [here](https://discord.gg/2XunevgrHD) for more info.`)
 				.setTimestamp()
 				.setFooter({ text: `Requested by ${interaction.user.displayName}`, iconURL: interaction.user.displayAvatarURL() });
 
