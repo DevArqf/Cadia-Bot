@@ -24,8 +24,8 @@ class UserCommand extends BeemoCommand {
 			builder //
 				.setName('mute')
 				.setDescription(this.description)
+				.addUserOption((option) => option.setName('user').setDescription('The user to mute').setRequired(true))
 				.addStringOption((option) => option.setName('time').setDescription('The duration to mute the user (e.g., 1m, 1h, 1d)').setRequired(true))
-				.addUserOption((option) => option.setName('user').setDescription('The user to mute').setRequired(false))
 				.addStringOption((option) => option.setName('reason').setDescription('Reason for the mute').setRequired(false))
 				.addStringOption((option) => option.setName('userid').setDescription('The id of the user to mute').setRequired(false))
 		);
@@ -39,7 +39,7 @@ class UserCommand extends BeemoCommand {
 			// Defining Things
 			const userToMute = interaction.options.getUser('user') || await interaction.client.users.fetch(await interaction.options.getString('userid'));
 			const muteMember = await interaction.guild.members.fetch(userToMute.id);
-			const reason = interaction.options.getString('reason') || 'No Reason Provided';
+			const reason = interaction.options.getString('reason') || 'No reason provided';
 			const timeString = interaction.options.getString('time');
 
 			if (!muteMember) {
@@ -73,18 +73,16 @@ class UserCommand extends BeemoCommand {
 			// Reply with confirmation
 			const muteConfirmationEmbed = new EmbedBuilder()
 				.setColor(`${color.success}`)
-				.setTitle(`${emojis.reg.success} Successfully Muted User`)
-				.setDescription(`**${userToMute.tag}** has been **Muted**! \n\n**• Reason:**\n ${emojis.custom.replyend} \`${reason}\``)
-				.setTimestamp()
-				.setFooter({ text: `Moderated by ${interaction.user.tag}`, iconURL: interaction.user.displayAvatarURL() });
+				.setDescription(`**${userToMute.tag}** has been successfully **Muted**! \n\n**• Reason:**\n ${emojis.custom.replyend} \`${reason}\``)
+				.setFooter({ text: `${userToMute.id}` })
+				.setTimestamp();
 
 			return interaction.reply({ embeds: [muteConfirmationEmbed], ephemeral: false });
 		} catch (error) {
 			console.error(error);
         	const errorEmbed = new EmbedBuilder()
             	.setColor(`${color.fail}`)
-            	.setTitle(`${emojis.custom.fail} Mute Command Error`)
-            	.setDescription(`${emojis.custom.fail} I have encountered an error! Please try again later.`)
+            	.setDescription(`${emojis.custom.fail} **I have encountered an error! Please try again later.**`)
             	.setTimestamp();
 
         	await interaction.reply({ embeds: [errorEmbed], ephemeral: true });

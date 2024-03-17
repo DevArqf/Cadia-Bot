@@ -24,7 +24,7 @@ class UserCommand extends BeemoCommand {
 			builder //
 				.setName('unmute')
 				.setDescription(this.description)
-				.addUserOption((option) => option.setName('user').setDescription('The user to unmute').setRequired(false))
+				.addUserOption((option) => option.setName('user').setDescription('The user to unmute').setRequired(true))
 				.addStringOption((option) => option.setName('reason').setDescription('Reason for the unmute').setRequired(false))
 				.addStringOption((option) => option.setName('userid').setDescription('The id of the user to unmute').setRequired(false))
 		);
@@ -37,7 +37,7 @@ class UserCommand extends BeemoCommand {
 		// Defining Things
 		const userToUnmute = interaction.options.getUser('user') || await interaction.client.users.fetch(await interaction.options.getString('userid')) ;
 		const unmuteMember = await interaction.guild.members.fetch(userToUnmute.id);
-		const reason = interaction.options.getString('reason') || 'No Reason Provided';
+		const reason = interaction.options.getString('reason') || 'No reason provided';
 
 		if (!unmuteMember) {
 			return await interaction.reply({
@@ -68,18 +68,16 @@ async function handleUnmute(interaction, userToUnmute, unmuteMember, reason) {
 		// Reply with confirmation
 		const unmuteConfirmationEmbed = new EmbedBuilder()
 			.setColor(`${color.success}`)
-			.setTitle(`${emojis.reg.success} Successfully Unmuted User`)
 			.setDescription(`**${userToUnmute.tag}** has been **Unmuted**! \n\n**• Reason:**\n ${emojis.custom.replyend} \`${reason}\``)
-			.setTimestamp()
-			.setFooter({ text: `Moderated by ${interaction.user.tag}`, iconURL: interaction.user.displayAvatarURL() });
+			.setFooter({ text: `${userToUnmute.id}` })
+			.setTimestamp();
 
 		return interaction.reply({ embeds: [unmuteConfirmationEmbed], ephemeral: false });
 	} catch (error) {
 		console.error(error);
         const errorEmbed = new EmbedBuilder()
             .setColor(`${color.fail}`)
-            .setTitle(`${emojis.custom.fail} Unmute Command Error`)
-            .setDescription(`${emojis.custom.fail} I have encountered an error! Please try again later.`)
+            .setDescription(`${emojis.custom.fail} **I have encountered an error! Please try again later.**`)
             .setTimestamp();
 
         await interaction.reply({ embeds: [errorEmbed], ephemeral: true });
