@@ -55,7 +55,7 @@ class UserCommand extends BeemoCommand {
         if (userid) {
             try {
             if (Number.isNaN(userid)) {
-                return await interaction.reply('Can not ban user');
+                return await interaction.reply(`${emojis.custom.fail} You have entered the wrong ID or you have entered characters instead of numbers. Verify and check to see if the ID was correct!`);
             }
             if (interaction.member.id === userid) {
                 return interaction.reply({content: `${emojis.custom.fail} You **cannot** ban yourself!`, ephemeral: true});
