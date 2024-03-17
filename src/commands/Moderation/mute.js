@@ -24,11 +24,10 @@ class UserCommand extends BeemoCommand {
 			builder //
 				.setName('mute')
 				.setDescription(this.description)
-				.addUserOption((option) => option.setName('user').setDescription('The user to mute').setRequired(true))
-				.addStringOption((option) =>
-					option.setName('time').setDescription('The duration to mute the user (e.g., 1m, 1h, 1d)').setRequired(true)
-				)
+				.addStringOption((option) => option.setName('time').setDescription('The duration to mute the user (e.g., 1m, 1h, 1d)').setRequired(true))
+				.addUserOption((option) => option.setName('user').setDescription('The user to mute').setRequired(false))
 				.addStringOption((option) => option.setName('reason').setDescription('Reason for the mute').setRequired(false))
+				.addStringOption((option) => option.setName('userid').setDescription('The id of the user to mute').setRequired(false))
 		);
 	}
 
@@ -38,7 +37,7 @@ class UserCommand extends BeemoCommand {
 	async chatInputRun(interaction) {
 		try {
 			// Defining Things
-			const userToMute = interaction.options.getUser('user');
+			const userToMute = interaction.options.getUser('user') || await interaction.client.users.fetch(await interaction.options.getString('userid'));
 			const muteMember = await interaction.guild.members.fetch(userToMute.id);
 			const reason = interaction.options.getString('reason') || 'No Reason Provided';
 			const timeString = interaction.options.getString('time');

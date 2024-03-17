@@ -25,17 +25,21 @@ class UserCommand extends BeemoCommand {
 			builder //
 				.setName('ban')
 				.setDescription(this.description)
-				.addUserOption(option => 
-                    option.setName('user')
-                        .setDescription('The user to ban')
-                        .setRequired(true))
                 .addStringOption(option =>
                     option.setName('reason')
                         .setDescription('Reason for the banning the user')
                         .setRequired(true))
+				.addUserOption(option => 
+                    option.setName('user')
+                        .setDescription('The user to ban')
+                        .setRequired(false))
                 .addAttachmentOption(option =>
                     option.setName('picture')
                         .setDescription('Attach a picture related to the ban')
+                        .setRequired(false))
+                .addStringOption(option =>
+                    option.setName('userid')
+                        .setDescription('Ban a user using their user id')
                         .setRequired(false)),
 		);
 	}
@@ -45,19 +49,64 @@ class UserCommand extends BeemoCommand {
 	 */
 	async chatInputRun(interaction) {
 		// Defining Things
-        const userToBan = interaction.options.getUser('user');
-        const banMember = await interaction.guild.members.fetch(userToBan.id);
         const reason = interaction.options.getString('reason');
         const picture = interaction.options.getAttachment('picture');
+        const userid = interaction.options.getString('userid');
+        if (userid) {
+            try {
+            if (Number.isNaN(userid)) {
+                return await interaction.reply('Can not ban user');
+            }
+            if (interaction.member.id === userid) {
+                return interaction.reply({content: `${emojis.custom.fail} You **cannot** ban yourself!`, ephemeral: true});
+            }
+
+            const user = await interaction.client.users.fetch(userid);
+            if (!user) {
+                return await interaction.reply('Invalaid user id')
+            } else {
+                const banConfirmationEmbed = new EmbedBuilder()
+                .setColor(`${color.success}`)
+                .setTitle(`${emojis.reg.success} Ban Successful`)
+                .setDescription(`**${user.tag}** has been **Banned**! \n\n**• Reason:**\n ${emojis.custom.replyend} \`${reason}\``)
+                .setTimestamp()
+                .setFooter({ text: `Moderated by ${interaction.user.tag}`, iconURL: interaction.user.displayAvatarURL() });
+
+                await interaction.guild.members.ban(user, { reason: `Moderated by ${interaction.user.tag}: ${reason}` })
+                return await interaction.reply({ content: '', embeds: [banConfirmationEmbed] });
+                
+            }
+
+            } catch (error) {
+                console.error(error);
+                const errorEmbed = new EmbedBuilder()
+                    .setColor(`${color.fail}`)
+                    .setTitle(`${emojis.custom.fail} Ban Command Error`)
+                    .setDescription(`${emojis.custom.fail} I have encountered an error! Please try again later.`)
+                    .setTimestamp();
+    
+                return await interaction.reply({ embeds: [errorEmbed], ephemeral: true });
+            };
+            return;
+        }
+        const userToBan = interaction.options.getUser('user');
+        const banMember = await interaction.guild.members.fetch(userToBan.id);
+
+
 
         // Permissions
         // if (!interaction.member.permissions.has(PermissionsBitField.Flags.BanMembers)) {
-        //    return await interaction.reply({ content: `${emojis.custom.fail} You are not **authorized** to **execute** this command!`, ephemeral: true});
-        // }
+            //    return await interaction.reply({ content: `${emojis.custom.fail} You are not **authorized** to **execute** this command!`, ephemeral: true});
+            // }
+        
+            
+            if (!banMember) {
+                return await interaction.reply({ content:`${emojis.custom.fail} The **user** mentioned is no longer within the **server**!`, ephemeral: true});
+            }
 
-        if (!banMember) {
-            return await interaction.reply({ content:`${emojis.custom.fail} The **user** mentioned is no longer within the **server**!`, ephemeral: true});
-        }
+            if (banMember.permissions.has(PermissionsBitField.Flags.Administrator)) {
+                return interaction.reply({content: `${emojis.custom.fail} You **cannot** ban **staff** members or people with the **Administrator** permission!`, ephemeral: true});
+            }
 
         if (!banMember.kickable) {
             return await interaction.reply({ content: `${emojis.custom.fail} I **cannot** ban this user because they are either **higher** than me or you!`, ephemeral: true});
@@ -65,10 +114,6 @@ class UserCommand extends BeemoCommand {
 
         if (interaction.member.id === banMember.id) {
             return interaction.reply({content: `${emojis.custom.fail} You **cannot** ban yourself!`, ephemeral: true});
-        }
-
-        if (banMember.permissions.has(PermissionsBitField.Flags.Administrator)) {
-            return interaction.reply({content: `${emojis.custom.fail} You **cannot** ban **staff** members or people with the **Administrator** permission!`, ephemeral: true});
         }
 
         // DM Message

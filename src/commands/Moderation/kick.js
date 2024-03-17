@@ -1,13 +1,13 @@
 const { emojis, color } = require('../../config');
-const { EmbedBuilder } = require('discord.js');
+const { EmbedBuilder, PermissionsBitField } = require('discord.js');
 const BeemoCommand = require('../../lib/structures/commands/BeemoCommand');
 
 class UserCommand extends BeemoCommand {
 	constructor(context, options) {
 		super(context, {
 			...options,
+			requiredUserPermissions: ['KickMembers'],
 			description: 'Kick a member from the server',
-			requiredUserPermissions: ['KickMembers']
 		});
 	}
 
@@ -20,8 +20,9 @@ class UserCommand extends BeemoCommand {
 			builder //
 				.setName(this.name)
 				.setDescription(this.description)
-				.addUserOption((option) => option.setName('user').setDescription('The user to kick').setRequired(true))
 				.addStringOption((option) => option.setName('reason').setDescription('Reason for kicking the user').setRequired(true))
+				.addUserOption((option) => option.setName('user').setDescription('The user to kick').setRequired(false))
+				.addStringOption((option) => option.setName('userid').setDescription('The id of the user to moderate').setRequired(false))
 		);
 	}
 
@@ -30,7 +31,7 @@ class UserCommand extends BeemoCommand {
 	 */
 	async chatInputRun(interaction) {
 		// Defining Things
-		const userToKick = interaction.options.getUser('user');
+		const userToKick = interaction.options.getUser('user') || await interaction.client.users.fetch(await interaction.options.getString('userid'));
 		const kickMember = await interaction.guild.members.fetch(userToKick.id);
 		const reason = interaction.options.getString('reason');
 
@@ -65,18 +66,17 @@ class UserCommand extends BeemoCommand {
 
 		// DM Message
 		try {
-			const dmEmbed = EmbedBuilder()
+			const dmEmbed = new EmbedBuilder()
 				.setColor(`${color.default}`)
 				.setTitle(`\`🚫\` You have been kicked from **${interaction.guild.name}**`)
 				.setDescription(`• **Kicked by:** \n${emojis.custom.replyend} **${interaction.user.displayName}** \n\n• **Reason:** \n${emojis.custom.replyend} \`${reason}\``)
-				.setThumbnail({ url: interaction.guild.iconURL() })
 				.setFooter({ text: `Moderated by ${interaction.user.tag}`, iconURL: interaction.user.displayAvatarURL() })
 				.setTimestamp();
 
 			await userToKick.send({ embeds: [dmEmbed] }).catch((error) => console.error(`I couldn\`t send a DM to ${userToKick.tag}.`, error));
 
 			// Kick Successful
-			const kickConfirmationEmbed = EmbedBuilder()
+			const kickConfirmationEmbed = new EmbedBuilder()
 				.setColor(`${color.success}`)
 				.setTitle(`${emojis.reg.success} Kick Successful`)
 				.setDescription(`**${userToKick.tag}** has been **Kicked**! \n\n**• Reason**\n ${emojis.custom.replyend} \`${reason}\``)
@@ -93,6 +93,7 @@ class UserCommand extends BeemoCommand {
             	.setTitle(`${emojis.custom.fail} Kick Command Error`)
             	.setDescription(`${emojis.custom.fail} I have encountered an error! Please try again later.`)
             	.setTimestamp();
+			await interaction.reply({ embeds: [errorEmbed], ephemeral: true });	
 		}
 	}
 }
