@@ -1,6 +1,6 @@
 const BeemoCommand = require('../../lib/structures/commands/BeemoCommand');
 const { PermissionLevels } = require('../../lib/types/Enums');
-const { color, emojis } = require('../../config');
+const { color, emojis, ClientConfig } = require('../../config');
 const { EmbedBuilder } = require('discord.js');
 
 class UserCommand extends BeemoCommand {
@@ -26,7 +26,7 @@ class UserCommand extends BeemoCommand {
                 .addUserOption((option) => option
                     .setName('user')
                     .setDescription('The user you want to view information of')
-                    .setRequired(true)),
+                    .setRequired(false)),
 		);
 	}
 
@@ -36,8 +36,18 @@ class UserCommand extends BeemoCommand {
 	async chatInputRun(interaction) {
 
 		const user = interaction.options.getUser('user') || interaction.user;
-        const member = await interaction.guild.members.fetch(user.id);
-		const icon = interaction.user.displayAvatarURL();
+        const member = await interaction.guild.members.cache.get(user.id)
+        if (!member) {
+            const embed = new EmbedBuilder()
+            .setColor(`${color.fail}`)
+            .setAuthor({ name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL() })
+            .setDescription(`I can not get this users information as they have **left** the server.`)
+            .setTimestamp();
+            
+            return await interaction.reply({ embeds: [embed] });
+        };
+        
+        const icon = user.displayAvatarURL();
         const tag = user.tag;
 
         const embed = new EmbedBuilder()
