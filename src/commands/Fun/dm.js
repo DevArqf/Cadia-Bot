@@ -11,7 +11,7 @@ class UserCommand extends BeemoCommand {
 	constructor(context, options) {
 		super(context, {
 			...options,
-			description: "Send a DM to a user within the server"
+			description: "Send a Anonymous DM to a user within the server"
 		});
 	}
 
@@ -23,7 +23,6 @@ class UserCommand extends BeemoCommand {
 			builder //
 				.setName('dm')
 				.setDescription(this.description)
-                .setDefaultMemberPermissions(PermissionFlagsBits.Administrator)
         .addUserOption(option =>
             option
                 .setName('user')
@@ -34,10 +33,6 @@ class UserCommand extends BeemoCommand {
                 .setName('message')
                 .setDescription('The message that the user should receive')
                 .setRequired(true))
-        .addStringOption(option =>
-            option
-                .setName('reason')
-                .setDescription('The reason for the DM'))
 		);
 	}
 
@@ -47,26 +42,23 @@ class UserCommand extends BeemoCommand {
 	async chatInputRun(interaction) {
 		const user = interaction.options.getUser('user');
         const message = interaction.options.getString('message');
-        const reason = interaction.options.getString('reason' || 'No reason provided');
  
         const embed = new EmbedBuilder()
-            .setTitle('`📮` Direct Message Received')
+            .setTitle('`📮` Anonymous DM Received')
             .setColor(`${color.default}`)
             .addFields(
                 { name: '`📝` Message', value: `${emojis.custom.replyend} ${message}` },
                 { name: '`💻` Server', value: `${emojis.custom.replyend} ${interaction.guild.name}` },
-                { name: '`🔨` Reason', value: `${emojis.custom.replyend} ${reason}` },
-                { name: '`👤` Author', value: `${emojis.custom.replyend} ${interaction.user}` },
             )
-            .setFooter({ text: `${interaction.user.displayName}`, iconURL: interaction.user.avatarURL() })
+            .setFooter({ text: `Sent by Anonymous` })
             .setTimestamp();
  
             await user.send({ embeds: [embed] })
                 .then(() => {
-                    interaction.reply({ content: `${emojis.custom.success} The message has been **successfully** sent to **${user.tag}**!` });
+                    interaction.reply({ content: `${emojis.custom.success} The message has been **successfully** sent to **${user.tag}**!`, ephemeral: true });
                 })
                 .catch(() => {
-                    interaction.reply({ content: `${emojis.custom.fail} **${user.tag}** has Direct Messages **disabled**!` });
+                    interaction.reply({ content: `${emojis.custom.fail} **${user.tag}** has Direct Messages **disabled**!`, ephemeral: true });
                 });
 	}
 };
