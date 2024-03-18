@@ -35,7 +35,7 @@ class UserCommand extends BeemoCommand {
 	async chatInputRun(interaction) {
 		// Defining Things
 		const userToUnmute = interaction.options.getUser('user');
-		const unmuteMember = await interaction.guild.members.fetch(userToUnmute.id);
+		const unmuteMember = await interaction.guild.members.cache.get(userToUnmute.id);
 		const reason = interaction.options.getString('reason') || 'No reason provided';
 
 		if (!unmuteMember) {

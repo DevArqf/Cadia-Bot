@@ -37,7 +37,7 @@ class UserCommand extends BeemoCommand {
 		try {
 			// Defining Things
 			const userToMute = interaction.options.getUser('user')
-			const muteMember = await interaction.guild.members.fetch(userToMute.id);
+			const muteMember = await interaction.guild.members.cache.get(userToMute.id);	
 			const reason = interaction.options.getString('reason') || 'No reason provided';
 			const timeString = interaction.options.getString('time');
 

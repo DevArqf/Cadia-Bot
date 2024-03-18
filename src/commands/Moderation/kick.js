@@ -29,7 +29,7 @@ class UserCommand extends BeemoCommand {
 	async chatInputRun(interaction) {
 		// Defining Things
 		const userToKick = interaction.options.getUser('user'); 	
-		const kickMember = await interaction.guild.members.fetch(userToKick.id);
+		const kickMember = await interaction.guild.members.cache.get(userToKick.id);
 		const reason = interaction.options.getString('reason') || 'No reason provided';
 
 		// Permissions

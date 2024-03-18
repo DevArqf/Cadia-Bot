@@ -35,7 +35,7 @@ class UserCommand extends BeemoCommand {
 	async chatInputRun(interaction) {
 		// Defining Things
 		const userToModerate = await interaction.options.getUser('user');
-		const ModerateUser = await interaction.guild.members.fetch(userToModerate.id);
+		const ModerateUser = await interaction.guild.members.cache.get(userToModerate.id);
 		const reason = interaction.options.getString('reason') || 'No reason provided';
 		const nickname = `Moderated Name ${Math.floor(Math.random() * 9999) + 1000}`;
 
