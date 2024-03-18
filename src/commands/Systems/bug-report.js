@@ -138,7 +138,7 @@ class UserCommand extends BeemoCommand {
 			const BugReportChanel = interaction.client.channels.cache.get(channels.bugReports);
 
 		const sentEmbed = new EmbedBuilder()
-		.setColor(`${color.success}`)
+		.setColor(`${color.random}`)
 		.setDescription(`${emojis.custom.success} **Thank you for submitting this bug report.** The Developers will **investigate** the bug **very** soon.\n\n **Issue:**\n${emojis.custom.replyend} ${issue}\n\n **Notes:**\n${emojis.custom.replyend} ${notes} \n\n**Image:**\n ${image ? `${emojis.custom.replyend} Please look below` : `${emojis.custom.replyend} No picture provided`}\n\n ***Abusing** this feature will **result** in you getting **blacklisted***!`)
 		.setImage(image ? image.url : null)
 		.setTimestamp()
