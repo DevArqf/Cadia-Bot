@@ -82,7 +82,7 @@ class UserCommand extends BeemoCommand {
 					interaction.reply({ content: `${emojis.custom.fail} **${user.tag}** has Direct Messages **disabled**!` });
 				});
 		} else if (subcommand === 'toggle-dms') {
-			const currentSettings = await UserSettingsSchema.findOne({ userId: interaction.user.id });
+			let currentSettings = await UserSettingsSchema.findOne({ userId: interaction.user.id });
 
 			if (currentSettings) {
 				currentSettings.receiveDMs = !currentSettings.receiveDMs;
