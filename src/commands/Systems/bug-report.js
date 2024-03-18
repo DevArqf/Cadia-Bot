@@ -175,7 +175,30 @@ class UserCommand extends BeemoCommand {
 						
 						if (customId === 'solve') {
 				try {
-					await interaction.message.delete();
+					
+					const user = interaction.user.displayName;
+					const newActionRowEmbeds = interaction.message.components.map((oldActionRow) => {
+						const updatesActionRow = new ActionRowBuilder();
+
+						updatesActionRow.addComponents(
+							oldActionRow.components.map((buttonComponent) => {
+								const newButton = new ButtonBuilder()
+									.setCustomId(buttonComponent.customId)
+									.setLabel(`Solved by ${user}`)
+									.setStyle(ButtonStyle.Success)
+									.setDisabled(true)
+
+							return newButton;
+							})
+						);
+						return updatesActionRow;
+					});
+					const successEmbed = new EmbedBuilder()
+						.setColor(`${color.success}`)
+						.setDescription(`${emojis.reg.success} **Marked Resolved**\n\nThis bug report has been **successfully** been marked as **resolved**.`)
+					await interaction.reply({ embeds: [successEmbed] , ephemeral: true });
+					await interaction.message.edit({ components: newActionRowEmbeds });
+
 				} catch (error) {
 					console.error(error);
 					const errorEmbed = new EmbedBuilder()
