@@ -32,7 +32,7 @@ class UserCommand extends BeemoCommand {
 	 */
 	async chatInputRun(interaction) {
 		// const loadingMessage = RandomLoadingMessage[Math.floor(Math.random() * RandomLoadingMessage.length)];
-		const sent = interaction.reply({ embeds: [new EmbedBuilder().setColor(`${color.invis}`).setDescription(`${emojis.custom.loading} **Currently fetching the latency, this might take a while**`)] });
+		const sent = await interaction.reply({ embeds: [new EmbedBuilder().setColor(`${color.invis}`).setDescription(`${emojis.custom.loading} **Currently fetching the latency, this might take a while**`)] });
 
 		const diff = sent.createdTimestamp - interaction.createdTimestamp;
 
