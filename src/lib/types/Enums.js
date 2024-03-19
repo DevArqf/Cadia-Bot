@@ -7,6 +7,7 @@
  * @property {number} Moderator - Permissions for Moderators.
  * @property {number} Administrator - Permissions for Administrators.
  * @property {number} ServerOwner - Permissions for Server Owners.
+ * @property {number} Developer - Permissions for Developers
  * @property {number} BotOwner - Permissions for Bot Owners.
  * @description Represents permission levels for commands.
  */

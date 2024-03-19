@@ -15,7 +15,7 @@ class UserEvent extends Listener {
     async run(message) {
         if (message.author.bot) return;
 
-        if (message.mentions.has(message.client.user)) {
+        if (message.content.includes("<@1200475110235197631>")) {
 
             const commands = this.container.stores.get('commands').size;
 

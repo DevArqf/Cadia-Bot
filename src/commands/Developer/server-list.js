@@ -12,7 +12,7 @@ class UserCommand extends BeemoCommand {
 	constructor(context, options) {
 		super(context, {
 			...options,
-			permissionLevel: PermissionLevels.Developer,
+			permissionLevel: PermissionLevels.BotOwner,
 			description: 'Shows all of the servers I am in (DEV ONLY)'
 		});
 	}

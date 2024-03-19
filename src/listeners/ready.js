@@ -5,6 +5,7 @@ const os = require('os');
 const { default: mongoose } = require('mongoose');
 const { envParseString } = require('@skyra/env-utilities');
 const dev = process.env.NODE_ENV !== 'production';
+const { ActivityType } = require('discord.js')
 
 class UserEvent extends Listener {
 	style = dev ? yellow : blue;
@@ -24,8 +25,7 @@ class UserEvent extends Listener {
 		this._printBanner(info);
 		this._printStoreDebugInformation();
 		this._displayAdvancedConsole();
-
-		setBotActivities(client);
+		this._setBotActivities(client);
 	}
 
 	/**
@@ -112,6 +112,43 @@ ${line09}
 		logger.info(this._styleStore(last, true));
 	}
 
+	async _setBotActivities(client) {
+		const totalServers = client.guilds.cache.size;
+		const totalMembers = client.guilds.cache.reduce((total, guild) => total + guild.memberCount, 0);
+		const totalCommands = this.container.stores.get('commands').size;
+	
+		client.user.setActivity({
+			type: ActivityType.Listening,
+			name: `${totalServers} Servers`
+		});
+	
+		setTimeout(() => {
+			client.user.setActivity({
+				type: ActivityType.Listening,
+				name: '/help'
+			});
+	
+			setTimeout(() => {
+				client.user.setActivity({
+					type: ActivityType.Watching,
+					name: `${totalCommands} Commands`
+				});
+				
+				setTimeout(() => {
+					client.user.setActivity({
+						type: ActivityType.Listening,
+						name: `${totalMembers} Users`
+					});
+					
+					setTimeout(() => {
+						this._setBotActivities(client);
+					}, 20000);
+					
+				}, 20000);
+			}, 20000);
+		}, 20000);
+	};
+
 	/**
 	 *
 	 * @param {Store<any>} store
@@ -121,36 +158,7 @@ ${line09}
 	_styleStore(store, last) {
 		return gray(`${last ? '└─' : '├─'} Loaded ${this.style(store.size.toString().padEnd(3, ' '))} ${store.name}.`);
 	}
-}
-
-const { ActivityType } = require('discord.js');
-
-function setBotActivities(client) {
-	const totalServers = client.guilds.cache.size;
-	const totalMembers = client.guilds.cache.reduce((total, guild) => total + guild.memberCount, 0);
-
-	client.user.setActivity({
-		type: ActivityType.Watching,
-		name: `${totalServers} Servers`
-	});
-
-	setTimeout(() => {
-		client.user.setActivity({
-			type: ActivityType.Listening,
-			name: '/𝗵𝗲𝗹𝗽'
-		});
-		setTimeout(() => {
-			client.user.setActivity({
-				type: ActivityType.Watching,
-				name: `${totalMembers} Total Members`
-			});
-
-			setTimeout(() => {
-				setBotActivities(client);
-			}, 20000);
-		}, 20000);
-	}, 20000);
-}
+};
 
 module.exports = {
 	UserEvent

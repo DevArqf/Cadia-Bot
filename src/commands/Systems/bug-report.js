@@ -138,7 +138,7 @@ class UserCommand extends BeemoCommand {
 			const BugReportChanel = interaction.client.channels.cache.get(channels.bugReports);
 
 		const sentEmbed = new EmbedBuilder()
-		.setColor(`${color.success}`)
+		.setColor(`${color.random}`)
 		.setDescription(`${emojis.custom.success} **Thank you for submitting this bug report.** The Developers will **investigate** the bug **very** soon.\n\n **Issue:**\n${emojis.custom.replyend} ${issue}\n\n **Notes:**\n${emojis.custom.replyend} ${notes} \n\n**Image:**\n ${image ? `${emojis.custom.replyend} Please look below` : `${emojis.custom.replyend} No picture provided`}\n\n ***Abusing** this feature will **result** in you getting **blacklisted***!`)
 		.setImage(image ? image.url : null)
 		.setTimestamp()
@@ -154,6 +154,7 @@ class UserCommand extends BeemoCommand {
 			{ name: '**Image:**', value: `${image ? `${emojis.custom.replyend} Please look below` : `${emojis.custom.replyend} No picture provided`}` },
 			])
 		.setTimestamp()
+		.setFooter({ text: `Submitted by ${interaction.user.displayName}`, iconURL: interaction.user.displayAvatarURL() })
 		.setImage(image ? image.url : null);
 			
 			const button = new ActionRowBuilder()
@@ -174,7 +175,30 @@ class UserCommand extends BeemoCommand {
 						
 						if (customId === 'solve') {
 				try {
-					await interaction.message.delete();
+					
+					const user = interaction.user.displayName;
+					const newActionRowEmbeds = interaction.message.components.map((oldActionRow) => {
+						const updatesActionRow = new ActionRowBuilder();
+
+						updatesActionRow.addComponents(
+							oldActionRow.components.map((buttonComponent) => {
+								const newButton = new ButtonBuilder()
+									.setCustomId(buttonComponent.customId)
+									.setLabel(`Solved by ${user}`)
+									.setStyle(ButtonStyle.Success)
+									.setDisabled(true)
+
+							return newButton;
+							})
+						);
+						return updatesActionRow;
+					});
+					const successEmbed = new EmbedBuilder()
+						.setColor(`${color.success}`)
+						.setDescription(`${emojis.reg.success} **Marked Resolved**\n\nThis bug report has been **successfully** been marked as **resolved**.`)
+					await interaction.reply({ embeds: [successEmbed] , ephemeral: true });
+					await interaction.message.edit({ components: newActionRowEmbeds });
+
 				} catch (error) {
 					console.error(error);
 					const errorEmbed = new EmbedBuilder()
