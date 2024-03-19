@@ -1,4 +1,4 @@
-const { Schema, model } = require('mongoose');
+const { Schema, mongoose } = require('mongoose');
 
 let releasenotes = new Schema({
     Updates: String,
@@ -7,4 +7,6 @@ let releasenotes = new Schema({
     Version: Number
 });
 
-module.exports = model('releasenotes', releasenotes);
+const ReleaseNotesSchema = mongoose.model('releasenotes', releasenotes);
+
+module.exports = { ReleaseNotesSchema };

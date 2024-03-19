@@ -1,5 +1,6 @@
 const { Listener, Events } = require('@sapphire/framework');
-const { ButtonStyle, ActionRowBuilder, ButtonBuilder, Guild } = require('discord.js');
+const { ButtonStyle, ActionRowBuilder, ButtonBuilder, Guild, EmbedBuilder, ChannelType } = require('discord.js');
+const { color, emojis } = require('../config');
 
 class UserEvent extends Listener {
 	/**
@@ -24,43 +25,42 @@ class UserEvent extends Listener {
 				.first();
 			const embed = new EmbedBuilder()
 				.setColor(`${color.default}`)
-				.setTitle("`⚙️` Beemo's System Message")
 				.setDescription(
-					"**• Thank you for adding me to your server!**\n ┌ If you need any help, please feel free to join\n └ our support server.\n\n **• Important**\n ┌ Make sure the bot's role is at the highest position\n └ in the role hierarchy to prevent any bugs or issues."
+					`${emojis.custom.wave} **Thank you for adding me to your server!**\n ${emojis.custom.replystart} If you need any help, please feel free to join\n ${emojis.custom.replyend} our support server.\n\n ${emojis.custom.warning} **Important**\n ${emojis.custom.replystart} Make sure the bot's role is at the highest position\n ${emojis.custom.replyend} in the role hierarchy to prevent any bugs or issues.`
 				)
 				.setThumbnail(avatarURL);
 
 			const channel = new ActionRowBuilder().addComponents(
 				new ButtonBuilder()
-					.setEmoji(':bl_Home:')
+					.setEmoji(`${emojis.custom.home}`)
 					.setLabel('Support Server')
 					.setURL('https://discord.gg/SrYexYcKZ2')
 					.setStyle(ButtonStyle.Link),
 
 				new ButtonBuilder()
-					.setEmoji(':bl_person_add:')
+					.setEmoji(`${emojis.custom.personadd}`)
 					.setLabel('Invite bot')
-					.setURL('https://discord.com/api/oauth2/authorize?client_id=1200475110235197631&permissions=70368744177655&scope=bot')
+					.setURL('https://discord.com/api/oauth2/authorize?client_id=1200475110235197631&scope=applications.commands+bot&permissions=8')
 					.setStyle(ButtonStyle.Link),
 
 				new ButtonBuilder()
-					.setEmoji(':bl_Chart:')
+					.setEmoji(`${emojis.custom.chart}`)
 					.setLabel('Vote')
-					.setURL('https://top.gg/bot/1100445112980471889')
+					.setURL('https://top.gg/bot/1200475110235197631')
 					.setStyle(ButtonStyle.Link)
 			);
 
 			const dmbot = new ActionRowBuilder().addComponents(
 				new ButtonBuilder()
-					.setEmoji(':bl_Home:')
+					.setEmoji(`${emojis.custom.home}`)
 					.setLabel('Support Server')
 					.setURL('https://discord.gg/SrYexYcKZ2')
 					.setStyle(ButtonStyle.Link),
 
 				new ButtonBuilder()
-					.setEmoji(':bl_Chart:')
+					.setEmoji(`${emojis.custom.chart}`)
 					.setLabel('Vote')
-					.setURL('https://top.gg/bot/1100445112980471889')
+					.setURL('https://top.gg/bot/1200475110235197631')
 					.setStyle(ButtonStyle.Link)
 			);
 
