@@ -119,7 +119,7 @@ ${line09}
 		const totalCommands = this.container.stores.get('commands').size;
 	
 		client.user.setActivity({
-			type: ActivityType.Watching,
+			type: ActivityType.Listening,
 			name: `${totalServers} Servers`
 		});
 	
@@ -137,7 +137,7 @@ ${line09}
 				
 				setTimeout(() => {
 					client.user.setActivity({
-						type: ActivityType.Watching,
+						type: ActivityType.Listening,
 						name: `${totalMembers} Users`
 					});
 					/*
