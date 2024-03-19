@@ -25,8 +25,7 @@ class UserEvent extends Listener {
 		this._printBanner(info);
 		this._printStoreDebugInformation();
 		this._displayAdvancedConsole();
-
-		setBotActivities(client);
+		this._setBotActivities(client);
 	}
 
 	/**
@@ -140,11 +139,11 @@ ${line09}
 						type: ActivityType.Listening,
 						name: `${totalMembers} Users`
 					});
-					/*
+					
 					setTimeout(() => {
-						setBotActivities(client);
+						this._setBotActivities(client);
 					}, 20000);
-					*/
+					
 				}, 20000);
 			}, 20000);
 		}, 20000);
