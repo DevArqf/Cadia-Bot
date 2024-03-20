@@ -147,13 +147,12 @@ class UserCommand extends BeemoCommand {
 
 		const sentEmbed = new EmbedBuilder()
 		.setColor(`${color.random}`)
-		.setDescription(`${emojis.custom.success} **Thank you for submitting this bug report.** The Developers will **investigate** the bug **very** soon.`) // \n\n **Issue:**\n${emojis.custom.replyend} ${issue}\n\n **Notes:**\n${emojis.custom.replyend} ${notes} \n\n**Image:**\n ${image ? `${emojis.custom.replyend} Please look below` : `${emojis.custom.replyend} No picture provided`}\n\n**System:**\n ${emojis.custom.replyend} ${system} **Abusing** this feature will **result** in you getting **blacklisted***!`)
+		.setDescription(`${emojis.custom.success} **Thank you for submitting this bug report.** The Developers will **investigate** the bug **very** soon.\n ${emojis.custom.replyend} Abusing or misusing this feature will **result** in you getting **blacklisted**!`) // \n\n **Issue:**\n${emojis.custom.replyend} ${issue}\n\n **Notes:**\n${emojis.custom.replyend} ${notes} \n\n**Image:**\n ${image ? `${emojis.custom.replyend} Please look below` : `${emojis.custom.replyend} No picture provided`}\n\n**System:**\n ${emojis.custom.replyend} ${system} **Abusing** this feature will **result** in you getting **blacklisted***!`)
 		.addFields([
 			{ name: '**Issue:**', value: `${emojis.custom.replyend} ${issue}` },
 			{ name: '**Notes:**', value: `${emojis.custom.replyend} ${notes}` },
 			{ name: '**System:**', value: `${emojis.custom.replyend} ${system}` },
-			{ name: '**Image:**', value: `${image ? `${emojis.custom.replyend} Please look below` : `${emojis.custom.replyend} No picture provided`}` },
-			{ name: '**Abusing:**', value: `${emojis.custom.replyend} Abusing this feature will **result** in you getting **blacklisted**` }
+			{ name: '**Image:**', value: `${image ? `${emojis.custom.replyend} Please look below` : `${emojis.custom.replyend} No picture provided`}` }
 		])
 		.setImage(image ? image.url : null)
 		.setTimestamp()
@@ -219,8 +218,7 @@ class UserCommand extends BeemoCommand {
 					console.error(error);
 					const errorEmbed = new EmbedBuilder()
 							.setColor(`${color.fail}`)
-							.setTitle(`${emojis.custom.fail} Solve Error`)
-							.setDescription(`${emojis.custom.fail} I have encountered an error! Please try again later.`)
+							.setDescription(`${emojis.custom.fail} **I have encountered an error! Please try again later.**`)
 							.setTimestamp();
 							
 							return await interaction.reply({ embeds: [errorEmbed], ephemeral: true });
