@@ -1,7 +1,7 @@
 const BeemoCommand = require('../../lib/structures/commands/BeemoCommand');
 const { PermissionLevels } = require('../../lib/types/Enums');
 const { color, emojis } = require('../../config');
-const { EmbedBuilder } = require('discord.js');
+const { EmbedBuilder, REST, Routes, DataResolver } = require('discord.js');
 
 class UserCommand extends BeemoCommand {
 	/**
@@ -11,7 +11,7 @@ class UserCommand extends BeemoCommand {
 	constructor(context, options) {
 		super(context, {
 			...options,
-			description: 'Add an animated avatar (DEV ONLY)',
+			description: 'Add an animated banner (DEV ONLY)',
 			permissionLevel: PermissionLevels.BotOwner
 		});
 	}
@@ -22,11 +22,11 @@ class UserCommand extends BeemoCommand {
 	registerApplicationCommands(registry) {
 		registry.registerChatInputCommand((builder) =>
 			builder //
-				.setName('bot-avatar')
+				.setName('bot-banner')
 				.setDescription(this.description)
 				.addAttachmentOption((option) => option
-                    .setName('avatar')
-                    .setDescription('The avatar you want to add')
+                    .setName('banner')
+                    .setDescription('The banner you want to add')
                     .setRequired(true))
 		);
 	}
@@ -34,9 +34,10 @@ class UserCommand extends BeemoCommand {
 	/**
 	 * @param {BeemoCommand.ChatInputCommandInteraction} interaction
 	 */
-	async chatInputRun(interaction) {
+	async chatInputRun(interaction, client) {
+            const { TOKEN } = process.env;
             const { options } = interaction;
-            const avatar = options.getAttachment("avatar");
+            const banner = options.getAttachment("banner");
         
             async function sendMessage(message) {
               const embed = new EmbedBuilder()
@@ -45,15 +46,20 @@ class UserCommand extends BeemoCommand {
         
               await interaction.reply({ embeds: [embed], ephemeral: true });
             }
+            
+            if (banner.contentType !== "image/gif" && banner.contentType !== "image/png")
+                return await sendMessage(`${emojis.custom.warning} Please use a **GIF** or a **PNG** format for banners`);
+            
             var error;
-            await interaction.client.user.setAvatar(avatar.url).catch(async (err) => {
-              error = true;
-              console.log(err);
-              return await sendMessage(`Error : \`${err.toString()}\``);
+
+            const rest = new REST().setToken(TOKEN);
+            await rest.patch(Routes.user(), {
+                body: { banner: await DataResolver.resolveImage(banner.url) },
             });
-        
+
             if (error) return;
-            await sendMessage(`${emojis.custom.success} The avatar has been **successfully** uploaded!`);
+
+            await sendMessage(`${emojis.custom.success} The banner has been **successfully** uploaded!`);
           }
         };
 
