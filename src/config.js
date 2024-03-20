@@ -78,7 +78,11 @@ const emojis = {
 		loading: '<a:bl_loading:1206433137928708146>',
 		right: '<:bl_right:1213888472813674546>',
 		left: '<:bl_left:1213888437132730368>',
-		update: '<:bl_Update:1206442846907793418>'
+		update: '<:bl_Update:1206442846907793418>',
+		home: '<:bl_Home:1206440941335089153>',
+		chart: '<:bl_Chart:1206440620659576913>',
+		personadd: '<:bl_person_add:1206441060494999592>',
+		wave: '<a:bl_wave:1219771036862513172>'
 	}
 };
 
