@@ -1,3 +1,4 @@
+
 const BeemoCommand = require('../../lib/structures/commands/BeemoCommand');
 const { PermissionLevels } = require('../../lib/types/Enums');
 const { color, emojis, channels } = require('../../config')
@@ -35,6 +36,11 @@ class UserCommand extends BeemoCommand {
                         .setName('issue')
                         .setDescription('Describe the issue(s) you encountered')
                         .setRequired(true))
+				.addStringOption(option =>
+					option
+						.setName('system')
+						.setDescription('What command or system did you find this bug in?')
+						.setRequired(true))
                 .addAttachmentOption(option =>
                     option
                         .setName('image')
@@ -73,6 +79,7 @@ class UserCommand extends BeemoCommand {
 						.setDescription('The ID of the user')
 						.setRequired(true))),
         );
+
 	}
 
 	/**
@@ -134,12 +141,20 @@ class UserCommand extends BeemoCommand {
 			const issue = interaction.options.getString('issue');
 			const notes = interaction.options.getString('notes') || 'No notes provided';
 			const image = interaction.options.getAttachment('image');
+			const system = interaction.options.getString('system');
 			
 			const BugReportChanel = interaction.client.channels.cache.get(channels.bugReports);
 
 		const sentEmbed = new EmbedBuilder()
 		.setColor(`${color.random}`)
-		.setDescription(`${emojis.custom.success} **Thank you for submitting this bug report.** The Developers will **investigate** the bug **very** soon.\n\n **Issue:**\n${emojis.custom.replyend} ${issue}\n\n **Notes:**\n${emojis.custom.replyend} ${notes} \n\n**Image:**\n ${image ? `${emojis.custom.replyend} Please look below` : `${emojis.custom.replyend} No picture provided`}\n\n ***Abusing** this feature will **result** in you getting **blacklisted***!`)
+		.setDescription(`${emojis.custom.success} **Thank you for submitting this bug report.** The Developers will **investigate** the bug **very** soon.`) // \n\n **Issue:**\n${emojis.custom.replyend} ${issue}\n\n **Notes:**\n${emojis.custom.replyend} ${notes} \n\n**Image:**\n ${image ? `${emojis.custom.replyend} Please look below` : `${emojis.custom.replyend} No picture provided`}\n\n**System:**\n ${emojis.custom.replyend} ${system} **Abusing** this feature will **result** in you getting **blacklisted***!`)
+		.addFields([
+			{ name: '**Issue:**', value: `${emojis.custom.replyend} ${issue}` },
+			{ name: '**Notes:**', value: `${emojis.custom.replyend} ${notes}` },
+			{ name: '**System:**', value: `${emojis.custom.replyend} ${system}` },
+			{ name: '**Image:**', value: `${image ? `${emojis.custom.replyend} Please look below` : `${emojis.custom.replyend} No picture provided`}` },
+			{ name: '**Abusing:**', value: `${emojis.custom.replyend} Abusing this feature will **result** in you getting **blacklisted**` }
+		])
 		.setImage(image ? image.url : null)
 		.setTimestamp()
         .setFooter({ text: `Requested by ${interaction.user.displayName}`, iconURL: interaction.user.displayAvatarURL() });
@@ -151,6 +166,7 @@ class UserCommand extends BeemoCommand {
 			{ name: '**User info:**', value: `${emojis.custom.replycontinue} **User ID:** ${interaction.user.id}\n${emojis.custom.replyend} **User:** <@${interaction.user.id}>` },
 			{ name: '**Issue:**', value: `${emojis.custom.replyend} ${issue}` },
 			{ name: '**Notes:**', value: `${emojis.custom.replyend} ${notes}` },
+			{ name: '**System:**', value: `${emojis.custom.replyend} ${system}`},
 			{ name: '**Image:**', value: `${image ? `${emojis.custom.replyend} Please look below` : `${emojis.custom.replyend} No picture provided`}` },
 			])
 		.setTimestamp()
