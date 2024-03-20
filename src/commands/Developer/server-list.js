@@ -40,7 +40,7 @@ class UserCommand extends BeemoCommand {
 		sourcebin
 			.create([
 				{
-					name: `Beemo Server List - Code By Beemo`,
+					name: `Cadia Server List - Code By Cadia`,
 					content: list,
 					languageId: 'js'
 				}
