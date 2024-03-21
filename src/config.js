@@ -82,7 +82,8 @@ const emojis = {
 		home: '<:bl_Home:1206440941335089153>',
 		chart: '<:bl_Chart:1206440620659576913>',
 		personadd: '<:bl_person_add:1206441060494999592>',
-		wave: '<a:bl_wave:1219771036862513172>'
+		wave: '<a:bl_wave:1219771036862513172>',
+		heart2: '<a:bl_heart2:1220504936563867719>'
 	}
 };
 
