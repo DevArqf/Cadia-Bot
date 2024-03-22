@@ -67,7 +67,7 @@ class UserCommand extends BeemoCommand {
         	const errorEmbed = new EmbedBuilder()
             	.setColor(`${color.fail}`)
             	.setTitle(`${emojis.custom.fail} Server Info Error`)
-            	.setDescription(`${emojis.custom.fail} I have encountered an error! Please try again later.`)
+            	.setDescription(`${emojis.custom.fail} **I have encountered an error! Please try again later.**`)
             	.setTimestamp();
 
         	await interaction.reply({ embeds: [errorEmbed], ephemeral: true });

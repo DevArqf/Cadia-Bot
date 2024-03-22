@@ -28,7 +28,7 @@ class UserEvent extends Listener {
                 .setColor(`${color.default}`)
                 .setTitle("`❓` Someone mentioned me!")
                 .setDescription(
-                    `Hey there **${message.author.username}**! Here is some **information** on how to **use** me!\n\n \`🔑\` **Commands**\nUse the </help:1206974259528728677> command to view a list of all my existing commands!`)
+                    `Hey there **${message.author.username}**! Here is some **information** on how to **use** me!\n\n \`🔑\` **Commands**\nUse the </help:1220511304771440641> command to view a list of all my existing commands!`)
                 .addFields(
                     { name: "`💡` **Total Commands:**", value: `${emojis.custom.replyend} **${commands}**`, inline: true },
                     { name: "`👤` **Total Users:**", value: `${emojis.custom.replyend} **${members}**`, inline: true },
