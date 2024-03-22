@@ -38,11 +38,6 @@ class UserCommand extends BeemoCommand {
                 .setName("embed")
                 .setDescription("Would you want your reply embedded or not?")
                 .setRequired(true)
-            )
-            .addStringOption(option => option
-                .setName("embed-color")
-                .setDescription("The color you want the embed to be (HEX Only)")
-                .setRequired(true)
             ),
 		);
 	}
@@ -53,14 +48,11 @@ class UserCommand extends BeemoCommand {
 	async chatInputRun(interaction) {
 		const msgid = interaction.options.getString("message-id");
         const content = interaction.options.getString("text");
-        const embedcolor = interaction.options.get
         const boolean = interaction.options.getBoolean("embed")
 
         const embed1 = new EmbedBuilder()
         .setDescription(`${content}`)
-        .setColor(`${embedcolor}`)
-
-        if (embedcolor)
+        .setColor(`${color.default}`)
 
         if (msgid.startsWith("http")) {
             return await interaction.reply({
