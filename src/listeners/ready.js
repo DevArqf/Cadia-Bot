@@ -40,15 +40,12 @@ class UserEvent extends Listener {
 		const blc = dev ? magenta : blue;
 		const db = dbInfo.error ? `[${fail}] Database Not Connected (${dbInfo.message})` : `[${success}] Database Connected`;
 
-		const line01 = llc(String.raw` ███████████                                            `);
-		const line02 = llc(String.raw`░░███░░░░░███                                           `);
-		const line03 = llc(String.raw` ░███    ░███  ██████   ██████  █████████████    ██████ `);
-		const line04 = llc(String.raw` ░██████████  ███░░███ ███░░███░░███░░███░░███  ███░░███`);
-		const line05 = llc(String.raw` ░███░░░░░███░███████ ░███████  ░███ ░███ ░███ ░███ ░███`);
-		const line06 = llc(String.raw` ░███    ░███░███░░░  ░███░░░   ░███ ░███ ░███ ░███ ░███`);
-		const line07 = llc(String.raw` ███████████ ░░██████ ░░██████  █████░███ █████░░██████ `);
-		const line08 = llc(String.raw`░░░░░░░░░░░   ░░░░░░   ░░░░░░  ░░░░░ ░░░ ░░░░░  ░░░░░░ `);
-		const line09 = llc(String.raw`                                                        `);
+		const line01 = llc(String.raw` ██████╗ █████╗ ██████╗ ██╗ █████╗ `);
+		const line02 = llc(String.raw`██╔════╝██╔══██╗██╔══██╗██║██╔══██╗`);
+		const line03 = llc(String.raw`██║     ███████║██║  ██║██║███████║`);
+		const line04 = llc(String.raw`██║     ██╔══██║██║  ██║██║██╔══██║`);
+		const line05 = llc(String.raw`╚██████╗██║  ██║██████╔╝██║██║  ██║`);
+		const line06 = llc(String.raw` ╚═════╝╚═╝  ╚═╝╚═════╝ ╚═╝╚═╝  ╚═╝`);
 
 		// Offset Pad
 		const pad = ' '.repeat(7);
@@ -58,13 +55,10 @@ class UserEvent extends Listener {
 			String.raw`
 ${line01}
 ${line02}
-${line03} ${pad}${blc('1.0.0')}
+${line03} ${pad}${blc('1.3.0')}
 ${line04} ${pad}[${success}] Gateway
 ${line05} ${pad}${db}
-${line06}${dev ? ` ${pad}${blc('<')}${llc('/')}${blc('>')} ${llc('DEVELOPMENT MODE')}` : ''}
-${line07}
-${line08}
-${line09}
+${line06}${dev ? ` ${pad}${blc('<')}${llc('/')}${blc('>')} ${llc('ALPHA MODE')}` : ''}
 		`.trim()
 		);
 	}
@@ -86,20 +80,21 @@ ${line09}
 		const commandCount = this.container.stores.get('commands').size;
 		const totalMembers = client.guilds.cache.reduce((acc, guild) => acc + guild.memberCount, 0);
 		const totalGuilds = client.guilds.cache.size;
-		const botVersion = 'Cadia Alpha 1.5.0';
-		const botOwner = 'Malik & Navin';
+		const botVersion = 'Cadia Alpha 1.3.0';
+		const botOwner = 'Malik';
+		const developers = 'Oreo & Navin';
 
 		console.log(blue('=================================='));
 		console.log(magenta(`Command Count: ${commandCount}`));
 		console.log(cyan(`Total Members: ${totalMembers}`));
 		console.log(green(`Total Guilds: ${totalGuilds}`));
-		console.log(red(`Beemo's Launch Time: ${new Date().toLocaleString()}`));
-		console.log(blue(`Beemo's Version: ${botVersion}`));
+		console.log(red(`Cadia's Launch Time: ${new Date().toLocaleString()}`));
+		console.log(blue(`Cadia's Version: ${botVersion}`));
 		console.log(magenta(`Storage Used: ${Math.round((os.totalmem() - os.freemem()) / 1024 / 1024)} MB`));
 		console.log(cyan(`Total RAM: ${Math.round(os.totalmem() / 1024 / 1024)} MB`));
 		console.log(green(`CPU: ${os.cpus()[0].model}`));
-		console.log(red(`Beemo's Founders: ${botOwner}`));
-		console.log(magenta(`Beemo's Developers: Oreo`));
+		console.log(red(`Cadia's Founders: ${botOwner}`));
+		console.log(magenta(`Cadia's Developers: ${developers}`));
 		console.log(blue('=================================='));
 	}
 
@@ -119,7 +114,7 @@ ${line09}
 	
 		client.user.setActivity({
 			type: ActivityType.Listening,
-			name: `${totalServers} Servers`
+			name: `${totalServers} Guilds`
 		});
 	
 		setTimeout(() => {
@@ -130,8 +125,8 @@ ${line09}
 	
 			setTimeout(() => {
 				client.user.setActivity({
-					type: ActivityType.Watching,
-					name: `${totalCommands} Commands`
+					type: ActivityType.Playing,
+					name: `with ${totalCommands} Commands`
 				});
 				
 				setTimeout(() => {
@@ -139,15 +134,21 @@ ${line09}
 						type: ActivityType.Listening,
 						name: `${totalMembers} Users`
 					});
-					
+
 					setTimeout(() => {
-						this._setBotActivities(client);
-					}, 20000);
+						client.user.setActivity({
+							type: ActivityType.Watching,
+							name: `Shard 1/5`
+						});
 					
-				}, 20000);
-			}, 20000);
-		}, 20000);
-	};
+						setTimeout(() => {
+							this._setBotActivities(client);
+						}, 5000);
+				}, 5000);
+			}, 5000);
+		}, 5000);
+	}, 5000);
+};
 
 	/**
 	 *
