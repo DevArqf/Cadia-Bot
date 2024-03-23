@@ -1,4 +1,3 @@
-
 const BeemoCommand = require('../../lib/structures/commands/BeemoCommand');
 const { PermissionLevels } = require('../../lib/types/Enums');
 const { color, emojis, channels } = require('../../config')
