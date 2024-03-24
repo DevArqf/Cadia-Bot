@@ -73,6 +73,13 @@ class UserCommand extends BeemoCommand {
 								.setURL(`https://discordlist.gg/bot/1200475110235197631?message=success`)
 								.setStyle(ButtonStyle.Link)
 						)
+
+						.addComponents(
+							new ButtonBuilder()
+								.setLabel('Omenlist.xyz')
+								.setURL(`https://omenlist.xyz/bot/1200475110235197631`)
+								.setStyle(ButtonStyle.Link)
+						)
 						
                     return interaction.reply({ embeds: [voteEmbed], components: [voteButton1] })
             }
