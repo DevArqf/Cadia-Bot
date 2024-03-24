@@ -5,6 +5,6 @@ const userSettingsSchema = new mongoose.Schema({
 	receiveDMs: { type: Boolean, required: true, default: true }
 });
 
-const UserSettingsSchema = mongoose.model('UserSettings', userSettingsSchema);
+const UserSettingsSchema = mongoose.model('UserSettingSchema', userSettingsSchema);
 
 module.exports = { UserSettingsSchema };

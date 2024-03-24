@@ -2,7 +2,7 @@ const { Command, ApplicationCommandRegistry } = require('@sapphire/framework');
 const { ChatInputCommandInteraction, EmbedBuilder, ChannelType } = require('discord.js');
 const { emojis, color } = require('../../config');
 const { GuildSchema } = require('../../lib/schemas/guild');
-const { CountActivity, CountingReward } = require('../../lib/schemas/count');
+const { CountActivity, CountingReward } = require('../../lib/schemas/countSchema');
 
 class countingCommand extends Command {
 	constructor(context, options) {

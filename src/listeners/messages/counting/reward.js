@@ -1,7 +1,7 @@
 const { Listener } = require('@sapphire/framework');
 const { Message } = require('discord.js');
-const { CountingReward } = require('../../../lib/schemas/count');
-const { UserSchema } = require('../../../lib/schemas/user');
+const { CountingReward } = require('../../../lib/schemas/countSchema');
+const { UserSchema } = require('../../../lib/schemas/userSchema');
 
 class UserEvent extends Listener {
 	constructor(context, options) {
