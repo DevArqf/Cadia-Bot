@@ -1,5 +1,5 @@
 const { AllFlowsPrecondition, Result } = require('@sapphire/framework');
-const Guild = require('../lib/schemas/blacklist');
+const Guild = require('../lib/schemas/blacklistSchema');
 const { ChatInputCommandInteraction, Message } = require('discord.js');
 const { Developers } = require('../lib/util/constants');
 

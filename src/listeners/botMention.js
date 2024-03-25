@@ -71,7 +71,7 @@ class UserEvent extends Listener {
                             const errorEmbed = new EmbedBuilder()
                                 .setColor(`${color.fail}`)
                                 .setTitle(`${emojis.custom.fail} Bot Mention Error`)
-                                .setDescription(`${emojis.custom.fail} I have encountered an error! Please try again later.`)
+                                .setDescription(`${emojis.custom.fail} **I have encountered an error! Please try again later.**\n\n *Have you already tried and you are still encountering this error, please join our support server [here](https://discord.gg/2XunevgrHD) for assistance or use </bug-report:1219050295770742934>*`)
                                 .setTimestamp();
 
                             await interaction.reply({ embeds: [errorEmbed], ephemeral: true });

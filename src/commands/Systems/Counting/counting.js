@@ -1,8 +1,8 @@
 const { Command, ApplicationCommandRegistry } = require('@sapphire/framework');
 const { ChatInputCommandInteraction, EmbedBuilder, ChannelType } = require('discord.js');
-const { emojis, color } = require('../../config');
-const { GuildSchema } = require('../../lib/schemas/guild');
-const { CountActivity, CountingReward } = require('../../lib/schemas/countSchema');
+const { emojis, color } = require('../../../config');
+const { GuildSchema } = require('../../../lib/schemas/guildSchema');
+const { CountActivity, CountingReward } = require('../../../lib/schemas/countSchema');
 
 class countingCommand extends Command {
 	constructor(context, options) {
@@ -25,7 +25,7 @@ class countingCommand extends Command {
 				.addSubcommand((subcommand) =>
 					subcommand //
 						.setName('setup')
-						.setDescription('(re)Setup the counting game for your server')
+						.setDescription('Setup the counting game for your server')
 						.addChannelOption((option) =>
 							option //
 								.setName('channel')
