@@ -8,7 +8,7 @@ const userSchema = new mongoose.Schema({
 	updatedAt: { type: Date, default: Date.now }
 });
 
-const UserSchema = mongoose.model('User', userSchema);
+const UserSchema = mongoose.model('CountingUserSchema', userSchema);
 
 module.exports = {
 	UserSchema

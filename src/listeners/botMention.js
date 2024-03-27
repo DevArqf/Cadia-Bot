@@ -28,7 +28,7 @@ class UserEvent extends Listener {
                 .setColor(`${color.default}`)
                 .setTitle("`❓` Someone mentioned me!")
                 .setDescription(
-                    `Hey there **${message.author.username}**! Here is some **information** on how to **use** me!\n\n \`🔑\` **Commands**\nUse the </help:1206974259528728677> command to view a list of all my existing commands!`)
+                    `Hey there **${message.author.username}**! Here is some **information** on how to **use** me!\n\n \`🔑\` **Commands**\nUse the </help:1220511304771440641> command to view a list of all my existing commands!`)
                 .addFields(
                     { name: "`💡` **Total Commands:**", value: `${emojis.custom.replyend} **${commands}**`, inline: true },
                     { name: "`👤` **Total Users:**", value: `${emojis.custom.replyend} **${members}**`, inline: true },
@@ -70,8 +70,7 @@ class UserEvent extends Listener {
                         console.error(error);
                             const errorEmbed = new EmbedBuilder()
                                 .setColor(`${color.fail}`)
-                                .setTitle(`${emojis.custom.fail} Bot Mention Error`)
-                                .setDescription(`${emojis.custom.fail} I have encountered an error! Please try again later.`)
+                                .setDescription(`${emojis.custom.fail} **I have encountered an error! Please try again later.**\n\n > *Have you already tried and still encountering the same error? Then please consider joining our support server [here](https://discord.gg/2XunevgrHD) for assistance or use </bugreport:1219050295770742934>*`)
                                 .setTimestamp();
 
                             await interaction.reply({ embeds: [errorEmbed], ephemeral: true });

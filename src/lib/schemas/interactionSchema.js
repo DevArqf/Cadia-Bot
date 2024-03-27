@@ -14,4 +14,4 @@ let interactions = new Schema({
     KissGive: Number
 });
  
-module.exports = model('interactions', interactions);
+module.exports = model('interactionSchema', interactions);

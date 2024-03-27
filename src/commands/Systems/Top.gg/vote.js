@@ -52,14 +52,36 @@ class UserCommand extends BeemoCommand {
                     .setFooter({ text: `Requested by ${interaction.user.displayName}`, iconURL: interaction.user.displayAvatarURL() })
                     .setTimestamp();
 
-					const voteButton = new ActionRowBuilder()
+					const voteButton1 = new ActionRowBuilder()
 						.addComponents(
 							new ButtonBuilder()
-								.setLabel('Vote Here')
+								.setLabel('Top.gg')
 								.setURL(`https://top.gg/bot/1200475110235197631`)
 								.setStyle(ButtonStyle.Link)
 						)
-                    return interaction.reply({ embeds: [voteEmbed], components: [voteButton] })
+
+						.addComponents(
+							new ButtonBuilder()
+								.setLabel('DiscordBotList.com')
+								.setURL(`https://discordbotlist.com/bots/cadia`)
+								.setStyle(ButtonStyle.Link)
+						)
+
+						.addComponents(
+							new ButtonBuilder()
+								.setLabel('DiscordList.gg')
+								.setURL(`https://discordlist.gg/bot/1200475110235197631?message=success`)
+								.setStyle(ButtonStyle.Link)
+						)
+
+						.addComponents(
+							new ButtonBuilder()
+								.setLabel('Omenlist.xyz')
+								.setURL(`https://omenlist.xyz/bot/1200475110235197631`)
+								.setStyle(ButtonStyle.Link)
+						)
+						
+                    return interaction.reply({ embeds: [voteEmbed], components: [voteButton1] })
             }
         } else {
             return interaction.reply(`**I have encountered an error! Please try again later.**`)

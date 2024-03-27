@@ -13,7 +13,7 @@ const guildSchema = new mongoose.Schema({
 	updatedAt: { type: Date, default: Date.now }
 });
 
-const GuildSchema = mongoose.model('Guild', guildSchema);
+const GuildSchema = mongoose.model('CountingGuildSchema', guildSchema);
 
 module.exports = {
 	GuildSchema

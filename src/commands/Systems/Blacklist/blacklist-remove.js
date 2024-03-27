@@ -1,7 +1,7 @@
 const BeemoCommand = require('../../../lib/structures/commands/BeemoCommand');
 const { PermissionLevels } = require('../../../lib/types/Enums');
 const { color, emojis } = require('../../../config');
-const Guild = require('../../../lib/schemas/blacklist');
+const Guild = require('../../../lib/schemas/blacklistSchema');
 const { EmbedBuilder } = require('discord.js');
 
 class UserCommand extends BeemoCommand {
@@ -60,7 +60,7 @@ class UserCommand extends BeemoCommand {
             const errorEmbed = new EmbedBuilder()
             .setColor(`${color.fail}`)
             .setTitle(`${emojis.custom.fail} Blacklist Remove Error`)
-            .setDescription(`${emojis.custom.fail} I have encountered an error! Please try again later.`)
+            .setDescription(`${emojis.custom.fail} **I have encountered an error! Please try again later.**\n\n > *Have you already tried and still encountering the same error? Then please consider joining our support server [here](https://discord.gg/2XunevgrHD) for assistance or use </bugreport:1219050295770742934>*`)
             .setTimestamp();
 
             await interaction.reply({ embeds: [errorEmbed], ephemeral: true });

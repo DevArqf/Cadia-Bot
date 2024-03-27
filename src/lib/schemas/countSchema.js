@@ -15,8 +15,8 @@ const countActivitySchema = new mongoose.Schema({
 	count: { type: Number, required: true }
 });
 
-const CountingReward = mongoose.model('CountingReward', countingRewardSchema);
-const CountActivity = mongoose.model('CountActivity', countActivitySchema);
+const CountingReward = mongoose.model('CountingRewardSchema', countingRewardSchema);
+const CountActivity = mongoose.model('CountActivitySchema', countActivitySchema);
 
 module.exports = {
 	CountingReward,

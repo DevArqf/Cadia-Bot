@@ -7,6 +7,6 @@ let releasenotes = new Schema({
     Version: Number
 });
 
-const ReleaseNotesSchema = mongoose.model('releasenotes', releasenotes);
+const ReleaseNotesSchema = mongoose.model('releasenoteSchema', releasenotes);
 
 module.exports = { ReleaseNotesSchema };
