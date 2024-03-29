@@ -19,7 +19,7 @@ class UserEvent extends Listener {
 		if (interaction.deferred || interaction.replied) {
 			if (identifier === 'PermissionError') {
 				return interaction.editReply({
-					content: `${emojis.custom.fail} You are not **authorized** to **execute** this command`,
+					content: `${emojis.custom.forbidden} You are not **authorized** to **execute** this command`,
 					ephemeral: true
 				});
 			}
@@ -27,14 +27,14 @@ class UserEvent extends Listener {
 
 		if (identifier === 'PermissionError') {
 			return interaction.reply({
-				content: `${emojis.custom.fail} You are not **authorized** to **execute** this command`,
+				content: `${emojis.custom.forbidden} You are not **authorized** to **execute** this command`,
 				ephemeral: true
 			});
 		}
 
 		if (identifier === 'DevOnlyCommand') {
 			return interaction.reply({
-				content: `${emojis.custom.fail} You are not **authorized** to **execute** this command`,
+				content: `${emojis.custom.forbidden} You are not **authorized** to **execute** this command`,
 				ephemeral: true
 			});
 		}

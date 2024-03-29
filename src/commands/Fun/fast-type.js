@@ -42,7 +42,7 @@ class UserCommand extends BeemoCommand {
 		const selectedSentence = sentences[Math.floor(Math.random() * sentences.length)];
 
 		const challengeEmbed = new EmbedBuilder()
-			.setColor(`${color.default}`)
+			.setColor(color.default)
 			.setTitle('`🌟` Fast-Type Challenge!')
 			.setDescription('`⚡` **Are you ready to showcase your typing speed?**')
 			.addFields({
@@ -66,7 +66,7 @@ class UserCommand extends BeemoCommand {
 			if (m.content.toLowerCase() === selectedSentence.toLowerCase()) {
 				const timeTaken = m.createdTimestamp - interaction.createdTimestamp;
 				const successEmbed = new EmbedBuilder()
-					.setColor(`${color.success}`)
+					.setColor(color.success)
 					.setTitle(`${emojis.custom.tada} Congratulations, You Won!`)
 					.setDescription(`${m.author}, you completed the challenge in **${timeTaken / 1000}s**!`)
 					.setFooter({ text: `Requested by ${interaction.user.displayName}`, iconURL: interaction.user.displayAvatarURL() })
@@ -80,7 +80,7 @@ class UserCommand extends BeemoCommand {
 		collector.on('end', (collected) => {
 			if (collected.size === 0) {
 				const failEmbed = new EmbedBuilder()
-					.setColor(`${color.fail}`)
+					.setColor(color.fail)
 					.setTitle('`⏰` Times Up!')
 					.setDescription('You ran out of time! Better luck next time!')
 					.setFooter({ text: `Requested by ${interaction.user.displayName}`, iconURL: interaction.user.displayAvatarURL() })

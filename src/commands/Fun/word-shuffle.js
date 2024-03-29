@@ -68,7 +68,7 @@ class UserCommand extends BeemoCommand {
 		const shuffledWord = shuffleWord(selectedWord);
 
 		const startEmbed = new EmbedBuilder()
-			.setColor(`${color.default}`)
+			.setColor(color.default)
 			.setTitle('`🔠` Word Shuffle Game')
 			.setDescription(
 				`**Guess the word!**\n\nThe Shuffled Word: \`${shuffledWord}\`\n\n*You have **30 seconds** to guess! Type your guess in the chat.*`
@@ -86,14 +86,14 @@ class UserCommand extends BeemoCommand {
 
 			if (m.content.toLowerCase().trim() === selectedWord) {
 				resultEmbed
-					.setColor(`${color.success}`)
+					.setColor(color.success)
 					.setTitle(`${emojis.custom.tada} **Congratulations**, that was the **correct** answer!`)
 					.setDescription(`You guessed the word **correctly**!\n\nThe word was: \`${selectedWord}\``)
 					.setTimestamp()
 					.setFooter({ text: `Requested by ${interaction.user.displayName}`, iconURL: interaction.user.displayAvatarURL() });
 			} else {
 				resultEmbed
-					.setColor(`${color.fail}`)
+					.setColor(color.fail)
 					.setTitle(`${emojis.reg.fail} Incorrect Answer`)
 					.setDescription(`**Unfortunately**, that's the **incorrect** word!\n\nThe **correct** word was:\n ${emojis.custom.replyend} \`${selectedWord}\``)
 					.setTimestamp()
@@ -106,7 +106,7 @@ class UserCommand extends BeemoCommand {
 		collector.on('end', (collected) => {
 			if (collected.size === 0) {
 				const timeoutEmbed = new EmbedBuilder()
-					.setColor(`${color.fail}`)
+					.setColor(color.fail)
 					.setTitle('`⏰` Times Up!')
 					.setDescription('You ran out of time! Better luck next time!')
 					.setTimestamp()

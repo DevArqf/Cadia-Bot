@@ -40,7 +40,7 @@ class UserCommand extends BeemoCommand {
 	 */
 	async chatInputRun(interaction) {
 
-	const { client, member } = interaction;
+	    const { client, member } = interaction;
         const userOption = interaction.options.getUser('user');
         const idOption = interaction.options.getString('id');
 
@@ -56,9 +56,8 @@ class UserCommand extends BeemoCommand {
 
                 console.error(error);
                 const errorEmbed = new EmbedBuilder()
-                    .setColor(`${color.fail}`)
-                    .setTitle(`${emojis.custom.fail} Avatar Error`)
-                    .setDescription(`${emojis.custom.fail} I have encountered an error! Please make sure the provided ID is **valid**.`)
+                    .setColor(color.fail)
+                    .setDescription(`${emojis.custom.fail} **I have encountered an error! Please try again later.**\n\n > *Have you already tried and still encountering the same error? Then please consider joining our support server [here](https://discord.gg/2XunevgrHD) for assistance or use </bugreport:1219050295770742934>*`)
                     .setTimestamp();
 
                 await interaction.reply({ embeds: [errorEmbed], ephemeral: true });
@@ -72,7 +71,7 @@ class UserCommand extends BeemoCommand {
         const userAvatar = user.displayAvatarURL({ size: 2048, dynamic: true });
 
         const embed = new EmbedBuilder()
-            .setColor(`${color.default}`)
+            .setColor(color.default)
             .setAuthor({ name: `${user.username}'s Avatar`, iconURL: `${user.displayAvatarURL({ size: 64, dynamic: true })}`})
             .setImage(userAvatar)
             .setTimestamp()

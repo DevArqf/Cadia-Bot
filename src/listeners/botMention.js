@@ -25,7 +25,7 @@ class UserEvent extends Listener {
             const servers = message.client.guilds.cache.size;
 
             const pingEmbed = new EmbedBuilder()
-                .setColor(`${color.default}`)
+                .setColor(color.default)
                 .setTitle("`❓` Someone mentioned me!")
                 .setDescription(
                     `Hey there **${message.author.username}**! Here is some **information** on how to **use** me!\n\n \`🔑\` **Commands**\nUse the </help:1220511304771440641> command to view a list of all my existing commands!`)
@@ -69,7 +69,7 @@ class UserEvent extends Listener {
                     } catch (error) {
                         console.error(error);
                             const errorEmbed = new EmbedBuilder()
-                                .setColor(`${color.fail}`)
+                                .setColor(color.fail)
                                 .setDescription(`${emojis.custom.fail} **I have encountered an error! Please try again later.**\n\n > *Have you already tried and still encountering the same error? Then please consider joining our support server [here](https://discord.gg/2XunevgrHD) for assistance or use </bugreport:1219050295770742934>*`)
                                 .setTimestamp();
 

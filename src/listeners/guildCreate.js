@@ -24,7 +24,7 @@ class UserEvent extends Listener {
 				.sort((a, b) => a.rawPosition - b.rawPosition || a.id - b.id)
 				.first();
 			const embed = new EmbedBuilder()
-				.setColor(`${color.default}`)
+				.setColor(color.default)
 				.setDescription(
 					`${emojis.custom.wave} **Thank you for adding me to your server!**\n ${emojis.custom.replystart} If you need any help, please feel free to join\n ${emojis.custom.replyend} our support server.\n\n ${emojis.custom.warning} **Important**\n ${emojis.custom.replystart} Make sure the bot's role is at the highest position\n ${emojis.custom.replyend} in the role hierarchy to prevent any bugs or issues.`
 				)
@@ -69,7 +69,7 @@ class UserEvent extends Listener {
 		} catch (error) {
 			console.error(error);
 			const errorEmbed = new EmbedBuilder()
-            	.setColor(`${color.fail}`)
+            	.setColor(color.fail)
             	.setDescription(`${emojis.custom.fail} **I have encountered an error! Please try again later.**\n\n > *Have you already tried and still encountering the same error? Then please consider joining our support server [here](https://discord.gg/2XunevgrHD) for assistance or use </bugreport:1219050295770742934>*`)
             	.setTimestamp();
 			await interaction.reply({ embeds: [errorEmbed], ephemeral: true });	

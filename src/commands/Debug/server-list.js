@@ -52,7 +52,7 @@ class UserCommand extends BeemoCommand {
 						`${emojis.custom.success} The Server List has been **successfully** generated!\n⠀${emojis.custom.replyend} [Click here to view](${src.url})`
 					)
 					.setFooter({ text: `Requested by ${interaction.user.displayName}`, iconURL: interaction.user.displayAvatarURL() })
-					.setColor(`${color.success}`)
+					.setColor(color.success)
 					.setTimestamp();
 
 				interaction.reply({ embeds: [embed], ephemeral: true });

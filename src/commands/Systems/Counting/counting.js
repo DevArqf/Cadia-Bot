@@ -91,7 +91,7 @@ class countingCommand extends Command {
 			const goal = interaction.options.getInteger('goal', true);
 
 			if (!channel.isTextBased()) {
-				await interaction.reply({ content: `${emojis.custom.fail} The channel must be a text channel`, ephemeral: true });
+				await interaction.reply({ embeds: [new EmbedBuilder().setColor(`${color.invis}`).setDescription(`${emojis.custom.fail} The channel must be a text channel`)], ephemeral: true });
 				return;
 			}
 
@@ -129,7 +129,7 @@ class countingCommand extends Command {
 			// 	}
 			// });
 
-			await interaction.reply({ content: `${emojis.custom.success} The counting game has been setup in ${channel}`, ephemeral: true });
+			await interaction.reply({ embeds: [new EmbedBuilder().setColor(`${color.invis}`).setDescription(`${emojis.custom.success} The counting game has been setup in ${channel}`)], ephemeral: true });
 		}
 
 		if (subcommand === 'reward') {
@@ -175,14 +175,14 @@ class countingCommand extends Command {
 			// });
 
 			if (!data.countChannel) {
-				await interaction.reply({ content: `${emojis.custom.fail} The counting game has not been setup yet`, ephemeral: true });
+				await interaction.reply({ embeds: [new EmbedBuilder().setColor(`${color.invis}`).setDescription(`${emojis.custom.fail} The counting game has not been setup yet`)], ephemeral: true });
 				return;
 			}
 
 			const countingChannel = interaction.guild.channels.cache.get(data.countChannel);
 
 			if (!countingChannel || !countingChannel.isTextBased()) {
-				await interaction.reply({ content: `${emojis.custom.fail} The counting game has not been setup yet`, ephemeral: true });
+				await interaction.reply({ embeds: [new EmbedBuilder().setColor(`${color.invis}`).setDescription(`${emojis.custom.fail} The counting game has not been setup yet`)], ephemeral: true });
 				return;
 			}
 
@@ -223,7 +223,7 @@ class countingCommand extends Command {
 			// });
 
 			if (!data.length || data.length === 0) {
-				await interaction.reply({ content: `${emojis.custom.fail} No guild has counted yet`, ephemeral: true });
+				await interaction.reply({ embeds: [new EmbedBuilder().setColor(`${color.invis}`).setDescription(`${emojis.custom.fail} No guild has counted yet`)], ephemeral: true });
 				return;
 			}
 
@@ -247,7 +247,7 @@ class countingCommand extends Command {
 			});
 
 			if (!data) {
-				await interaction.reply({ content: `${emojis.custom.fail} The counting game has not been setup yet`, ephemeral: true });
+				await interaction.reply({ embeds: [new EmbedBuilder().setColor(`${color.invis}`).setDescription(`${emojis.custom.fail} The counting game has not been setup yet`)], ephemeral: true });
 				return;
 			}
 
@@ -273,7 +273,7 @@ class countingCommand extends Command {
 			// });
 
 			if (!localLeaderboard.length) {
-				await interaction.reply({ content: `${emojis.custom.fail} No member has counted yet`, ephemeral: true });
+				await interaction.reply({ embeds: [new EmbedBuilder().setColor(`${color.invis}`).setDescription(`${emojis.custom.fail} No member has counted yet`)], ephemeral: true });
 				return;
 			}
 

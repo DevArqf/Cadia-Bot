@@ -47,7 +47,7 @@ class UserCommand extends BeemoCommand {
                 return interaction.reply(`${emojis.custom.fail} You have **already** voted for Cadia. We **appreciate** you trying again!`)
             } else if (data.voted === 0){
                 const voteEmbed = new EmbedBuilder()
-                    .setColor(`${color.default}`)
+                    .setColor(color.default)
                     .setDescription(`${emojis.custom.heart2} It appears you're interested in **voting** for Cadia. To **cast** your vote, simply **click** the button **below** at your convenience!`)
                     .setFooter({ text: `Requested by ${interaction.user.displayName}`, iconURL: interaction.user.displayAvatarURL() })
                     .setTimestamp();

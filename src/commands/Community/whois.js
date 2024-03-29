@@ -26,7 +26,11 @@ class UserCommand extends BeemoCommand {
                 .addUserOption((option) => option
                     .setName('user')
                     .setDescription('The user you want to view information of')
-                    .setRequired(true)),
+                    .setRequired(true))
+				.addStringOption((option) => option
+                    .setName('id')
+                    .setDescription(`If the user has left, you can enter the user ID`)
+                    .setRequired(false)),
 		);
 	}
 
@@ -34,23 +38,48 @@ class UserCommand extends BeemoCommand {
 	 * @param {BeemoCommand.ChatInputCommandInteraction} interaction
 	 */
 	async chatInputRun(interaction) {
+		const { member } = interaction;
+		const userOption = interaction.options.getUser('user') || interaction.user;
+        const idOption = interaction.options.getString('id');
+        const tag = userOption.tag;
 
-		const user = interaction.options.getUser('user') || interaction.user;
-        const member = await interaction.guild.members.fetch(user.id);
-		const icon = interaction.user.displayAvatarURL();
-        const tag = user.tag;
+        let user;
+
+        if (userOption) {
+            user = userOption;
+
+        } else if (idOption) {
+            try {
+                user = await client.users.fetch(idOption);
+            } catch (error) {
+
+                console.error(error);
+                const errorEmbed = new EmbedBuilder()
+                    .setColor(color.fail)
+                    .setDescription(`${emojis.custom.fail} **I have encountered an error! Please try again later.**\n\n > *Have you already tried and still encountering the same error? Then please consider joining our support server [here](https://discord.gg/2XunevgrHD) for assistance or use </bugreport:1219050295770742934>*`)
+                    .setTimestamp();
+
+                await interaction.reply({ embeds: [errorEmbed], ephemeral: true });
+                return;
+            }
+
+		} else {
+            user = member.user;
+        }
+
+        const userAvatar = user.displayAvatarURL({ size: 2048, dynamic: true });
 
         const embed = new EmbedBuilder()
-        .setColor(`${color.default}`)
-        .setAuthor({ name: tag, iconURL: icon })
-        .setThumbnail(icon)
+        .setColor(color.default)
+        .setAuthor({ name: tag, iconURL: userAvatar })
+        .setThumbnail(userAvatar)
         .addFields(
-            { name: `**• Member:**`, value: `${emojis.custom.replyend} ${user}`, inline: false},
-            { name: `**• Roles:**`, value: `${emojis.custom.replyend} ${member.roles.cache.map(r => r).join(' ')}`, inline: false},
-            { name: `**• Joined Server:**`, value: `${emojis.custom.replyend} <t:${parseInt(member.joinedAt / 1000)}:R>`, inline: true},
-            { name: `**• Joined Discord:**`, value: `${emojis.custom.replyend} <t:${parseInt(user.createdAt / 1000)}:R>`, inline: true}
+            { name: `${emojis.custom.person} \`-\` **Member:**`, value: `${emojis.custom.replyend} ${userOption}`, inline: false},
+            { name: `${emojis.custom.community} \`-\` **Roles:**`, value: `${member.roles.cache.map(r => r).join(' ')}`, inline: false},
+            { name: `${emojis.custom.clock} \`-\` **Joined Server:**`, value: `${emojis.custom.replyend} <t:${parseInt(member.joinedAt / 1000)}:R>`, inline: true},
+            { name: `${emojis.custom.calendar} \`-\` **Joined Discord:**`, value: `${emojis.custom.replyend} <t:${parseInt(user.createdAt / 1000)}:R>`, inline: true}
         )
-        .setFooter({ text: `User ID: ${user.id}` })
+        .setFooter({ text: `User ID: ${userOption.id}` })
         .setTimestamp();
 
         await interaction.reply({ embeds: [embed] });
@@ -58,9 +87,6 @@ class UserCommand extends BeemoCommand {
     }
 }
 
-
 module.exports = {
 	UserCommand
 };
-
-

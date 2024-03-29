@@ -39,7 +39,7 @@ class UserCommand extends BeemoCommand {
 
         async function sendMessage(message, send) {
             const embed = new EmbedBuilder()
-            .setColor(`${color.default}`)
+            .setColor(color.default)
             .setDescription(message);
 
             if (send) {

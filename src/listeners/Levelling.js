@@ -60,7 +60,7 @@ async run (message) {
 	} catch (error) {
 		console.error(error)
             const errorEmbed = new EmbedBuilder()
-                .setColor(`${color.fail}`)
+                .setColor(color.fail)
                 .setDescription(`${emojis.custom.fail} **I have encountered an error! Please try again later.**\n\n > *Have you already tried and still encountering the same error? Then please consider joining our support server [here](https://discord.gg/2XunevgrHD) for assistance or use </bugreport:1219050295770742934>*`)
                 .setTimestamp();
 

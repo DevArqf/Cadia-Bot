@@ -11,7 +11,7 @@ class UserCommand extends BeemoCommand {
 	constructor(context, options) {
 		super(context, {
 			...options,
-			description: 'Get information about the current server'
+			description: 'Get information about the server'
 		});
 	}
 
@@ -40,19 +40,19 @@ class UserCommand extends BeemoCommand {
 			const maxEmojis = 50 + boostLevel * 50;
 
 				const embed = new EmbedBuilder()
-					.setColor(`${color.default}`)
-					.setTitle(`\`⚙️\` Server Information`)
+					.setColor(color.default)
 					.addFields(
-						{ name: '**Server Name:**', value: `${emojis.custom.replyend} \`${interaction.guild.name}\`` },
-						{ name: '**Owner:**', value: `${emojis.custom.replyend} ${await interaction.guild.fetchOwner()}` },
-						{ name: '**Boost Tier:**', value: `${emojis.custom.replyend} \`${boostLevel}\`` },
-						{ name: '**Member Count:**', value: `${emojis.custom.replyend} \`${interaction.guild.memberCount}\`` },
-						{ name: '**Channel Count:**', value: `${emojis.custom.replyend} \`${interaction.guild.channels.cache.size}\`` },
-						{ name: '**Role Count:**', value: `${emojis.custom.replyend} \`${interaction.guild.roles.cache.size}\`` },
-						{ name: '**Regular Emojis:**', value: `${emojis.custom.replyend} \`${emoji_reg}/${maxEmojis}\`` },
-						{ name: '**Animated Emojis:**', value: `${emojis.custom.replyend} \`${emoji_animated}/${maxEmojis}\`` },
-						{ name: '**Server Icon:**', value: `${emojis.custom.replyend} ${server_icon ? `[Click Here](${server_icon})` : '\`None\`'}` },
-						{ name: '**Server Creation:**', value: `${emojis.custom.replyend} <t:${server_made}:R>` }
+						{ name: `${emojis.custom.home} \`-\` **Server Name:**`, value: `${emojis.custom.replyend} **${interaction.guild.name}**`, inline: true },
+						{ name: `${emojis.custom.crown} \`-\` **Founder:**`, value: `${emojis.custom.replyend} ${await interaction.guild.fetchOwner()}`, inline: true },
+						{ name: `${emojis.custom.boost} \`-\` **Boost Tier:**`, value: `${emojis.custom.replyend} **${boostLevel}**`, inline: true },
+						{ name: `${emojis.custom.friends} \`-\` **Members:**`, value: `${emojis.custom.replyend} **${interaction.guild.memberCount}**`, inline: true },
+						{ name: `${emojis.custom.comment} \`-\` **Channels:**`, value: `${emojis.custom.replyend} **${interaction.guild.channels.cache.size}**`, inline: true },
+						{ name: `${emojis.custom.community} \`-\` **Roles:**`, value: `${emojis.custom.replyend} **${interaction.guild.roles.cache.size}**`, inline: true },
+						{ name: `${emojis.custom.link} \`-\` **Server Icon:**`, value: `${emojis.custom.replyend} ${server_icon ? `[Click Here](${server_icon})` : '**None**'}`, inline: true },
+						{ name: `${emojis.custom.clock} \`-\` **Created Date:**`, value: `${emojis.custom.replyend} <t:${server_made}:R>`, inline: true },
+						{ name: `${emojis.custom.openfolder} \`-\` **Emoji Count:**`, value: `${emojis.custom.replyend} **${maxEmojis}**`, inline: true },
+						{ name: `${emojis.custom.emoji1} \`-\` **Regular Emojis:**`, value: `${emojis.custom.replyend} **${emoji_reg}/${maxEmojis}**`, inline: true },
+						{ name: `${emojis.custom.emoji2} \`-\` **Animated Emojis:**`, value: `${emojis.custom.replyend} **${emoji_animated}/${maxEmojis}**`, inline: true }
 					)
 					.setTimestamp()
 					.setThumbnail(server_icon ? server_icon : null)
@@ -65,8 +65,7 @@ class UserCommand extends BeemoCommand {
 		console.error(error);
 			
         	const errorEmbed = new EmbedBuilder()
-            	.setColor(`${color.fail}`)
-            	.setTitle(`${emojis.custom.fail} Server Info Error`)
+            	.setColor(color.fail)
             	.setDescription(`${emojis.custom.fail} **I have encountered an error! Please try again later.**\n\n > *Have you already tried and still encountering the same error? Then please consider joining our support server [here](https://discord.gg/2XunevgrHD) for assistance or use </bugreport:1219050295770742934>*`)
             	.setTimestamp();
 

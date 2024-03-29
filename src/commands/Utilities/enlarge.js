@@ -54,15 +54,15 @@ class UserCommand extends BeemoCommand {
         }
 
         if (!emoji.startsWith("http")) {
-            return await interaction.reply({ content: `${emojis.custom.fail} You **cannot** enlarge default emojis!`, ephemeral: true })
+            return await interaction.reply({ embeds: [new EmbedBuilder().setColor(`${color.invis}`).setDescription(`${emojis.custom.fail} You **cannot** enlarge default emojis!`)], ephemeral: true })
         }
 
         if (!emoji.startsWith("https")) {
-            return await interaction.reply({ content: `${emojis.custom.fail} You **cannot** enlarge default emojis!`, ephemeral: true })
+            return await interaction.reply({ embeds: [new EmbedBuilder().setColor(`${color.invis}`).setDescription(`${emojis.custom.fail} You **cannot** enlarge default emojis!`)], ephemeral: true })
         }
 
         const embed = new EmbedBuilder()
-        .setColor(`${color.default}`)
+        .setColor(color.default)
         .setDescription(`${emojis.custom.success} Your emoji has been **successfully** enlarged`)
         .setImage(emoji)
         .setFooter({ text: `Requested by ${interaction.user.displayName}`, iconURL: interaction.user.displayAvatarURL() })

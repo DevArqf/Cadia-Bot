@@ -53,7 +53,7 @@ class UserCommand extends BeemoCommand {
         });
 
         const embed = new EmbedBuilder()
-        .setColor(`${color.success}`)
+        .setColor(color.success)
 
         if (perms !== '8') embed.setDescription(`${emojis.custom.success} The invite link has been **successfully** generated using your selected choice! To **view** the specific **permissions**, click on the invite and continue with a selected server. \n \n${emojis.custom.warning} This bot **may** require **__Administrator Permissions__** to fully function! By not selecting the highest permissions for your server, you **__risk__** not being able to use all of the features. \n \n> ${link}`)
         else embed.setDescription(`${emojis.custom.success} The invite link has been **successfully** generated using your selected choice! To **view** the specific **permissions**, click on the invite link and continue with a selected server. \n \n> ${link}`)

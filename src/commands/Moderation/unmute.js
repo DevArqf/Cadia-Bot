@@ -1,6 +1,6 @@
 const BeemoCommand = require('../../lib/structures/commands/BeemoCommand');
 const { PermissionLevels } = require('../../lib/types/Enums');
-const { PermissionFlagsBits, PermissionsBitField, EmbedBuilder } = require('discord.js');
+const { PermissionFlagsBits, EmbedBuilder } = require('discord.js');
 const { color, emojis } = require('../../config');
 
 class UserCommand extends BeemoCommand {
@@ -40,16 +40,16 @@ class UserCommand extends BeemoCommand {
 
 		if (!unmuteMember) {
 			return await interaction.reply({
-				content: `${emojis.custom.fail} The user **mentioned** is no longer within the **server**!`,
+				embeds: [new EmbedBuilder().setColor(`${color.invis}`).setDescription(`${emojis.custom.fail} The user **mentioned** is no longer within the **server**!`)],
 				ephemeral: true
 			});
 		}
 		if (interaction.member.id === unmuteMember.id) {
-			return interaction.reply({ content: `${emojis.custom.fail} You **cannot** unmute yourself!`, ephemeral: true });
+			return interaction.reply({ embeds: [new EmbedBuilder().setColor(`${color.invis}`).setDescription(`${emojis.custom.fail} You **cannot** unmute yourself!`)], ephemeral: true });
 		}
 		if (unmuteMember.permissions.has(PermissionFlagsBits.Administrator)) {
 			return interaction.reply({
-				content: `${emojis.custom.fail} You **cannot** mute **staff members** or people with the **Administrator** permission!`,
+				embeds: [new EmbedBuilder().setColor(`${color.invis}`).setDescription(`${emojis.custom.fail} You **cannot** mute **staff members** or people with the **Administrator** permission!`)],
 				ephemeral: true
 			});
 		}
@@ -66,7 +66,7 @@ async function handleUnmute(interaction, userToUnmute, unmuteMember, reason) {
 
 		// Reply with confirmation
 		const unmuteConfirmationEmbed = new EmbedBuilder()
-			.setColor(`${color.success}`)
+			.setColor(color.success)
 			.setDescription(`**${userToUnmute.tag}** has been **Unmuted**! \n\n**• Reason:**\n ${emojis.custom.replyend} \`${reason}\``)
 			.setFooter({ text: `${userToUnmute.id}` })
 			.setTimestamp();
@@ -75,7 +75,7 @@ async function handleUnmute(interaction, userToUnmute, unmuteMember, reason) {
 	} catch (error) {
 		console.error(error);
         const errorEmbed = new EmbedBuilder()
-            .setColor(`${color.fail}`)
+            .setColor(color.fail)
             .setDescription(`${emojis.custom.fail} **I have encountered an error! Please try again later.**\n\n > *Have you already tried and still encountering the same error? Then please consider joining our support server [here](https://discord.gg/2XunevgrHD) for assistance or use </bugreport:1219050295770742934>*`)
             .setTimestamp();
 

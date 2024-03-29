@@ -51,7 +51,7 @@ class UserCommand extends BeemoCommand {
 				.setDescription(
 					`${emojis.custom.success} Successfully set presence to **${presence}**!\n\n > Please wait up to 5 minutes for the presence to change.`
 				)
-				.setColor(`${color.default}`)
+				.setColor(color.default)
 				.setTimestamp()
 				.setFooter({ text: `${interaction.user.displayName}`, iconURL: interaction.user.displayAvatarURL() });
 

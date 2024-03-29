@@ -54,7 +54,7 @@ class UserCommand extends BeemoCommand {
         const sub = options.getSubcommand();
 
         if (!interaction.member.permissions.has(PermissionFlagsBits.Administrator))
-            return await interaction.reply({ content: `${emojis.custom.fail} You are not **authorized** to **execute** this command`, ephemeral: true });
+            return await interaction.reply({ embeds: [new EmbedBuilder().setColor(`${color.invis}`).setDescription(`${emojis.custom.fail} You are not **authorized** to **execute** this command`)], ephemeral: true });
 
         switch (sub) {
             case 'flagged-words':
@@ -90,7 +90,7 @@ class UserCommand extends BeemoCommand {
                     if (!rule) return;
 
                     const embed = new EmbedBuilder()
-                        .setColor(`${color.success}`)
+                        .setColor(color.success)
                         .setDescription(`${emojis.custom.success} **Your Automod rule has been successfully created!**\n ${emojis.custom.replyend} All **Swear Words** will be blocked by **${interaction.client.user}**`);
 
                     await interaction.editReply({ content: '', embeds: [embed] });
@@ -132,7 +132,7 @@ class UserCommand extends BeemoCommand {
                     if (!rule2) return;
 
                     const embed2 = new EmbedBuilder()
-                        .setColor(`${color.success}`)
+                        .setColor(color.success)
                         .setDescription(`${emojis.custom.success} **Your Automod rule has been successfully created!**\n ${emojis.custom.replyend} All messages containing the word **${word}** will be blocked by **${interaction.client.user}**`);
 
                     await interaction.editReply({ content: '', embeds: [embed2] });
@@ -173,7 +173,7 @@ class UserCommand extends BeemoCommand {
                     if (!rule3) return;
 
                     const embed3 = new EmbedBuilder()
-                        .setColor(`${color.success}`)
+                        .setColor(color.success)
                         .setDescription(`${emojis.custom.success} **Your Automod rule has been successfully created!**\n ${emojis.custom.replyend} All **Spam Messages** will be blocked by **${interaction.client.user}**`);
 
                     await interaction.editReply({ content: '', embeds: [embed3] });
@@ -215,7 +215,7 @@ class UserCommand extends BeemoCommand {
                     if (!rule4) return;
 
                     const embed4 = new EmbedBuilder()
-                        .setColor(`${color.success}`)
+                        .setColor(color.success)
                         .setDescription(`${emojis.custom.success} **Your Automod rule has been **successfully** created!**\n ${emojis.custom.replyend} All **Spam Mentions** will be blocked by **${interaction.client.user}**`);
 
                     await interaction.editReply({ content: '', embeds: [embed4] });

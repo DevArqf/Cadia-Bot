@@ -29,7 +29,7 @@ class UserCommand extends BeemoCommand {
 	 * @param {BeemoCommand.ChatInputCommandInteraction} interaction
 	 */
 	async chatInputRun(interaction) {
-		interaction.reply({ content: `${emojis.custom.warning} This feature is coming **very** soon. This command is currently in progress and **may** take some time!`, ephemeral: true });
+		interaction.reply({ embeds: [new EmbedBuilder().setColor(`${color.invis}`).setDescription(`${emojis.custom.warning2} This feature is coming **very** soon. This command is currently in progress and **may** take some time!`)], ephemeral: true });
 	}
 }
 

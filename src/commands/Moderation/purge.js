@@ -51,7 +51,7 @@ class UserCommand extends BeemoCommand {
 		if (amount < 1 || amount > 100) {
 			// Building and sending embed for invalid amount error
 			const invalidAmountEmbed = new EmbedBuilder()
-				.setColor(`${color.fail}`)
+				.setColor(color.fail)
 				.setFooter({ text: `Requested by ${interaction.user.displayName}`, iconURL: interaction.user.displayAvatarURL() })
 				.setTitle(`${emojis.reg.fail} Invalid Amount`)
 				.setDescription('Please specify a valid number of messages to purge (1-100).')
@@ -95,7 +95,7 @@ class UserCommand extends BeemoCommand {
 			if (messages.size === 0) {
 				// Building and sending embed for no messages to purge
 				const noMessagesEmbed = new EmbedBuilder()
-					.setColor(`${color.fail}`)
+					.setColor(color.fail)
 					.setFooter({ text: `Requested by ${interaction.user.displayName}`, iconURL: interaction.user.displayAvatarURL() })
 					.setTitle(`${emojis.reg.fail} No Messages to Purge`)
 					.setDescription(`${emojis.custom.fail} Uh Oh... There are no messages in the channel to purge.`)
@@ -107,7 +107,7 @@ class UserCommand extends BeemoCommand {
 			// Purging the messages and sending success message
 			await channel.bulkDelete([...messages.values()], true);
 			const purgeSuccessEmbed = new EmbedBuilder()
-				.setColor(`${color.success}`)
+				.setColor(color.success)
 				.setFooter({ text: `Requested by ${interaction.user.displayName}`, iconURL: interaction.user.displayAvatarURL() })
 				.setTitle(`${emojis.reg.success} Purge Successful`)
 				.setDescription(`${emojis.custom.success} Successfully purged **${messages.size}** message(s).`)
@@ -118,7 +118,7 @@ class UserCommand extends BeemoCommand {
 			// Handling errors occurred during the process
 			console.error(error);
         	const errorEmbed = new EmbedBuilder()
-            	.setColor(`${color.fail}`)
+            	.setColor(color.fail)
             	.setDescription(`${emojis.custom.fail} **I have encountered an error! Please try again later.**\n\n > *Have you already tried and still encountering the same error? Then please consider joining our support server [here](https://discord.gg/2XunevgrHD) for assistance or use </bugreport:1219050295770742934>*`)
             	.setTimestamp();
 

@@ -2,9 +2,10 @@ const { AllFlowsPrecondition, Result } = require('@sapphire/framework');
 const Guild = require('../lib/schemas/blacklistSchema');
 const { ChatInputCommandInteraction, Message } = require('discord.js');
 const { Developers } = require('../lib/util/constants');
+const { emojis } =require('../config');
 
 class UserPrecondition extends AllFlowsPrecondition {
-	#message = "Sorry but your server is banned from using this bot's commands. Contact the bot developer for more information.";
+	#message = `${emojis.custom.forbidden} Sorry but your server is **blacklisted** from using Cadia's commands. Contact <@899385550585364481> or join our [Support Server](https://discord.gg/2XunevgrHD) for more information.`;
 
 	constructor(context, options) {
 		super(context, {
