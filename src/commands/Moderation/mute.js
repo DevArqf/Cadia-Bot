@@ -11,7 +11,7 @@ class UserCommand extends BeemoCommand {
 	constructor(context, options) {
 		super(context, {
 			...options,
-			requiredUserPermissions: ['ManageRoles'],
+			requiredUserPermissions: ['ModerateMembers'],
 			description: 'Mute a user within the server, revoking their permission to speak.'
 		});
 	}
@@ -43,16 +43,16 @@ class UserCommand extends BeemoCommand {
 
 			if (!muteMember) {
 				return await interaction.reply({
-					content: `${emojis.custom.fail} The user **mentioned** is no longer within the **server**!`,
+					embeds: [new EmbedBuilder().setColor(`${color.invis}`).setDescription(`${emojis.custom.fail} The user **mentioned** is no longer within the **server**!`)],
 					ephemeral: true
 				});
 			}
 			if (interaction.member.id === muteMember.id) {
-				return interaction.reply({ content: `${emojis.custom.fail} You **cannot** mute yourself!`, ephemeral: true });
+				return interaction.reply({ embeds: [new EmbedBuilder().setColor(`${color.invis}`).setDescription(`${emojis.custom.fail} You **cannot** mute yourself!`)], ephemeral: true });
 			}
 			if (muteMember.permissions.has(PermissionFlagsBits.Administrator)) {
 				return interaction.reply({
-					content: `${emojis.custom.fail} You **cannot** mute **staff members** or people with the **Administrator** permission!`,
+					embeds: [new EmbedBuilder().setColor(`${color.invis}`).setDescription(`${emojis.custom.fail} You **cannot** mute **staff members** or people with the **Administrator** permission!`)],
 					ephemeral: true
 				});
 			}
@@ -60,7 +60,7 @@ class UserCommand extends BeemoCommand {
 			// Check if the member is already unmuted
 			const mutedRole = interaction.guild.roles.cache.find((role) => role.name === 'Muted');
 			if (muteMember.roles.cache.has(mutedRole?.id)) {
-				return interaction.reply({ content: `${emojis.custom.fail} This user is already **muted!**`, ephemeral: true });
+				return interaction.reply({ embeds: [new EmbedBuilder().setColor(`${color.invis}`).setDescription(`${emojis.custom.fail} This user is already **muted!**`)], ephemeral: true });
 			}
 
 			// Convert time string to milliseconds
@@ -71,7 +71,7 @@ class UserCommand extends BeemoCommand {
 
 			// Reply with confirmation
 			const muteConfirmationEmbed = new EmbedBuilder()
-				.setColor(`${color.success}`)
+				.setColor(color.success)
 				.setDescription(`**${userToMute.tag}** has been successfully **Muted**! \n\n**• Reason:**\n ${emojis.custom.replyend} \`${reason}\``)
 				.setFooter({ text: `${userToMute.id}` })
 				.setTimestamp();
@@ -80,7 +80,7 @@ class UserCommand extends BeemoCommand {
 		} catch (error) {
 			console.error(error);
         	const errorEmbed = new EmbedBuilder()
-            	.setColor(`${color.fail}`)
+            	.setColor(color.fail)
             	.setDescription(`${emojis.custom.fail} **I have encountered an error! Please try again later.**\n\n > *Have you already tried and still encountering the same error? Then please consider joining our support server [here](https://discord.gg/2XunevgrHD) for assistance or use </bugreport:1219050295770742934>*`)
             	.setTimestamp();
 

@@ -40,7 +40,7 @@ class UserCommand extends BeemoCommand {
         ];
 
         const embed = new EmbedBuilder()
-            .setColor(`${color.default}`)
+            .setColor(color.default)
             .setTitle(topic)
             .setDescription(`• **Options:**\n${choices.map((choice, index) => `${choice.emoji} ${choice.name}`).join('\n')}`);
 

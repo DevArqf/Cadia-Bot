@@ -37,7 +37,7 @@ class UserCommand extends BeemoCommand {
             {name: "theoreotm", value: "> Assisting with the choice of framework and **30%** of Cadia's **overall** making.\n [Oreo's Website](https://oreotm.xyz/)\n [Oreo's Github](https://github.com/TheOreoTM)", inline: false},
 			{name: "Toowake Development's Team", value: "> Assisting and Provided with some of Cadia's existing commands.\n [Toowake's Discord](https://discord.gg/toowake-dev-hosting-1121353922355929129)", inline: false}
         )
-        .setColor(`${color.default}`)
+        .setColor(color.default)
         .setFooter({ text: `Requested by ${interaction.user.displayName}`, iconURL: interaction.user.displayAvatarURL() })
         .setTimestamp();
         

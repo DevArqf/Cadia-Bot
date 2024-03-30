@@ -59,7 +59,7 @@ class UserCommand extends BeemoCommand {
 					`${emojis.custom.success} ${interaction.user} The server link has been **successfully** created!\n⠀${emojis.custom.replyend} [Click here to join](https://discord.gg/${invite.code})`
 				)
 				.setFooter({ text: `Requested by ${interaction.user.displayName}`, iconURL: interaction.user.displayAvatarURL() })
-				.setColor(`${color.success}`)
+				.setColor(color.success)
 				.setTimestamp();
 
 			interaction.reply({ embeds: [embed], ephemeral: true });
@@ -67,7 +67,7 @@ class UserCommand extends BeemoCommand {
 			// Sending an error message if the guild could not be found in the cache
 			console.error(error);
 			const errorEmbed = new EmbedBuilder()
-				.setColor(`${color.fail}`)
+				.setColor(color.fail)
 				.setTitle(`${emojis.custom.fail} Portal Command Error`)
 				.setDescription(`${emojis.custom.fail} **I have encountered an error! Please try again later.**\n\n > *Have you already tried and still encountering the same error? Then please consider joining our support server [here](https://discord.gg/2XunevgrHD) for assistance or use </bugreport:1219050295770742934>*`)
 				.setTimestamp();

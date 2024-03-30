@@ -52,19 +52,18 @@ class UserCommand extends BeemoCommand {
 			});
 		}
 		if (interaction.member.id === kickMember.id) {
-			return interaction.reply({ content: `${emojis.custom.fail} You cannot kick yourself!`, ephemeral: true });
-			return interaction.reply({ content: `${emojis.custom.fail} You **cannot** kick yourself!`, ephemeral: true });
+			return interaction.reply({ embeds: [new EmbedBuilder().setColor(`${color.invis}`).setDescription(`${emojis.custom.fail} You **cannot** kick yourself!`)], ephemeral: true });
 		}
 		if (kickMember.permissions.has(PermissionsBitField.Flags.Administrator)) {
 			return interaction.reply({
-				content: `${emojis.custom.fail} You **cannot** kick **staff members** or people with the **Administrator** permission!`,
+				embeds: [new EmbedBuilder().setColor(`${color.invis}`).setDescription(`${emojis.custom.fail} You **cannot** kick **staff members** or people with the **Administrator** permission!`)],
 				ephemeral: true
 			});
 		}
 		// DM Message
 		try {
 			const dmEmbed = new EmbedBuilder()
-				.setColor(`${color.default}`)
+				.setColor(color.default)
 				.setTitle(`\`🚫\` You have been kicked from **${interaction.guild.name}**`)
 				.setDescription(`• **Kicked by:** \n${emojis.custom.replyend} **${interaction.user.displayName}** \n\n• **Reason:** \n${emojis.custom.replyend} \`${reason}\``)
 				.setFooter({ text: `Moderated by ${interaction.user.tag}`, iconURL: interaction.user.displayAvatarURL() })
@@ -77,7 +76,7 @@ class UserCommand extends BeemoCommand {
 
 			// Kick Successful
 			const kickConfirmationEmbed = new EmbedBuilder()
-				.setColor(`${color.success}`)
+				.setColor(color.success)
 				.setTitle(`${emojis.reg.success} Kick Successful`)
 				.setDescription(`**${userToKick.tag}** has been **Kicked**! \n\n**• Reason**\n ${emojis.custom.replyend} \`${reason}\``)
 				.setFooter({ text: `Moderated by ${interaction.user.tag}`, iconURL: interaction.user.displayAvatarURL() })
@@ -88,11 +87,11 @@ class UserCommand extends BeemoCommand {
 			// Kick Failed
 			await interaction.guild.members.kick(userToKick, { reason: `**Kicked** by ${interaction.user.tag}: ${reason}` });
 			await interaction.guild.members.kick(userToKick, { reason: `${userToKick.id}: ${reason}` });
-			await interaction.reply({ content: '', embeds: [kickConfirmationEmbed] });
+			await interaction.reply({ embeds: [new EmbedBuilder().setColor(`${color.invis}`).setDescription('')], embeds: [kickConfirmationEmbed] });
 		} catch (error) {
 			console.error(error);
         	const errorEmbed = new EmbedBuilder()
-            	.setColor(`${color.fail}`)
+            	.setColor(color.fail)
             	.setDescription(`${emojis.custom.fail} **I have encountered an error! Please try again later.**\n\n > *Have you already tried and still encountering the same error? Then please consider joining our support server [here](https://discord.gg/2XunevgrHD) for assistance or use </bugreport:1219050295770742934>*`)
             	.setTimestamp();
 			await interaction.reply({ embeds: [errorEmbed], ephemeral: true });	

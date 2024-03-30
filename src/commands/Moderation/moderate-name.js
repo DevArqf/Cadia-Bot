@@ -56,7 +56,7 @@ class UserCommand extends BeemoCommand {
 				ephemeral: true
 			});
 		if (interaction.member.id === ModerateUser.id)
-			return interaction.reply({ content: `${emojis.custom.fail} You **cannot** moderate your own name!`, ephemeral: true });
+			return interaction.reply({ embeds: [new EmbedBuilder().setColor(`${color.invis}`).setDescription(`${emojis.custom.fail} You **cannot** moderate your own name!`)], ephemeral: true });
 		if (ModerateUser.permissions.has(PermissionsBitField.Flags.Administrator))
 			return interaction.reply({
 				content: `${emojis.custom.fail} You **cannot** moderate **staff members** or people with the **Administrator** permission!`,
@@ -67,7 +67,7 @@ class UserCommand extends BeemoCommand {
 			ModerateUser.setNickname(nickname, reason);
 
 			const completed = new EmbedBuilder()
-				.setColor(`${color.success}`)
+				.setColor(color.success)
 				.setDescription(`**${userToModerate.tag}**'s name has been **moderated**! \n\n• **New Nickname:**\n ${emojis.custom.replyend} \`${nickname}\` \n\n• **Reason:**\n ${emojis.custom.replyend} \`${reason}\``)
 				.setFooter({ text: `${userToModerate.id}` })
 				.setTimestamp();
@@ -76,7 +76,7 @@ class UserCommand extends BeemoCommand {
 		} catch (error) {
 			console.error(error);
         	const errorEmbed = new EmbedBuilder()
-            	.setColor(`${color.fail}`)
+            	.setColor(color.fail)
             	.setDescription(`${emojis.custom.fail} **I have encountered an error! Please try again later.**\n\n > *Have you already tried and still encountering the same error? Then please consider joining our support server [here](https://discord.gg/2XunevgrHD) for assistance or use </bugreport:1219050295770742934>*`)
             	.setTimestamp();
 

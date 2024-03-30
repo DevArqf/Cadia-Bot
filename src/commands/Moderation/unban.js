@@ -46,11 +46,11 @@ class UserCommand extends BeemoCommand {
 
         // Permissions
         // if (!interaction.member.permissions.has(PermissionsBitField.Flags.BanMembers)) {
-        //    return await interaction.reply({ content: `${emojis.custom.fail} You are not **authorized** to **execute** this command!`, ephemeral: true });
+        //    return await interaction.reply({ embeds: [new EmbedBuilder().setColor(`${color.invis}`).setDescription(`${emojis.custom.fail} You are not **authorized** to **execute** this command!`)], ephemeral: true });
         // }
         
         if (Number.isNaN(userToUnban)) {
-            return await interaction.reply({ content: `${emojis.custom.fail} You have inputted something that is not a number!`, ephemeral: true });
+            return await interaction.reply({ embeds: [new EmbedBuilder().setColor(`${color.invis}`).setDescription(`${emojis.custom.fail} You have inputted something that is not a number!`)], ephemeral: true });
         }
         
         const user = await interaction.client.users.fetch(userToUnban);
@@ -59,18 +59,17 @@ class UserCommand extends BeemoCommand {
         await interaction.guild.bans.remove( user.id )
             .then(() => {
                 const embed = new EmbedBuilder()
-                    .setColor(`${color.success}`)   
-                    .setTitle(`${emojis.reg.success} Unban Successful`)
+                    .setColor(color.success)
                     .setDescription(`**${user.username}** has been **Unbanned**! \n\n**• Reason**\n ${emojis.custom.replyend} \`${reason}\``)
-                    .setTimestamp()
-                    .setFooter({ text: `Moderated by ${interaction.user.tag}`, iconURL: interaction.user.displayAvatarURL() });
+                    .setFooter({ text: `Moderated by ${interaction.user.tag}`, iconURL: interaction.user.displayAvatarURL() })
+                    .setTimestamp();
 
                 interaction.reply({ content: '', embeds: [embed] });
             })
             .catch(error => {
                 console.error(error);
         	    const errorEmbed = new EmbedBuilder()
-            	    .setColor(`${color.fail}`)
+            	    .setColor(color.fail)
             	    .setDescription(`${emojis.custom.fail} **I have encountered an error! Please try again later.**\n\n > *Have you already tried and still encountering the same error? Then please consider joining our support server [here](https://discord.gg/2XunevgrHD) for assistance or use </bugreport:1219050295770742934>*`)
             	    .setTimestamp();
 

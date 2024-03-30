@@ -52,7 +52,7 @@ class UserCommand extends BeemoCommand {
 
         const embed1 = new EmbedBuilder()
         .setDescription(`${content}`)
-        .setColor(`${color.default}`)
+        .setColor(color.default)
 
         if (msgid.startsWith("http")) {
             return await interaction.reply({

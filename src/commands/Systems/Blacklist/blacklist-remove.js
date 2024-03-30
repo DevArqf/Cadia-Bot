@@ -42,14 +42,14 @@ class UserCommand extends BeemoCommand {
 
             if (!removedGuild) {
                 const embed = new EmbedBuilder()
-                    .setColor(`${color.fail}`)
+                    .setColor(color.fail)
                     .setDescription(`${emojis.custom.fail} This server has **not** been **found** in my blacklist!`);
 
                 return await interaction.reply({ embeds: [embed] });
             }
 
             const embed = new EmbedBuilder()
-                .setColor(`${color.success}`)
+                .setColor(color.success)
                 .setDescription(`${emojis.custom.success} The server with ID \`${removedGuild.guildId}\` has been successfully **removed** from my blacklist!`);
 
             await interaction.reply({ embeds: [embed] });
@@ -58,7 +58,7 @@ class UserCommand extends BeemoCommand {
             console.error(error);
 
             const errorEmbed = new EmbedBuilder()
-            .setColor(`${color.fail}`)
+            .setColor(color.fail)
             .setTitle(`${emojis.custom.fail} Blacklist Remove Error`)
             .setDescription(`${emojis.custom.fail} **I have encountered an error! Please try again later.**\n\n > *Have you already tried and still encountering the same error? Then please consider joining our support server [here](https://discord.gg/2XunevgrHD) for assistance or use </bugreport:1219050295770742934>*`)
             .setTimestamp();

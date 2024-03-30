@@ -55,31 +55,31 @@ class UserCommand extends BeemoCommand {
         if (userid) {
             try {
             if (Number.isNaN(userid)) {
-                return await interaction.reply(`${emojis.custom.fail} You have entered something that is not a **number**. Please make sure you are entering a **valid** User ID!`);
+                return await interaction.reply({ embeds: [new EmbedBuilder().setColor(`${color.invis}`).setDescription(`${emojis.custom.fail} You have entered something that is not a **number**. Please make sure you are entering a **valid** User ID!`)], ephemeral: true });
             }
             if (interaction.member.id === userid) {
-                return interaction.reply({content: `${emojis.custom.fail} You **cannot** ban yourself!`, ephemeral: true});
+                return interaction.reply({ embeds: [new EmbedBuilder().setColor(`${color.invis}`).setDescription(`${emojis.custom.fail} You **cannot** ban yourself!`)], ephemeral: true});
             }
 
             const user = await interaction.client.users.fetch(userid);
             if (!user) {
-                return await interaction.reply(`${emojis.custom.fail} You have entered an **Invalid** user ID. Please make sure the User ID is **valid**!`);
+                return await interaction.reply({ embeds: [new EmbedBuilder().setColor(`${color.invis}`).setDescription(`${emojis.custom.fail} You have entered an **Invalid** user ID. Please make sure the User ID is **valid**!`)], ephemeral: true });
             } else {
                 const banConfirmationEmbed = new EmbedBuilder()
-                .setColor(`${color.success}`)
+                .setColor(color.success)
                 .setDescription(`**${user.tag}** has been successfully **Banned**! \n\n**• Reason:**\n ${emojis.custom.replyend} \`${reason}\``)
                 .setFooter({ text: `${userid}` })
                 .setTimestamp();
 
                 await interaction.guild.members.ban(user, { reason: `${userid}: ${reason}` })
-                return await interaction.reply({ content: '', embeds: [banConfirmationEmbed] });
+                return await interaction.reply({ embeds: [new EmbedBuilder().setColor(`${color.invis}`).setDescription('')], embeds: [banConfirmationEmbed] });
                 
             }
 
             } catch (error) {
                 console.error(error);
                 const errorEmbed = new EmbedBuilder()
-                    .setColor(`${color.fail}`)
+                    .setColor(color.fail)
                     .setDescription(`${emojis.custom.fail} **I have encountered an error! Please try again later.**\n\n > *Have you already tried and still encountering the same error? Then please consider joining our support server [here](https://discord.gg/2XunevgrHD) for assistance or use </bugreport:1219050295770742934>*`)
                     .setTimestamp();
     
@@ -92,30 +92,30 @@ class UserCommand extends BeemoCommand {
 
         // Permissions
         // if (!interaction.member.permissions.has(PermissionsBitField.Flags.BanMembers)) {
-            //    return await interaction.reply({ content: `${emojis.custom.fail} You are not **authorized** to **execute** this command!`, ephemeral: true});
+            //    return await interaction.reply({ embeds: [new EmbedBuilder().setColor(`${color.invis}`).setDescription(`${emojis.custom.fail} You are not **authorized** to **execute** this command!`)], ephemeral: true});
             // }
         
             
             if (!banMember) {
-                return await interaction.reply({ content:`${emojis.custom.fail} The **user** mentioned is no longer within the **server**!`, ephemeral: true});
+                return await interaction.reply({ embeds: [new EmbedBuilder().setColor(`${color.invis}`).setDescription(`${emojis.custom.fail} The **user** mentioned is no longer within the **server**!`)], ephemeral: true});
             }
 
             if (banMember.permissions.has(PermissionsBitField.Flags.Administrator)) {
-                return interaction.reply({content: `${emojis.custom.fail} You **cannot** ban **staff** members or people with the **Administrator** permission!`, ephemeral: true});
+                return interaction.reply({ embeds: [new EmbedBuilder().setColor(`${color.invis}`).setDescription(`${emojis.custom.fail} You **cannot** ban **staff** members or people with the **Administrator** permission!`)], ephemeral: true});
             }
 
         if (!banMember.kickable) {
-            return await interaction.reply({ content: `${emojis.custom.fail} I **cannot** ban this user because they are either **higher** than me or you!`, ephemeral: true});
+            return await interaction.reply({ embeds: [new EmbedBuilder().setColor(`${color.invis}`).setDescription(`${emojis.custom.fail} I **cannot** ban this user because they are either **higher** than me or you!`)], ephemeral: true});
         }
 
         if (interaction.member.id === banMember.id) {
-            return interaction.reply({content: `${emojis.custom.fail} You **cannot** ban yourself!`, ephemeral: true});
+            return interaction.reply({ embeds: [new EmbedBuilder().setColor(`${color.invis}`).setDescription(`${emojis.custom.fail} You **cannot** ban yourself!`)], ephemeral: true});
         }
 
         // DM Message
         try {
             const dmEmbed = new EmbedBuilder()
-                .setColor(`${color.fail}`)
+                .setColor(color.fail)
                 .setTitle(`\`🚫\` You have been banned from **${interaction.guild.name}**`)
                 .setDescription(`**• Banned by:**\n ${emojis.custom.replyend} \`${interaction.user.displayName}\`\n**• Reason:**\n ${emojis.custom.replyend} \`${reason}\``)
                 .setThumbnail(interaction.guild.iconURL())
@@ -131,18 +131,18 @@ class UserCommand extends BeemoCommand {
             
             // Ban Successful
             const banConfirmationEmbed = new EmbedBuilder()
-                .setColor(`${color.success}`)
+                .setColor(color.success)
                 .setDescription(`**${userToBan.tag}** has been successfully **Banned**! \n\n**• Reason:**\n ${emojis.custom.replyend} \`${reason}\``)
                 .setFooter({ text: `${userid}` })
                 .setTimestamp();
 
             //Ban Failed
             await interaction.guild.members.ban(userToBan, { reason: `${userid}: ${reason}` });
-            await interaction.reply({ content: '', embeds: [banConfirmationEmbed] });
+            await interaction.reply({ embeds: [new EmbedBuilder().setColor(`${color.invis}`).setDescription('')], embeds: [banConfirmationEmbed] });
         } catch (error) {
             console.error(error);
         	const errorEmbed = new EmbedBuilder()
-            	.setColor(`${color.fail}`)
+            	.setColor(color.fail)
             	.setDescription(`${emojis.custom.fail} **I have encountered an error! Please try again later.**\n\n > *Have you already tried and still encountering the same error? Then please consider joining our support server [here](https://discord.gg/2XunevgrHD) for assistance or use </bugreport:1219050295770742934>*`)
             	.setTimestamp();
 

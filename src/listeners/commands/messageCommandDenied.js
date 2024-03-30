@@ -1,4 +1,5 @@
 const { Listener } = require('@sapphire/framework');
+const { emojis } = require('../../config');
 
 class UserEvent extends Listener {
 	/**
@@ -19,14 +20,14 @@ class UserEvent extends Listener {
 
 		if (identifier === 'PermissionError') {
 			return message.reply({
-				content: `${emojis.custom.fail} You are not **authorized** to **execute** this command`,
+				content: `${emojis.custom.forbidden} You are not **authorized** to **execute** this command`,
 				ephemeral: true
 			});
 		}
 
 		if (identifier === 'DevOnlyCommand') {
 			return message.reply({
-				content: `${emojis.custom.fail} You are not **authorized** to **execute** this command`,
+				content: `${emojis.custom.forbidden} You are not **authorized** to **execute** this command`,
 				ephemeral: true
 			});
 		}

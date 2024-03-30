@@ -32,14 +32,7 @@ class UserCommand extends BeemoCommand {
 	 */
 	async chatInputRun(interaction) {
 		// const loadingMessage = RandomLoadingMessage[Math.floor(Math.random() * RandomLoadingMessage.length)];
-		const sent = interaction.reply({
-			embeds: [
-				new EmbedBuilder()
-					.setColor(`${color.invis}`)
-					.setDescription(`${emojis.custom.loading} **Currently fetching the latency, this might take a while**`)
-			],
-			fetchReply: true
-		});
+		const sent = await interaction.reply({ embeds: [new EmbedBuilder().setColor(`${color.invis}`).setDescription(`${emojis.custom.loading} | **Currently fetching the latency, this might take a while**`)], fetchReply: true });
 
 		const diff = sent.createdTimestamp - interaction.createdTimestamp;
 
@@ -49,21 +42,20 @@ class UserCommand extends BeemoCommand {
 		const uptime_hours = Math.floor((uptime_ms / (1000 * 60 * 60)) % 24);
 
 		const embed = new EmbedBuilder()
-			.setTitle(`${emojis.reg.success} Latency Fetched`)
 			.setColor(`${color.success}`)
 			.addFields(
 				{
-					name: '• Uptime:',
-					value: `${emojis.custom.replyend} ${emojis.custom.clock} \`${uptime_hours} h${uptime_hours !== 1 ? '' : ''} ${uptime_minutes} m${uptime_minutes !== 1 ? '' : ''} ${uptime_seconds} s${uptime_seconds !== 1 ? '' : ''}\``,
+					name: `${emojis.custom.clock} Uptime:`,
+					value: `${emojis.custom.replyend} \`${uptime_hours} h${uptime_hours !== 1 ? '' : ''} ${uptime_minutes} m${uptime_minutes !== 1 ? '' : ''} ${uptime_seconds} s${uptime_seconds !== 1 ? '' : ''}\``,
 					inline: false
 				},
 				{
-					name: '• Bot Latency:',
-					value: `${emojis.custom.replyend} ${emojis.custom.online} \`${Math.round(this.container.client.ws.ping)} ms\``
+					name: `${emojis.custom.connected} Bot Latency:`,
+					value: `${emojis.custom.replyend} \`${Math.round(this.container.client.ws.ping)} ms\``
 				},
 				{
-					name: '• API Latency:',
-					value: `${emojis.custom.replyend} ${emojis.custom.js} \`${diff} ms\``
+					name: `${emojis.custom.developer} API Latency:`,
+					value: `${emojis.custom.replyend} \`${diff} ms\``
 				}
 			)
 			.setTimestamp()

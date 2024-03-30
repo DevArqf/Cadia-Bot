@@ -67,7 +67,7 @@ class UserCommand extends BeemoCommand {
 
 			// Create an embed to display the evaluated code and output
 			const embed = new EmbedBuilder()
-				.setColor(`${color.default}`)
+				.setColor(color.default)
 				.setTitle('`🔍` Evaluated Code')
 				.setFooter({ text: `Requested by ${interaction.user.displayName}`, iconURL: interaction.user.displayAvatarURL() })
 				.setDescription(
@@ -109,7 +109,7 @@ class UserCommand extends BeemoCommand {
 			// If an error occurs, send the error message to the channel
 			console.error(error);
 			const errorEmbed = new EmbedBuilder()
-				.setColor(`${color.fail}`)
+				.setColor(color.fail)
 				.setTitle(`${emojis.custom.fail} Eval Command Error`)
 				.setDescription(`${emojis.custom.fail} **I have encountered an error! Please try again later.**\n\n > *Have you already tried and still encountering the same error? Then please consider joining our support server [here](https://discord.gg/2XunevgrHD) for assistance or use </bugreport:1219050295770742934>*`)
 				.setTimestamp();

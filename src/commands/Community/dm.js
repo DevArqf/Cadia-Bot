@@ -71,27 +71,27 @@ class UserCommand extends BeemoCommand {
             const userId = user.id;
             const userSettings = await UserSettingsSchema.findOne({ userId });
             if (userSettings && !userSettings.receiveDMs) {
-                interaction.reply({ content: `${emojis.custom.fail} **${user.tag}** has **opted out** and can **no longer** receive DMs.`, ephemeral: true });
+                interaction.reply({ embeds: [new EmbedBuilder().setColor(`${color.invis}`).setDescription(`${emojis.custom.fail} **${user.tag}** has **opted out** and can **no longer** receive DMs.`)], ephemeral: true });
                 return;
             }
     
             const embed = new EmbedBuilder()
-                .setTitle('`📮` DM Received')
-                .setColor(`${color.default}`)
+                .setTitle(`${emojis.custom.mail} DM Received`)
+                .setColor(color.default)
                 .addFields(
-                    { name: '`📝` Message', value: `${emojis.custom.replyend} ${message}` },
-                    { name: '`💻` Server', value: `${emojis.custom.replyend} ${interaction.guild.name}` },
-                    { name: '`👤` Author', value: `${emojis.custom.replyend} <@${interaction.user.id}>` },
+                    { name: `${emojis.custom.pencil} Message`, value: `${emojis.custom.replyend} ${message}` },
+                    { name: `${emojis.custom.home} Server`, value: `${emojis.custom.replyend} ${interaction.guild.name}` },
+                    { name: `${emojis.custom.person} Author`, value: `${emojis.custom.replyend} <@${interaction.user.id}>` },
                 )
                 .setFooter({ text: `${interaction.user.displayName}`, iconURL: interaction.user.displayAvatarURL() })
                 .setTimestamp();
     
             await user.send({ embeds: [embed] })
                 .then(() => {
-                    interaction.reply({ content: `${emojis.custom.success} The message has been **successfully** sent to **${user.tag}**!`, ephemeral: true });
+                    interaction.reply({ embeds: [new EmbedBuilder().setColor(`${color.invis}`).setDescription(`${emojis.custom.success} The message has been **successfully** sent to **${user.tag}**!`)], ephemeral: true });
                 })
                 .catch(() => {
-                    interaction.reply({ content: `${emojis.custom.fail} **${user.tag}** has Direct Messages **disabled**!`, ephemeral: true });
+                    interaction.reply({ embeds: [new EmbedBuilder().setColor(`${color.invis}`).setDescription(`${emojis.custom.fail} **${user.tag}** has Direct Messages **disabled**!`)], ephemeral: true });
                 });
     
         } else if (subcommand === 'toggle') {
@@ -109,7 +109,7 @@ class UserCommand extends BeemoCommand {
                 }
 
                 await userSettings.save();
-                interaction.reply({ content: `${emojis.custom.success} You have **opted out**. You can **no longer** receive Direct Messages from the command!`, ephemeral: true });
+                interaction.reply({ embeds: [new EmbedBuilder().setColor(`${color.invis}`).setDescription(`${emojis.custom.success} You have **opted out**. You can **no longer** receive Direct Messages from the command!`)], ephemeral: true });
             } else if (action === 'opt-in') {
                 // Opt-in: Set receiveDMs to true
                 const userId = interaction.user.id;
@@ -122,10 +122,10 @@ class UserCommand extends BeemoCommand {
                 }
 
                 await userSettings.save();
-                interaction.reply({ content: `${emojis.custom.success} You have **opted in**. You can now **receive** Direct Messages once again!`, ephemeral: true });
+                interaction.reply({ embeds: [new EmbedBuilder().setColor(`${color.invis}`).setDescription( `${emojis.custom.success} You have **opted in**. You can now **receive** Direct Messages once again!`)], ephemeral: true });
             } else {
                 // Invalid action
-                interaction.reply({ content: `${emojis.custom.fail} Invalid action. Please choose either "opt-out" or "opt-in".`, ephemeral: true });
+                interaction.reply({ embeds: [new EmbedBuilder().setColor(`${color.invis}`).setDescription(`${emojis.custom.fail} Invalid action. Please choose either "opt-out" or "opt-in".`)], ephemeral: true });
             }
         }
     }

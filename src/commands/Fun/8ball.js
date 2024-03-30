@@ -65,7 +65,7 @@ class UserCommand extends BeemoCommand {
             var get_response = answers[Math.floor(Math.random() * answers.length)];
         
         const embed = new EmbedBuilder()
-            .setColor(`${color.default}`)
+            .setColor(color.default)
             .setTitle(`\`🎱\` Ball Response`)
             .setDescription(`• **Question:**\n ${emojis.custom.replyend} \`${question}\`\n\n • **Response:**\n ${emojis.custom.replyend} ${get_response}`)
             .setTimestamp()
@@ -78,7 +78,7 @@ class UserCommand extends BeemoCommand {
         } catch (error) {
         console.error(error);
         const errorEmbed = new EmbedBuilder()
-            .setColor(`${color.fail}`)
+            .setColor(color.fail)
             .setTitle(`${emojis.reg.fail} 8 Ball Error`)
             .setDescription(`${emojis.custom.fail} **I have encountered an error! Please try again later.**\n\n > *Have you already tried and still encountering the same error? Then please consider joining our support server [here](https://discord.gg/2XunevgrHD) for assistance or use </bugreport:1219050295770742934>*`)
             .setTimestamp();

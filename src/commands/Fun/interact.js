@@ -112,7 +112,7 @@ class UserCommand extends BeemoCommand {
 					const randomizer = Math.floor(Math.random() * hug.length);
 
 					const hugembed = new EmbedBuilder()
-						.setColor(`${color.default}`)
+						.setColor(color.default)
 						.setTimestamp()
 						.setTitle('`🤗` Gave a Hug!')
 						.setFooter({ text: `Requested by ${interaction.user.displayName}`, iconURL: interaction.user.displayAvatarURL() })
@@ -167,7 +167,7 @@ class UserCommand extends BeemoCommand {
 					});
 				else {
 					const statembed = new EmbedBuilder()
-						.setColor(`${color.default}`)
+						.setColor(color.default)
 						.setTimestamp()
 						.setFooter({ text: `Requested by ${interaction.user.displayName}`, iconURL: interaction.user.displayAvatarURL() })
 						.setTitle(`${emojis.custom.right} ${displayuser.username}'s Profile ${emojis.custom.left}`)
@@ -255,7 +255,7 @@ class UserCommand extends BeemoCommand {
 					const failchance = Math.floor(Math.random() * results.length);
 
 					const slapembed = new EmbedBuilder()
-						.setColor(`${color.default}`)
+						.setColor(color.default)
 						.setTimestamp()
 						.setTitle('`👋` Ooo, a SLAP!')
 						.setFooter({ text: `Requested by ${interaction.user.displayName}`, iconURL: interaction.user.displayAvatarURL() })

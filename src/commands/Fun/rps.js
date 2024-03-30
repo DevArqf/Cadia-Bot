@@ -42,16 +42,16 @@ class UserCommand extends BeemoCommand {
 		];
 
 		if (player1.id == player2.id) {
-			await interaction.reply({ content: `${emojis.custom.fail} You cannot play the game with yourself!`, ephemeral: true });
+			await interaction.reply({ embeds: [new EmbedBuilder().setColor(`${color.invis}`).setDescription(`${emojis.custom.fail} You cannot play the game with yourself!`)], ephemeral: true });
 			return;
 		}
 		if (player2.bot) {
-			await interaction.reply({ content: `${emojis.custom.fail} You cannot play the game with a bot!`, ephemeral: true });
+			await interaction.reply({ embeds: [new EmbedBuilder().setColor(`${color.invis}`).setDescription(`${emojis.custom.fail} You cannot play the game with a bot!`)], ephemeral: true });
 			return;
 		}
 
 		const gameEmbed = new EmbedBuilder()
-			.setColor(`${color.default}`)
+			.setColor(color.default)
 			.setTitle('`⚡` Rock, Paper, Scissors!')
 			.setDescription(`It's currently ${player2}'s turn.`)
 
@@ -81,7 +81,7 @@ class UserCommand extends BeemoCommand {
 
 		const player2Choice = choices.find((choice) => choice.name == player2Interaction.customId);
 
-		await player2Interaction.reply({ content: `You picked ${player2Choice.name + player2Choice.emoji}`, ephemeral: true });
+		await player2Interaction.reply({ embeds: [new EmbedBuilder().setColor(`${color.invis}`).setDescription(`You picked ${player2Choice.name + player2Choice.emoji}`)], ephemeral: true });
 		gameEmbed.setDescription(`It's currently ${player1}'s turn.`);
 		await game.edit({
 			content: `${player1} it's your turn now!`,

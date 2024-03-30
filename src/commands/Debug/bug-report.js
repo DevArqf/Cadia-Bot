@@ -98,15 +98,15 @@ class UserCommand extends BeemoCommand {
 			const reason = interaction.options.getString('reason') || 'No reason provided';
 
 			if (Number.isNaN(userId)) {
-				return await interaction.reply({ content: `${emojis.custom.fail} You have entered a character that is not a number.`, ephemeral: true });
+				return await interaction.reply({ embeds: [new EmbedBuilder().setColor(`${color.invis}`).setDescription(`${emojis.custom.fail} You have entered a character that is not a number.`)], ephemeral: true });
 			};
 			const find = await BugReportBlacklist.find({ userID: userId });
 
 			if (find.length === 0) {
 				await BugReportBlacklist.create({ userID: userId, reason });
-				return await interaction.reply({ content: `${emojis.reg.success} **Successfully Blacklisted!**\n\`${userId}\` has been **blacklisted** from executing the **bug-report** command\n\n**Reason:**\n ${emojis.custom.replyend} \`${reason}\``, ephemeral: true});
+				return await interaction.reply({ embeds: [new EmbedBuilder().setColor(`${color.invis}`).setDescription(`${emojis.reg.success} **Successfully Blacklisted!**\n\`${userId}\` has been **blacklisted** from executing the **bug-report** command\n\n**Reason:**\n ${emojis.custom.replyend} \`${reason}\``)], ephemeral: true});
 			}
-			return await interaction.reply({ content: `${emojis.reg.success} **Failed to Backlist!**\n\n\`${userId}\` **cannot** be **blacklisted** from executing the **bug-report** command as they have already been **blacklisted**`, ephemeral: true});
+			return await interaction.reply({ embeds: [new EmbedBuilder().setColor(`${color.invis}`).setDescription(`${emojis.reg.success} **Failed to Backlist!**\n\n\`${userId}\` **cannot** be **blacklisted** from executing the **bug-report** command as they have already been **blacklisted**`)], ephemeral: true});
 
 		}
 
@@ -119,9 +119,9 @@ class UserCommand extends BeemoCommand {
 
 			if (find.length !== 0) {
 				await BugReportBlacklist.findOneAndDelete({ userID: userId });
-				return await interaction.reply({ content: `${emojis.reg.success} **Successfully Unblacklisted!**\n\`${userId}\` has been **sucessfully** Unblacklisted`, ephemeral: true })
+				return await interaction.reply({ embeds: [new EmbedBuilder().setColor(`${color.invis}`).setDescription(`${emojis.reg.success} **Successfully Unblacklisted!**\n\`${userId}\` has been **sucessfully** Unblacklisted`)], ephemeral: true })
 			}
-			return await interaction.reply({ content: `${emojis.reg.success} **Failed to Unblacklist!**\n\n\`${userId}\` **cannot** be **blacklisted** from **executing** the **bug-report** command as they have already been **blacklisted**`, ephemeral: true});
+			return await interaction.reply({ embeds: [new EmbedBuilder().setColor(`${color.invis}`).setDescription(`${emojis.reg.success} **Failed to Unblacklist!**\n\n\`${userId}\` **cannot** be **blacklisted** from **executing** the **bug-report** command as they have already been **blacklisted**`)], ephemeral: true});
 
 		};
 
@@ -129,7 +129,7 @@ class UserCommand extends BeemoCommand {
 			const find = await BugReportBlacklist.find({ userID: interaction.user.id });
 			if (find.length !== 0) {
 				const blacklistEmbed = new EmbedBuilder()
-				.setColor(`${color.fail}`)
+				.setColor(color.fail)
 				.setDescription(`${emojis.custom.warning} You have been **blacklisted** from **executing** the bug-report command! Please join our discord server [here](https://discord.gg/2XunevgrHD) for more info.`)
 				.setTimestamp()
 				.setFooter({ text: `Requested by ${interaction.user.displayName}`, iconURL: interaction.user.displayAvatarURL() });
@@ -158,7 +158,7 @@ class UserCommand extends BeemoCommand {
         .setFooter({ text: `Requested by ${interaction.user.displayName}`, iconURL: interaction.user.displayAvatarURL() });
 
 		const devEmbed = new EmbedBuilder()
-		.setColor(`${color.default}`)
+		.setColor(color.default)
 		.setTitle('`🔔` New Bug Report')
 		.addFields([
 			{ name: '**User info:**', value: `${emojis.custom.replycontinue} **User ID:** ${interaction.user.id}\n${emojis.custom.replyend} **User:** <@${interaction.user.id}>` },
@@ -208,7 +208,7 @@ class UserCommand extends BeemoCommand {
 						return updatesActionRow;
 					});
 					const successEmbed = new EmbedBuilder()
-						.setColor(`${color.success}`)
+						.setColor(color.success)
 						.setDescription(`${emojis.reg.success} **Marked Resolved**\n\nThis bug report has been **successfully** been marked as **resolved**.`)
 					await interaction.reply({ embeds: [successEmbed] , ephemeral: true });
 					await interaction.message.edit({ components: newActionRowEmbeds });
@@ -216,7 +216,7 @@ class UserCommand extends BeemoCommand {
 				} catch (error) {
 					console.error(error);
 					const errorEmbed = new EmbedBuilder()
-							.setColor(`${color.fail}`)
+							.setColor(color.fail)
 							.setDescription(`${emojis.custom.fail} **I have encountered an error! Please try again later.**\n\n > *Have you already tried and still encountering the same error? Then please consider joining our support server [here](https://discord.gg/2XunevgrHD) for assistance or use </bugreport:1219050295770742934>*`)
 							.setTimestamp();
 							
