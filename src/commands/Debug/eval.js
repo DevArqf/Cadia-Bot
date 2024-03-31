@@ -71,7 +71,7 @@ class UserCommand extends BeemoCommand {
 				.setTitle('`🔍` Evaluated Code')
 				.setFooter({ text: `Requested by ${interaction.user.displayName}`, iconURL: interaction.user.displayAvatarURL() })
 				.setDescription(
-					`**• Input:**\n\`\`\`js\n${evaluatedCode}\n\`\`\`\n**• Output:**\n\`\`\`${output.replaceAll("'", '')}\`\`\`\n**Operation took** \`${end?.getTime() - start?.getTime()}\` **millisecond**${end?.getTime() - start?.getTime() > 1 ? 's' : ''}.`
+					`**Input:**\n\`\`\`js\n${evaluatedCode}\n\`\`\`\n**Output:**\n\`\`\`${output.replaceAll("'", '')}\`\`\`\n**Operation took** \`${end?.getTime() - start?.getTime()}\` **millisecond**${end?.getTime() - start?.getTime() > 1 ? 's' : ''}.`
 				)
 				.setTimestamp();
 
@@ -89,7 +89,7 @@ class UserCommand extends BeemoCommand {
 			// Create a collector for message components (buttons)
 			const filter = (i) => {
 				if (i.user.id === interaction.author.id) return true;
-				i.reply({ content: `${emojis.custom.fail} You are not **authorized** to **execute** this command!**`, ephemeral: true });
+				i.reply({ content: `${emojis.custom.forbidden} You are not **authorized** to **execute** this command!**`, ephemeral: true });
 				return false;
 			};
 
@@ -110,7 +110,6 @@ class UserCommand extends BeemoCommand {
 			console.error(error);
 			const errorEmbed = new EmbedBuilder()
 				.setColor(color.fail)
-				.setTitle(`${emojis.custom.fail} Eval Command Error`)
 				.setDescription(`${emojis.custom.fail} **I have encountered an error! Please try again later.**\n\n > *Have you already tried and still encountering the same error? Then please consider joining our support server [here](https://discord.gg/2XunevgrHD) for assistance or use </bugreport:1219050295770742934>*`)
 				.setTimestamp();
 

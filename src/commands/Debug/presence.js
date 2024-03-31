@@ -49,7 +49,7 @@ class UserCommand extends BeemoCommand {
 			const embed = new EmbedBuilder()
 				.setTitle("`🔒` Beemo's Presence")
 				.setDescription(
-					`${emojis.custom.success} Successfully set presence to **${presence}**!\n\n > Please wait up to 5 minutes for the presence to change.`
+					`${emojis.custom.success} **Successfully** set presence to **${presence}**!\n\n > Please wait up to **5 minutes** for the presence to change.`
 				)
 				.setColor(color.default)
 				.setTimestamp()
@@ -67,10 +67,14 @@ class UserCommand extends BeemoCommand {
 
 			return await interaction.reply({ embeds: [embed] });
 		} catch (error) {
-			interaction.channel.send({
-				content: `${emojis.custom.fail} I have **encountered** an **error**:\n \`\`\`js\n${error}\`\`\` `,
-				ephemeral: true
-			});
+			console.error(error);
+			const errorEmbed = new EmbedBuilder()
+				.setColor(color.fail)
+				.setDescription(`${emojis.custom.fail} **I have encountered an error! Please try again later.**\n\n > *Have you already tried and still encountering the same error? Then please consider joining our support server [here](https://discord.gg/2XunevgrHD) for assistance or use </bugreport:1219050295770742934>*`)
+				.setTimestamp();
+
+			await interaction.reply({ embeds: [errorEmbed], ephemeral: true });
+			return;
 		}
 	}
 }

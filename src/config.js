@@ -113,7 +113,9 @@ const emojis = {
 		friends: '<:cl_friends:1223405551191326721>',
 		emoji1: '<:cl_emoji1:1223431397654397028>',
 		emoji2: '<:cl_emoji2:1223431395502850161>',
-		openfolder: '<:cl_openfolder:1223433141939605554>'
+		openfolder: '<:cl_openfolder:1223433141939605554>',
+		trash: '<:cl_trash:1223407865600147476>',
+		lock: '<:cl_lock:1223791266073018458>'
 	}
 };
 

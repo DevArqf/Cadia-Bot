@@ -13,7 +13,7 @@ class UserCommand extends BeemoCommand {
 		super(context, {
 			...options,
 			permissionLevel: PermissionLevels.BotOwner,
-			description: 'Shows all of the servers I am in (DEV ONLY)'
+			description: 'Shows all of the servers Cadia is in (DEV ONLY)'
 		});
 	}
 
@@ -47,9 +47,8 @@ class UserCommand extends BeemoCommand {
 			])
 			.then((src) => {
 				const embed = new EmbedBuilder()
-					.setTitle('`📁` Server List')
 					.setDescription(
-						`${emojis.custom.success} The Server List has been **successfully** generated!\n⠀${emojis.custom.replyend} [Click here to view](${src.url})`
+						`> ${emojis.custom.success} The Server List has been **successfully** generated!\n⠀${emojis.custom.replyend} [Click here to view](${src.url})`
 					)
 					.setFooter({ text: `Requested by ${interaction.user.displayName}`, iconURL: interaction.user.displayAvatarURL() })
 					.setColor(color.success)

@@ -26,25 +26,25 @@ class UserEvent extends Listener {
 			const embed = new EmbedBuilder()
 				.setColor(color.default)
 				.setDescription(
-					`${emojis.custom.wave} **Thank you for adding me to your server!**\n ${emojis.custom.replystart} If you need any help, please feel free to join\n ${emojis.custom.replyend} our support server.\n\n ${emojis.custom.warning} **Important**\n ${emojis.custom.replystart} Make sure the bot's role is at the highest position\n ${emojis.custom.replyend} in the role hierarchy to prevent any bugs or issues.`
+					`${emojis.custom.heart1} **Thank you for adding me to your server!**\n ${emojis.custom.replystart} If you need any help, please feel free to join\n ${emojis.custom.replyend} our support server.\n\n ${emojis.custom.warning} **Important**\n ${emojis.custom.replystart} Make sure the bot's role is at the highest position\n ${emojis.custom.replyend} in the role hierarchy to prevent any bugs or issues.`
 				)
 				.setThumbnail(avatarURL);
 
 			const channel = new ActionRowBuilder().addComponents(
 				new ButtonBuilder()
-					.setEmoji(`${emojis.custom.home}`)
+					.setEmoji(emojis.custom.home)
 					.setLabel('Support Server')
 					.setURL('https://discord.gg/SrYexYcKZ2')
 					.setStyle(ButtonStyle.Link),
 
 				new ButtonBuilder()
-					.setEmoji(`${emojis.custom.personadd}`)
+					.setEmoji(emojis.custom.link)
 					.setLabel('Invite bot')
 					.setURL('https://discord.com/api/oauth2/authorize?client_id=1200475110235197631&scope=applications.commands+bot&permissions=8')
 					.setStyle(ButtonStyle.Link),
 
 				new ButtonBuilder()
-					.setEmoji(`${emojis.custom.chart}`)
+					.setEmoji(emojis.custom.gem)
 					.setLabel('Vote')
 					.setURL('https://top.gg/bot/1200475110235197631')
 					.setStyle(ButtonStyle.Link)

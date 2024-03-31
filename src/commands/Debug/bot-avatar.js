@@ -49,7 +49,13 @@ class UserCommand extends BeemoCommand {
             await interaction.client.user.setAvatar(avatar.url).catch(async (err) => {
               error = true;
               console.log(err);
-              return await sendMessage(`Error : \`${err.toString()}\``);
+              const errorEmbed = new EmbedBuilder()
+                    .setColor(color.fail)
+                    .setDescription(`${emojis.custom.fail} **I have encountered an error! Please try again later.**\n\n > *Have you already tried and still encountering the same error? Then please consider joining our support server [here](https://discord.gg/2XunevgrHD) for assistance or use </bugreport:1219050295770742934>*`)
+                    .setTimestamp();
+
+                await interaction.reply({ embeds: [errorEmbed], ephemeral: true });
+                return;
             });
         
             if (error) return;

@@ -91,37 +91,37 @@ class UserCommand extends BeemoCommand {
 
 		if (subcommand === 'blacklist-user') {
 			if (!authorizedIDs.includes(interaction.user.id)) { 
-				return await interaction.reply(`${emojis.custom.fail} You are not **authorized** to **execute** this command!`);
+				return await interaction.reply(`${emojis.custom.forbidden} You are not **authorized** to **execute** this command!`);
 			};
 
 			const userId = interaction.options.getString('user-id');
 			const reason = interaction.options.getString('reason') || 'No reason provided';
 
 			if (Number.isNaN(userId)) {
-				return await interaction.reply({ embeds: [new EmbedBuilder().setColor(`${color.invis}`).setDescription(`${emojis.custom.fail} You have entered a character that is not a number.`)], ephemeral: true });
+				return await interaction.reply({ embeds: [new EmbedBuilder().setColor(`${color.invis}`).setDescription(`${emojis.custom.fail} You have **entered** a character that is **not** a number.`)], ephemeral: true });
 			};
 			const find = await BugReportBlacklist.find({ userID: userId });
 
 			if (find.length === 0) {
 				await BugReportBlacklist.create({ userID: userId, reason });
-				return await interaction.reply({ embeds: [new EmbedBuilder().setColor(`${color.invis}`).setDescription(`${emojis.reg.success} **Successfully Blacklisted!**\n\`${userId}\` has been **blacklisted** from executing the **bug-report** command\n\n**Reason:**\n ${emojis.custom.replyend} \`${reason}\``)], ephemeral: true});
+				return await interaction.reply({ embeds: [new EmbedBuilder().setColor(`${color.invis}`).setDescription(`${emojis.custom.success} **Successfully Blacklisted!**\n\`${userId}\` has been **blacklisted** from executing the **bug-report** command\n\n**Reason:**\n ${emojis.custom.replyend} \`${reason}\``)], ephemeral: true});
 			}
-			return await interaction.reply({ embeds: [new EmbedBuilder().setColor(`${color.invis}`).setDescription(`${emojis.reg.success} **Failed to Backlist!**\n\n\`${userId}\` **cannot** be **blacklisted** from executing the **bug-report** command as they have already been **blacklisted**`)], ephemeral: true});
+			return await interaction.reply({ embeds: [new EmbedBuilder().setColor(`${color.invis}`).setDescription(`${emojis.custom.success} **Failed to Backlist!**\n\n\`${userId}\` **cannot** be **blacklisted** from executing the **bug-report** command as they have already been **blacklisted**`)], ephemeral: true});
 
 		}
 
 		if (subcommand === 'unblacklist-user') {
 			if (!authorizedIDs.includes(interaction.user.id)) { 
-				return await interaction.reply(`${emojis.custom.fail} You are not **authorized** to **execute** this command!`);
+				return await interaction.reply(`${emojis.custom.forbidden} You are not **authorized** to **execute** this command!`);
 			};
 			const userId = interaction.options.getString('user-id');
 			const find = await BugReportBlacklist.find({ userID: userId });
 
 			if (find.length !== 0) {
 				await BugReportBlacklist.findOneAndDelete({ userID: userId });
-				return await interaction.reply({ embeds: [new EmbedBuilder().setColor(`${color.invis}`).setDescription(`${emojis.reg.success} **Successfully Unblacklisted!**\n\`${userId}\` has been **sucessfully** Unblacklisted`)], ephemeral: true })
+				return await interaction.reply({ embeds: [new EmbedBuilder().setColor(`${color.invis}`).setDescription(`${emojis.custom.success} **Successfully Unblacklisted!**\n\`${userId}\` has been **sucessfully** Unblacklisted`)], ephemeral: true })
 			}
-			return await interaction.reply({ embeds: [new EmbedBuilder().setColor(`${color.invis}`).setDescription(`${emojis.reg.success} **Failed to Unblacklist!**\n\n\`${userId}\` **cannot** be **blacklisted** from **executing** the **bug-report** command as they have already been **blacklisted**`)], ephemeral: true});
+			return await interaction.reply({ embeds: [new EmbedBuilder().setColor(`${color.invis}`).setDescription(`${emojis.custom.success} **Failed to Unblacklist!**\n\n\`${userId}\` **cannot** be **blacklisted** from **executing** the **bug-report** command as they have already been **blacklisted**`)], ephemeral: true});
 
 		};
 
@@ -130,7 +130,7 @@ class UserCommand extends BeemoCommand {
 			if (find.length !== 0) {
 				const blacklistEmbed = new EmbedBuilder()
 				.setColor(color.fail)
-				.setDescription(`${emojis.custom.warning} You have been **blacklisted** from **executing** the bug-report command! Please join our discord server [here](https://discord.gg/2XunevgrHD) for more info.`)
+				.setDescription(`${emojis.custom.warning2} You have been **blacklisted** from **executing** the bug-report command! Please join our discord server [here](https://discord.gg/2XunevgrHD) for more info.`)
 				.setTimestamp()
 				.setFooter({ text: `Requested by ${interaction.user.displayName}`, iconURL: interaction.user.displayAvatarURL() });
 
@@ -146,12 +146,12 @@ class UserCommand extends BeemoCommand {
 
 		const sentEmbed = new EmbedBuilder()
 		.setColor(`${color.random}`)
-		.setDescription(`${emojis.custom.success} **Thank you for submitting this bug report.** The Developers will **investigate** the bug **very** soon.\n ${emojis.custom.replyend} Abusing or misusing this feature will **result** in you getting **blacklisted**!`) // \n\n **Issue:**\n${emojis.custom.replyend} ${issue}\n\n **Notes:**\n${emojis.custom.replyend} ${notes} \n\n**Image:**\n ${image ? `${emojis.custom.replyend} Please look below` : `${emojis.custom.replyend} No picture provided`}\n\n**System:**\n ${emojis.custom.replyend} ${system} **Abusing** this feature will **result** in you getting **blacklisted***!`)
+		.setDescription(`${emojis.custom.success} **Thank you for submitting this bug report.** The Developers will **investigate** the bug **very** soon.\n ${emojis.custom.replyend} ${emojis.custom.warning2} Abusing or misusing this feature will **result** in you getting **blacklisted**!`) // \n\n **Issue:**\n${emojis.custom.replyend} ${issue}\n\n **Notes:**\n${emojis.custom.replyend} ${notes} \n\n**Image:**\n ${image ? `${emojis.custom.replyend} Please look below` : `${emojis.custom.replyend} No picture provided`}\n\n**System:**\n ${emojis.custom.replyend} ${system} **Abusing** this feature will **result** in you getting **blacklisted***!`)
 		.addFields([
-			{ name: '**Issue:**', value: `${emojis.custom.replyend} ${issue}` },
-			{ name: '**Notes:**', value: `${emojis.custom.replyend} ${notes}` },
-			{ name: '**System:**', value: `${emojis.custom.replyend} ${system}` },
-			{ name: '**Image:**', value: `${image ? `${emojis.custom.replyend} Please look below` : `${emojis.custom.replyend} No picture provided`}` }
+			{ name: `${emojis.custom.warning1} \`-\` **Bug:**`, value: `${emojis.custom.replyend} ${issue}` },
+			{ name: `${emojis.custom.pencil} \`-\` **Notes:**'`, value: `${emojis.custom.replyend} ${notes}` },
+			{ name: `${emojis.custom.settings} \`-\` **System:**`, value: `${emojis.custom.replyend} ${system}` },
+			{ name: `${emojis.custom.save} \`-\` **Image:**`, value: `${image ? `${emojis.custom.replyend} Please take look below` : `${emojis.custom.replyend} No picture provided`}` }
 		])
 		.setImage(image ? image.url : null)
 		.setTimestamp()
@@ -159,21 +159,22 @@ class UserCommand extends BeemoCommand {
 
 		const devEmbed = new EmbedBuilder()
 		.setColor(color.default)
-		.setTitle('`🔔` New Bug Report')
+		.setTitle(`${emojis.custom.mail} New Bug Report`)
 		.addFields([
-			{ name: '**User info:**', value: `${emojis.custom.replycontinue} **User ID:** ${interaction.user.id}\n${emojis.custom.replyend} **User:** <@${interaction.user.id}>` },
-			{ name: '**Issue:**', value: `${emojis.custom.replyend} ${issue}` },
-			{ name: '**Notes:**', value: `${emojis.custom.replyend} ${notes}` },
-			{ name: '**System:**', value: `${emojis.custom.replyend} ${system}`},
-			{ name: '**Image:**', value: `${image ? `${emojis.custom.replyend} Please look below` : `${emojis.custom.replyend} No picture provided`}` },
+			{ name: `${emojis.custom.person} \`-\` **User info:**`, value: `${emojis.custom.replycontinue} **User ID:** ${interaction.user.id}\n${emojis.custom.replyend} **User:** <@${interaction.user.id}>` },
+			{ name: `${emojis.custom.warning1} **Bug:**`, value: `${emojis.custom.replyend} ${issue}` },
+			{ name: `${emojis.custom.pencil} \`-\` **Notes:**'`, value: `${emojis.custom.replyend} ${notes}` },
+			{ name: `${emojis.custom.settings} \`-\` **System:**`, value: `${emojis.custom.replyend} ${system}`},
+			{ name: `${emojis.custom.save} \`-\` **Image:**`, value: `${image ? `${emojis.custom.replyend} Please look below` : `${emojis.custom.replyend} No picture provided`}` },
 			])
 		.setTimestamp()
-		.setFooter({ text: `Submitted by ${interaction.user.displayName}`, iconURL: interaction.user.displayAvatarURL() })
+		.setFooter({ text: `Report submitted by ${interaction.user.displayName}`, iconURL: interaction.user.displayAvatarURL() })
 		.setImage(image ? image.url : null);
 			
 			const button = new ActionRowBuilder()
 			.addComponents(
 				new ButtonBuilder()
+					.setEmoji(emojis.custom.success)
 					.setLabel("Solved")
 					.setStyle(ButtonStyle.Success)
 					.setCustomId("solve")
@@ -198,7 +199,7 @@ class UserCommand extends BeemoCommand {
 							oldActionRow.components.map((buttonComponent) => {
 								const newButton = new ButtonBuilder()
 									.setCustomId(buttonComponent.customId)
-									.setLabel(`Solved by ${user}`)
+									.setLabel(`> ${emojis.custom.success} The **bug** has been **solved** by ${user}`)
 									.setStyle(ButtonStyle.Success)
 									.setDisabled(true)
 
@@ -209,7 +210,7 @@ class UserCommand extends BeemoCommand {
 					});
 					const successEmbed = new EmbedBuilder()
 						.setColor(color.success)
-						.setDescription(`${emojis.reg.success} **Marked Resolved**\n\nThis bug report has been **successfully** been marked as **resolved**.`)
+						.setDescription(`${emojis.custom.success} **Marked Resolved**\n\nThis bug report has been **successfully** been marked as **resolved**.`)
 					await interaction.reply({ embeds: [successEmbed] , ephemeral: true });
 					await interaction.message.edit({ components: newActionRowEmbeds });
 

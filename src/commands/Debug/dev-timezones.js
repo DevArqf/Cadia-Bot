@@ -36,7 +36,7 @@ class UserCommand extends BeemoCommand {
 
 		// Check if the user executing the command is authorized
 		// if (!authorizedIDs.includes(interaction.user.id)) {
-		//	return interaction.reply({ embeds: [new EmbedBuilder().setColor(`${color.invis}`).setDescription(`${emojis.custom.fail} You are not **authorized** to **execute** this command!`)], ephemeral: true });
+		//	return interaction.reply({ embeds: [new EmbedBuilder().setColor(`${color.invis}`).setDescription(`${emojis.custom.forbidden} You are not **authorized** to **execute** this command!`)], ephemeral: true });
 		// }
 
 		function get_time(timezone) {
@@ -98,7 +98,6 @@ class UserCommand extends BeemoCommand {
 		}
 
 		const embed = new EmbedBuilder()
-			.setTitle(`${emojis.reg.success} Time\'s Fetched`)
 			.setColor(color.success)
 			.addFields(
 				{ name: 'Malik\'s Time:', value: `${emojis.custom.replystart} ${get_time('AST')}`, inline: false },
