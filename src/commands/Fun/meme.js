@@ -48,15 +48,13 @@ class UserCommand extends BeemoCommand {
 
 				await interaction.reply({ embeds: [embed] });
 			} else {
-				await interaction.reply(`${emojis.custom.fail} Failed to fetch a meme. Try again later.`);
+				await interaction.reply(`${emojis.custom.fail} I **failed** to **fetch** a meme. Please try again later.`);
 			}
 		} catch (error) {
 		console.error(error);
-
         const errorEmbed = new EmbedBuilder()
             .setColor(color.fail)
-            .setTitle(`${emojis.custom.fail} Meme Command Error`)
-            .setDescription(`${emojis.custom.fail} **I have encountered an error! Please try again later.**\n\n > *Have you already tried and still encountering the same error? Then please consider joining our support server [here](https://discord.gg/2XunevgrHD) for assistance or use </bugreport:1219050295770742934>*`)
+            .setDescription(`${emojis.custom.fail} **Oopsie, I have encountered an error. The error has been **forwarded** to the developers, so please be **patient** and try running the command again later.**\n\n > ${emojis.custom.link} \`-\` *Have you already tried and still encountering the same error? Then please consider joining our support server [here](https://discord.gg/2XunevgrHD) for assistance or use </bugreport:1219050295770742934>*`)
             .setTimestamp();
 
         await interaction.reply({ embeds: [errorEmbed], ephemeral: true });

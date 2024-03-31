@@ -66,8 +66,7 @@ class UserCommand extends BeemoCommand {
         
         const embed = new EmbedBuilder()
             .setColor(color.default)
-            .setTitle(`\`🎱\` Ball Response`)
-            .setDescription(`• **Question:**\n ${emojis.custom.replyend} \`${question}\`\n\n • **Response:**\n ${emojis.custom.replyend} ${get_response}`)
+            .setDescription(`${emojis.custom.question} \`-\` **Question:**\n ${emojis.custom.replyend} > **${question}**\n\n ${emojis.custom.mail} \`-\` **Response:**\n ${emojis.custom.replyend} > ${get_response}`)
             .setTimestamp()
             .setFooter({ text: `Requested by ${interaction.user.displayName}`, iconURL: interaction.user.displayAvatarURL() })
             
@@ -79,8 +78,7 @@ class UserCommand extends BeemoCommand {
         console.error(error);
         const errorEmbed = new EmbedBuilder()
             .setColor(color.fail)
-            .setTitle(`${emojis.reg.fail} 8 Ball Error`)
-            .setDescription(`${emojis.custom.fail} **I have encountered an error! Please try again later.**\n\n > *Have you already tried and still encountering the same error? Then please consider joining our support server [here](https://discord.gg/2XunevgrHD) for assistance or use </bugreport:1219050295770742934>*`)
+            .setDescription(`${emojis.custom.fail} **Oopsie, I have encountered an error. The error has been **forwarded** to the developers, so please be **patient** and try running the command again later.**\n\n > ${emojis.custom.link} \`-\` *Have you already tried and still encountering the same error? Then please consider joining our support server [here](https://discord.gg/2XunevgrHD) for assistance or use </bugreport:1219050295770742934>*`)
             .setTimestamp();
 
         await interaction.reply({ embeds: [errorEmbed], ephemeral: true });

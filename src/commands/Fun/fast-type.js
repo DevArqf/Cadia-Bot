@@ -37,7 +37,7 @@ class UserCommand extends BeemoCommand {
 			'We climbed to the top of the mountain in just under two hours; isn’t that great?',
 			'In order to keep up at that pace, Zack Squeve would have to work all night.',
 			"Cadia Bot is my best friend. He's always there when I need him.",
-			'Cadia Bot was made on Jan, 26th, 2024 by Malik and Navin.'
+			'Cadia Bot was created on Jan, 26th, 2024 by Malik.'
 		];
 		const selectedSentence = sentences[Math.floor(Math.random() * sentences.length)];
 
@@ -82,7 +82,7 @@ class UserCommand extends BeemoCommand {
 				const failEmbed = new EmbedBuilder()
 					.setColor(color.fail)
 					.setTitle('`⏰` Times Up!')
-					.setDescription('You ran out of time! Better luck next time!')
+					.setDescription(`${emojis.custom.clock} You ran out of time! Better luck next time!`)
 					.setFooter({ text: `Requested by ${interaction.user.displayName}`, iconURL: interaction.user.displayAvatarURL() })
 					.setTimestamp();
 

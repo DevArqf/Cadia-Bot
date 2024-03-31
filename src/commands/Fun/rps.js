@@ -32,6 +32,8 @@ class UserCommand extends BeemoCommand {
 	 * @param {BeemoCommand.ChatInputCommandInteraction} interaction
 	 */
 	async chatInputRun(interaction) {
+		try {
+
 		const player1 = interaction.user;
 		const player2 = interaction.options.getUser('opponent');
 
@@ -118,6 +120,16 @@ class UserCommand extends BeemoCommand {
 			`${player1} picked\n ${emojis.custom.replyend} ${player1Choice.name + player1Choice.emoji}\n ${player2} picked\n ${emojis.custom.replyend} ${player2Choice.name + player2Choice.emoji}\n\n ${result}`
 		);
 		game.edit({ content: 'The Game has ended!', embeds: [gameEmbed], components: [] });
+	} catch (error) {
+		console.error(error);
+        const errorEmbed = new EmbedBuilder()
+            .setColor(color.fail)
+            .setDescription(`${emojis.custom.fail} **Oopsie, I have encountered an error. The error has been **forwarded** to the developers, so please be **patient** and try running the command again later.**\n\n > ${emojis.custom.link} \`-\` *Have you already tried and still encountering the same error? Then please consider joining our support server [here](https://discord.gg/2XunevgrHD) for assistance or use </bugreport:1219050295770742934>*`)
+            .setTimestamp();
+
+        await interaction.reply({ embeds: [errorEmbed], ephemeral: true });
+		return;
+		}
 	}
 }
 
