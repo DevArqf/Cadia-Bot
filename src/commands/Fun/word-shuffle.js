@@ -87,15 +87,13 @@ class UserCommand extends BeemoCommand {
 			if (m.content.toLowerCase().trim() === selectedWord) {
 				resultEmbed
 					.setColor(color.success)
-					.setTitle(`${emojis.custom.tada} **Congratulations**, that was the **correct** answer!`)
-					.setDescription(`You guessed the word **correctly**!\n\nThe word was: \`${selectedWord}\``)
+					.setDescription(`> ${emojis.custom.tada} You guessed the word **correctly**!\n\nThe word was: \`${selectedWord}\``)
 					.setTimestamp()
 					.setFooter({ text: `Requested by ${interaction.user.displayName}`, iconURL: interaction.user.displayAvatarURL() });
 			} else {
 				resultEmbed
 					.setColor(color.fail)
-					.setTitle(`${emojis.reg.fail} Incorrect Answer`)
-					.setDescription(`**Unfortunately**, that's the **incorrect** word!\n\nThe **correct** word was:\n ${emojis.custom.replyend} \`${selectedWord}\``)
+					.setDescription(`> ${emojis.custom.fail} ***Sad trombone..*** That was the **incorrect** word!\n\nThe **correct** word was:\n ${emojis.custom.replyend} \`${selectedWord}\``)
 					.setTimestamp()
 					.setFooter({ text: `Requested by ${interaction.user.displayName}`, iconURL: interaction.user.displayAvatarURL() });
 			}
@@ -108,7 +106,7 @@ class UserCommand extends BeemoCommand {
 				const timeoutEmbed = new EmbedBuilder()
 					.setColor(color.fail)
 					.setTitle('`⏰` Times Up!')
-					.setDescription('You ran out of time! Better luck next time!')
+					.setDescription(`> ${emojis.custom.clock} ***Sad trombone..*** You ran out of time! Better luck next time!`)
 					.setTimestamp()
 					.setFooter({ text: `Requested by ${interaction.user.displayName}`, iconURL: interaction.user.displayAvatarURL() });
 				interaction.followUp({ embeds: [timeoutEmbed] });
