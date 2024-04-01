@@ -65,7 +65,7 @@ class UserCommand extends BeemoCommand {
 					.setTimestamp();
 
 				return await interaction.reply(
-					`${emojis.custom.warning} The server with the ID \`${guildId}\` has been successfully **added** to my blacklist!\n\n**• Reason:**\n${emojis.custom.replyend} \`${reason}, Bot not in guild\``
+					`${emojis.custom.warning2} The server with the ID \`${guildId}\` has been successfully **added** to my blacklist!\n\n**• Reason:**\n${emojis.custom.replyend} \`${reason}, Bot not in guild\``
 				);
 			}
 
@@ -73,7 +73,7 @@ class UserCommand extends BeemoCommand {
 				.setTitle('`🚫` You have been Blacklisted!')
 				.setColor(color.default)
 				.setDescription(
-					`${emojis.custom.warning} Your server has been **blacklisted** from using **${interaction.client.user.displayName}**!\n\n** • Server Name:**\n ${emojis.custom.replyend} \`${targetGuild.name}\`\n** • Reason:**\n ${emojis.custom.replyend} \`${reason}\``
+					`${emojis.custom.warning2} Your server has been **blacklisted** from using **${interaction.client.user.displayName}**!\n\n** • Server Name:**\n ${emojis.custom.replyend} \`${targetGuild.name}\`\n** • Reason:**\n ${emojis.custom.replyend} \`${reason}\``
 				)
 				.setFooter({ text: `Requested by ${interaction.user.displayName}`, iconURL: interaction.user.displayAvatarURL() })
 				.setTimestamp();
@@ -97,7 +97,7 @@ class UserCommand extends BeemoCommand {
 			await interaction.user.send({ embeds: [embed] });
 
 			await interaction.reply(
-				`${emojis.custom.warning} The server with the ID \`${targetGuild.id}\` has been successfully **added** to my blacklist!\n\n**• Reason:**\n${emojis.custom.replyend} \`${reason}\``
+				`${emojis.custom.warning2} The server with the ID \`${targetGuild.id}\` has been successfully **added** to my blacklist!\n\n**• Reason:**\n${emojis.custom.replyend} \`${reason}\``
 			);
 		} catch (error) {
 			console.error(error);
