@@ -56,7 +56,7 @@ class UserCommand extends BeemoCommand {
     }
             if (sub === 'publish') {
                 if (!authorizedIDs.includes(interaction.user.id)) {
-                    return await interaction.reply(`${emojis.custom.fail} You are not **authorized** to **execute** this command!`);
+                    return await interaction.reply(`${emojis.custom.forbidden} You are not **authorized** to **execute** this command!`);
                 }
 
                 const update = interaction.options.getString('updated-notes');
@@ -80,14 +80,14 @@ class UserCommand extends BeemoCommand {
             if (sub === 'view') {
                 let string = '';
                 if (data.length == 0) {
-                    await sendMessage(`${emojis.custom.warning} **There are no public release notes yet...**`);
+                    await sendMessage(`${emojis.custom.warning2} **There are no public release notes yet...**`);
                 } else {
                     await data.forEach(async value => {
                         const updates = value.Updates.split(', ').map(update => `+ ${update}`).join('\n');
-                        string += `\`${value.Version}\` \n\n**Update Information:**\n\`\`\`diff\n${updates}\n\`\`\`\n\n**Updating Developer:**\n ${emojis.custom.replyend} \`${value.Developer}\`\n**Update Data:**\n ${emojis.custom.replyend} <t:${Math.floor(value.Date / 1000)}:R>`
+                        string += `\`${value.Version}\` \n\n**Update Information:**\n\`\`\`diff\n${updates}\n\`\`\`\n\n${emojis.custom.developer} \`-\` **Updating Developer:**\n > ${emojis.custom.replyend} \`${value.Developer}\`\n ${emojis.custom.info} \`-\` **Update Data:**\n > ${emojis.custom.replyend} <t:${Math.floor(value.Date / 1000)}:R>`
                     });
             
-                    await sendMessage(`${emojis.custom.update} **Release Notes** ${string}`);
+                    await sendMessage(`> ${emojis.custom.update} **Release Notes** ${string}`);
                 }
             };            
     }

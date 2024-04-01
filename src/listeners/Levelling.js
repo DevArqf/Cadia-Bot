@@ -14,7 +14,6 @@ class UserEvent extends Listener {
     }
 
 async run (message) {
-	try {
 		const guildId = message.guild.id;
 		const existingLevel = await Level.findOne({ guildId });
 
@@ -56,17 +55,6 @@ async run (message) {
 			}
 		}
 		await existingLevel.save();
-
-	} catch (error) {
-		console.error(error)
-            const errorEmbed = new EmbedBuilder()
-                .setColor(color.fail)
-                .setDescription(`${emojis.custom.fail} **Oopsie, I have encountered an error. The error has been **forwarded** to the developers, so please be **patient** and try running the command again later.**\n\n > ${emojis.custom.link} \`-\` *Have you already tried and still encountering the same error? Then please consider joining our support server [here](https://discord.gg/2XunevgrHD) for assistance or use </bugreport:1219050295770742934>*`)
-                .setTimestamp();
-
-                await interaction.reply({ embeds: [errorEmbed], ephemeral: true });
-                return;
-        }
     }
 };
 

@@ -27,12 +27,12 @@ class UserCommand extends BeemoCommand {
 				.setDescription(this.description)
 				.addStringOption(option => 
                     option.setName('user')
-                        .setDescription('The user(id) to unban')
+                        .setDescription('The user ID to unban')
                         .setRequired(true))
                 .addStringOption(option =>
                     option.setName('reason')
                         .setDescription('Reason for unbanning the user')
-                        .setRequired(true)),
+                        .setRequired(false)),
 		);
 	}
 
@@ -42,7 +42,7 @@ class UserCommand extends BeemoCommand {
 	async chatInputRun(interaction) {
 		// Defining Things
         const userToUnban = interaction.options.getString('user');
-        const reason = interaction.options.getString('reason');
+        const reason = interaction.options.getString('reason') || 'No reason provided';
 
         // Permissions
         // if (!interaction.member.permissions.has(PermissionsBitField.Flags.BanMembers)) {
@@ -59,9 +59,21 @@ class UserCommand extends BeemoCommand {
         await interaction.guild.bans.remove( user.id )
             .then(() => {
                 const embed = new EmbedBuilder()
-                    .setColor(color.success)
-                    .setDescription(`**${user.username}** has been **Unbanned**! \n\n**• Reason**\n ${emojis.custom.replyend} \`${reason}\``)
-                    .setFooter({ text: `Moderated by ${interaction.user.tag}`, iconURL: interaction.user.displayAvatarURL() })
+                    .setColor(color.default)
+                    .setDescription(`${emojis.custom.info} \`-\` **${user.tag}** has been **unbanned**!`)
+                    .addFields(
+                        {
+                            name: `${emojis.custom.mail} \`-\` **Reason:**`,
+                            value: `${emojis.custom.replyend} **${reason}**`,
+                            inline: false
+                        },
+                        {
+                            name: `${emojis.custom.person} \`-\` **Moderator:**`,
+                            value: `${emojis.custom.replyend} **${interaction.user.displayName}**`,
+                            inline: false
+                        }
+                    )
+                    .setFooter({ text: `User Unbanned: ${userToUnban}` })
                     .setTimestamp();
 
                 interaction.reply({ content: '', embeds: [embed] });
@@ -70,7 +82,7 @@ class UserCommand extends BeemoCommand {
                 console.error(error);
         	    const errorEmbed = new EmbedBuilder()
             	    .setColor(color.fail)
-            	    .setDescription(`${emojis.custom.fail} **Oopsie, I have encountered an error. The error has been **forwarded** to the developers, so please be **patient** and try running the command again later.**\n\n > ${emojis.custom.link} \`-\` *Have you already tried and still encountering the same error? Then please consider joining our support server [here](https://discord.gg/2XunevgrHD) for assistance or use </bugreport:1219050295770742934>*`)
+            	    .setDescription(`${emojis.custom.fail} Oopsie, I have encountered an error. The error has been **forwarded** to the developers, so please be **patient** and try running the command again later.\n\n > ${emojis.custom.link} *Have you already tried and still encountering the same error? Then please consider joining our support server [here](https://discord.gg/2XunevgrHD) for assistance or use </bugreport:1219050295770742934>*`)
             	    .setTimestamp();
 
         	    return interaction.reply({ embeds: [errorEmbed], ephemeral: true });
