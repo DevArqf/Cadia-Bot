@@ -91,7 +91,7 @@ class countingCommand extends Command {
 			const goal = interaction.options.getInteger('goal', true);
 
 			if (!channel.isTextBased()) {
-				await interaction.reply({ embeds: [new EmbedBuilder().setColor(`${color.invis}`).setDescription(`${emojis.custom.fail} The channel must be a text channel`)], ephemeral: true });
+				await interaction.reply({ embeds: [new EmbedBuilder().setColor(`${color.invis}`).setDescription(`${emojis.custom.fail} The **channel** must be a **text** channel`)], ephemeral: true });
 				return;
 			}
 
@@ -129,7 +129,7 @@ class countingCommand extends Command {
 			// 	}
 			// });
 
-			await interaction.reply({ embeds: [new EmbedBuilder().setColor(`${color.invis}`).setDescription(`${emojis.custom.success} The counting game has been setup in ${channel}`)], ephemeral: true });
+			await interaction.reply({ embeds: [new EmbedBuilder().setColor(`${color.invis}`).setDescription(`${emojis.custom.success} The counting game has been **setup** in ${channel}`)], ephemeral: true });
 		}
 
 		if (subcommand === 'reward') {
@@ -175,28 +175,28 @@ class countingCommand extends Command {
 			// });
 
 			if (!data.countChannel) {
-				await interaction.reply({ embeds: [new EmbedBuilder().setColor(`${color.invis}`).setDescription(`${emojis.custom.fail} The counting game has not been setup yet`)], ephemeral: true });
+				await interaction.reply({ embeds: [new EmbedBuilder().setColor(`${color.invis}`).setDescription(`${emojis.custom.fail} The counting game has **not** been **setup** yet`)], ephemeral: true });
 				return;
 			}
 
 			const countingChannel = interaction.guild.channels.cache.get(data.countChannel);
 
 			if (!countingChannel || !countingChannel.isTextBased()) {
-				await interaction.reply({ embeds: [new EmbedBuilder().setColor(`${color.invis}`).setDescription(`${emojis.custom.fail} The counting game has not been setup yet`)], ephemeral: true });
+				await interaction.reply({ embeds: [new EmbedBuilder().setColor(`${color.invis}`).setDescription(`${emojis.custom.fail} The counting game has **not** been **setup** yet`)], ephemeral: true });
 				return;
 			}
 
 			countingChannel.send({
 				embeds: [
 					new EmbedBuilder()
-						.setTitle('Counting Game Reward')
-						.setDescription(`The reward for reaching \`${count}\` counts has been set as \`${amount}\` coins`)
+						.setTitle('`🔢` Counting Game Reward')
+						.setDescription(`${emojis.custom.success} The reward for reaching \`${count}\` counts has been set to \`${amount}\` coins`)
 						.setColor(color.success)
 				]
 			});
 
 			await interaction.reply({
-				content: `${emojis.custom.success} The \`${amount}\` reward has been setup for ${count} counts`,
+				content: `${emojis.custom.success} The \`${amount}\` reward has been **setup** for **${count}** counts`,
 				ephemeral: true
 			});
 		}
@@ -237,7 +237,7 @@ class countingCommand extends Command {
 				.join('\n');
 
 			await interaction.reply({
-				embeds: [new EmbedBuilder().setTitle('Counting Game Global Leaderboard').setDescription(leaderboard).setColor(color.success)]
+				embeds: [new EmbedBuilder().setTitle(`\`🌎\` Global Leaderboard`).setDescription(leaderboard).setColor(color.success)]
 			});
 		}
 
@@ -247,7 +247,7 @@ class countingCommand extends Command {
 			});
 
 			if (!data) {
-				await interaction.reply({ embeds: [new EmbedBuilder().setColor(`${color.invis}`).setDescription(`${emojis.custom.fail} The counting game has not been setup yet`)], ephemeral: true });
+				await interaction.reply({ embeds: [new EmbedBuilder().setColor(`${color.invis}`).setDescription(`${emojis.custom.fail} The counting game has **not** been **setup** yet`)], ephemeral: true });
 				return;
 			}
 
@@ -286,7 +286,7 @@ class countingCommand extends Command {
 				.join('\n');
 
 			await interaction.reply({
-				embeds: [new EmbedBuilder().setTitle('Counting Game Server Leaderboard').setDescription(leaderboard).setColor(color.success)]
+				embeds: [new EmbedBuilder().setTitle('`🌎` Local Leaderboard').setDescription(leaderboard).setColor(color.success)]
 			});
 		}
 	}

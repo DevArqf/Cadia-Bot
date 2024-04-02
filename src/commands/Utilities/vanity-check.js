@@ -51,7 +51,7 @@ class UserCommand extends BeemoCommand {
 
         var invite = await interaction.client.fetchInvite(vanity).catch(err => {});
 
-        var nInviteMsg = `\`🔓\` The vanity invite \`${vanity}\` is **NOT** taken by a server!`;
+        var nInviteMsg = `${emojis.custom.info} \`-\` The vanity invite \`${vanity}\` is **NOT** taken by a server!`;
 
         if (!invite) {
             await sendMessage(nInviteMsg);
@@ -59,7 +59,7 @@ class UserCommand extends BeemoCommand {
             if (!invite.guild || !invite.guild.vanityURLCode || invite.guild.vanityURLCode !== vanity)
             return await sendMessage(nInviteMsg);
 
-            await sendMessage(`${emojis.custom.warning2} Looks like the vanity \`${vanity}\` is taken by: \`discord.gg/${vanity}\` \n\n**${invite.guild.name}'s Server Features:** \n> \n **• Member Count:**\n ${emojis.custom.replyend} \`${invite.memberCount}\` \n**• Server ID:**\n ${emojis.custom.replyend} \`${invite.guild.id}\` \n**• Server Description:**\n ${emojis.custom.replyend} \`${invite.guild.description??`None`}\` \n\nThis server holds the invite \`${vanity}\` meaning it is **NOT** usable by anyone else.`, true);
+            await sendMessage(`${emojis.custom.warning2} Looks like the vanity \`${vanity}\` is taken by: \`discord.gg/${vanity}\` \n\n${emojis.custom.compass} \`-\` **${invite.guild.name}'s Features:** \n> \n ${emojis.custom.person} \`-\` **Member Count:**\n ${emojis.custom.replyend} **${invite.memberCount}** \n${emojis.custom.community} \`-\` **Server ID:**\n ${emojis.custom.replyend} \`${invite.guild.id}\` \n${emojis.custom.pencil} \`-\` **Server Description:**\n ${emojis.custom.replyend} **${invite.guild.description??`None`}** \n\nThis server holds the invite \`${vanity}\` meaning it is **NOT** usable by anyone else.`, true);
         }
     }
 }

@@ -12,7 +12,7 @@ class UserCommand extends BeemoCommand {
 	constructor(context, options) {
 		super(context, {
 			...options,
-			description: "Enlarge any emoji and save it :)"
+			description: "Enlarge any emoji and save or steal it :)"
 		});
 	}
 

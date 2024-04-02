@@ -27,7 +27,7 @@ class UserCommand extends BeemoCommand {
                 .setDescription(this.description)
                 .addStringOption(option =>
                     option.setName('server-id')
-                        .setDescription('The ID of the server to be removed from my blacklist')
+                        .setDescription('The ID of the server to be unblacklisted')
                         .setRequired(true))
         );
     }
@@ -43,14 +43,14 @@ class UserCommand extends BeemoCommand {
             if (!removedGuild) {
                 const embed = new EmbedBuilder()
                     .setColor(color.fail)
-                    .setDescription(`${emojis.custom.fail} This server has **not** been **found** in my blacklist!`);
+                    .setDescription(`${emojis.custom.fail} This server has **not** been **found** in the database!`);
 
                 return await interaction.reply({ embeds: [embed] });
             }
 
             const embed = new EmbedBuilder()
                 .setColor(color.success)
-                .setDescription(`${emojis.custom.success} The server with ID \`${removedGuild.guildId}\` has been successfully **removed** from my blacklist!`);
+                .setDescription(`${emojis.custom.success} The server with ID \`${removedGuild.guildId}\` has been **removed** from the database!`);
 
             await interaction.reply({ embeds: [embed] });
             
@@ -59,7 +59,6 @@ class UserCommand extends BeemoCommand {
 
             const errorEmbed = new EmbedBuilder()
             .setColor(color.fail)
-            .setTitle(`${emojis.custom.fail} Blacklist Remove Error`)
             .setDescription(`${emojis.custom.fail} Oopsie, I have encountered an error. The error has been **forwarded** to the developers, so please be **patient** and try running the command again later.\n\n > ${emojis.custom.link} *Have you already tried and still encountering the same error? Then please consider joining our support server [here](https://discord.gg/2XunevgrHD) for assistance or use </bugreport:1219050295770742934>*`)
             .setTimestamp();
 
