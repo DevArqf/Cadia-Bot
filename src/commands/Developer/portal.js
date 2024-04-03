@@ -55,7 +55,7 @@ class UserCommand extends BeemoCommand {
 			// Reply to the interaction with a message containing the URL of the source bin
 			const embed = new EmbedBuilder()
 				.setDescription(
-					`> ${emojis.custom.success} ${interaction.user} The server link has been **successfully** created!\n⠀${emojis.custom.replyend} [Click here to join](https://discord.gg/${invite.code})`
+					`${emojis.custom.success} ${interaction.user} The server link has been **successfully** created!\n⠀${emojis.custom.replyend} [Click here to join](https://discord.gg/${invite.code})`
 				)
 				.setFooter({ text: `Requested by ${interaction.user.displayName}`, iconURL: interaction.user.displayAvatarURL() })
 				.setColor(color.success)

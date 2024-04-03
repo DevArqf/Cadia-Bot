@@ -48,9 +48,7 @@ class UserCommand extends BeemoCommand {
 
 			const embed = new EmbedBuilder()
 				.setTitle("`🔒` Beemo's Presence")
-				.setDescription(
-					`${emojis.custom.success} **Successfully** set presence to **${presence}**!\n\n > Please wait up to **5 minutes** for the presence to change.`
-				)
+				.setDescription( `${emojis.custom.success} **Successfully** set presence to **${presence}**!\n\n > Please wait up to **5 minutes** for the presence to change.`)
 				.setColor(color.default)
 				.setTimestamp()
 				.setFooter({ text: `${interaction.user.displayName}`, iconURL: interaction.user.displayAvatarURL() });

@@ -23,7 +23,7 @@ class UserCommand extends BeemoCommand {
 	registerApplicationCommands(registry) {
 		registry.registerChatInputCommand((builder) =>
 			builder //
-				.setName('server-list')
+				.setName('guild-list')
 				.setDescription(this.description)
 		);
 	}
@@ -40,7 +40,7 @@ class UserCommand extends BeemoCommand {
 		sourcebin
 			.create([
 				{
-					name: `Cadia Server List - Code By Cadia`,
+					name: `Cadia Guild List - Code By Cadia`,
 					content: list,
 					languageId: 'js'
 				}
@@ -48,7 +48,7 @@ class UserCommand extends BeemoCommand {
 			.then((src) => {
 				const embed = new EmbedBuilder()
 					.setDescription(
-						`> ${emojis.custom.success} The Server List has been **successfully** generated!\n⠀${emojis.custom.replyend} [Click here to view](${src.url})`
+						`${emojis.custom.success} The Guild List has been **successfully** generated!\n⠀${emojis.custom.replyend} [Click here to view](${src.url})`
 					)
 					.setFooter({ text: `Requested by ${interaction.user.displayName}`, iconURL: interaction.user.displayAvatarURL() })
 					.setColor(color.success)
