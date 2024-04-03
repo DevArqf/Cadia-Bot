@@ -75,6 +75,7 @@ const emojis = {
 		replycontinue: '<:cl_Reply_continue:1212047673188679720>',
 		replyend: '<:cl_Reply_end:1212047469014425650>',
 		connected: '<:cl_connected:1223398735082553436>',
+		disconnected: '<:cl_disconnected:1223411816852492318>',
 		online: '<:cl_online:1223412407343251556>',
 		offline: '<:cl_offline:1223412308844347535>',
 		developer: '<:cl_developer:1223413359672819764>',
