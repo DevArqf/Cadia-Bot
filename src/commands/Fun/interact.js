@@ -1,5 +1,5 @@
 const BeemoCommand = require('../../lib/structures/commands/BeemoCommand');
-const { color, emojis } = require('../../config');
+const { color, emojis } = require('../../config');;
 const { EmbedBuilder } = require('discord.js');
 const profileschema = require('../../lib/schemas/interactionSchema');
 const hug = require('../../lib/data/hug.json');

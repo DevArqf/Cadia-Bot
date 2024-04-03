@@ -1,6 +1,6 @@
 const BeemoCommand = require('../../lib/structures/commands/BeemoCommand');
 const { PermissionLevels } = require('../../lib/types/Enums');
-const { color, emojis } = require('../../config');
+const { color, emojis } = require('../../config');;
 const { EmbedBuilder, ButtonBuilder, ButtonStyle, ActionRowBuilder } = require('discord.js');
 
 class UserCommand extends BeemoCommand {
@@ -107,10 +107,10 @@ class UserCommand extends BeemoCommand {
 		let result;
 
 		if (player1Choice.beats == player2Choice.name) {
-			result = `${emojis.custom.tada} Congratulations ${player1}, you won!`;
+			result = `${emojis.custom.tada2} Congratulations ${player1}, you won!`;
 		}
 		if (player2Choice.beats == player1Choice.name) {
-			result = `${emojis.custom.tada} Congratulations ${player2}, you won!`;
+			result = `${emojis.custom.tada2} Congratulations ${player2}, you won!`;
 		}
 		if (player1Choice.name == player2Choice.name) {
 			result = 'Good Game, it was a tie!';

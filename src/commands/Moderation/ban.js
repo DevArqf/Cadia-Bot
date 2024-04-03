@@ -1,7 +1,7 @@
 const BeemoCommand = require('../../lib/structures/commands/BeemoCommand');
 const { PermissionLevels } = require('../../lib/types/Enums');
 const { PermissionsBitField, EmbedBuilder } = require('discord.js');
-const { color, emojis } = require('../../config')
+const { color, emojis } = require('../../config');
 
 
 class UserCommand extends BeemoCommand {

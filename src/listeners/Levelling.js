@@ -36,7 +36,7 @@ async run (message) {
 				.replace('{userName}', message.author.username)
 				.replace('{userMention}', `<@${userId}>`)
 				.replace('{userLevel}', existingLevel.userLevel) : 
-				`${emojis.custom.tada} **Congratulations** ${message.author}! You have **leveled up** to level **${existingLevel.userLevel}**!`;
+				`${emojis.custom.tada2} **Congratulations** ${message.author}! You have **leveled up** to level **${existingLevel.userLevel}**!`;
 
 		if (existingLevel.userEmbed) {
 			const userAvatar = message.author.displayAvatarURL({ format: 'png', dynamic: true });

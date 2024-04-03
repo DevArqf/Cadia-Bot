@@ -1,6 +1,6 @@
 const BeemoCommand = require('../../lib/structures/commands/BeemoCommand');
 const { PermissionLevels } = require('../../lib/types/Enums');
-const { color, emojis } = require('../../config');
+const { color, emojis } = require('../../config');;
 const { EmbedBuilder } = require('discord.js');
 
 class UserCommand extends BeemoCommand {
@@ -67,7 +67,7 @@ class UserCommand extends BeemoCommand {
 				const timeTaken = m.createdTimestamp - interaction.createdTimestamp;
 				const successEmbed = new EmbedBuilder()
 					.setColor(color.success)
-					.setTitle(`${emojis.custom.tada} Congratulations, You Won!`)
+					.setTitle(`${emojis.custom.tada2} Congratulations, You Won!`)
 					.setDescription(`${m.author}, you completed the challenge in **${timeTaken / 1000}s**!`)
 					.setFooter({ text: `Requested by ${interaction.user.displayName}`, iconURL: interaction.user.displayAvatarURL() })
 					.setTimestamp();

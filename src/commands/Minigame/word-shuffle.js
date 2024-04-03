@@ -1,6 +1,6 @@
 const BeemoCommand = require('../../lib/structures/commands/BeemoCommand');
 const { PermissionLevels } = require('../../lib/types/Enums');
-const { color, emojis } = require('../../config');
+const { color, emojis } = require('../../config');;
 const { EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
 
 class UserCommand extends BeemoCommand {
@@ -87,7 +87,7 @@ class UserCommand extends BeemoCommand {
 			if (m.content.toLowerCase().trim() === selectedWord) {
 				resultEmbed
 					.setColor(color.success)
-					.setDescription(`> ${emojis.custom.tada} You guessed the word **correctly**!\n\nThe word was: \`${selectedWord}\``)
+					.setDescription(`> ${emojis.custom.tada2} You guessed the word **correctly**!\n\nThe word was: \`${selectedWord}\``)
 					.setTimestamp()
 					.setFooter({ text: `Requested by ${interaction.user.displayName}`, iconURL: interaction.user.displayAvatarURL() });
 			} else {
