@@ -49,7 +49,7 @@ class UserCommand extends BeemoCommand {
 				.setDescription(this.description)
                 .addStringOption(option =>
                     option.setName('question')
-                        .setDescription('The question to ask')
+                        .setDescription('The question you want to ask 8ball')
                         .setRequired(true))
 		);
 	}
@@ -66,7 +66,8 @@ class UserCommand extends BeemoCommand {
         
         const embed = new EmbedBuilder()
             .setColor(color.default)
-            .setDescription(`${emojis.custom.question} \`-\` **Question:**\n ${emojis.custom.replyend} > **${question}**\n\n ${emojis.custom.mail} \`-\` **Response:**\n ${emojis.custom.replyend} > ${get_response}`)
+            .setTitle(`\`🎱\` | ${interaction.user.displayName}'s 8ball game`)
+            .setDescription(`${emojis.custom.question} \`-\` **Question:**\n ${emojis.custom.replyend} **${question}**\n\n ${emojis.custom.mail} \`-\` **Response:**\n ${emojis.custom.replyend} ${get_response}`)
             .setTimestamp()
             .setFooter({ text: `Requested by ${interaction.user.displayName}`, iconURL: interaction.user.displayAvatarURL() })
             

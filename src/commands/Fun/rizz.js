@@ -76,7 +76,7 @@ class UserCommand extends BeemoCommand {
             const embed = new EmbedBuilder()
             .setDescription(`${link}`)
             .setFooter({ text: `Requested by ${interaction.user.displayName}`, iconURL: interaction.user.displayAvatarURL() })
-            .setColor(color.default)
+            .setColor(color.random)
             .setTimestamp();
 
             await interaction.reply({ embeds: [embed]})

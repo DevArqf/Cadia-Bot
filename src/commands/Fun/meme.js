@@ -39,7 +39,7 @@ class UserCommand extends BeemoCommand {
 				const { url, title, ups, num_comments } = memeData;
 
 				const embed = new EmbedBuilder()
-					.setColor(`${color.random}`)
+					.setColor(color.random)
 					.setTitle(title)
 					.setURL(`https://www.reddit.com${memeData.permalink}`)
 					.setImage(url)

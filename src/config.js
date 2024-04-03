@@ -116,7 +116,8 @@ const emojis = {
 		emoji2: '<:cl_emoji2:1223431395502850161>',
 		openfolder: '<:cl_openfolder:1223433141939605554>',
 		trash: '<:cl_trash:1223407865600147476>',
-		lock: '<:cl_lock:1223791266073018458>'
+		lock: '<:cl_lock:1223791266073018458>',
+		chad: '<a:cl_chad:1225117357824016456>'
 	}
 };
 
