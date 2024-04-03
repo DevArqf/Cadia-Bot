@@ -11,7 +11,7 @@ class UserCommand extends BeemoCommand {
 	constructor(context, options) {
 		super(context, {
 			...options,
-			description: "View information of a user within the server"
+			description: "Receive information of a user within the server"
 		});
 	}
 
@@ -21,7 +21,7 @@ class UserCommand extends BeemoCommand {
 	registerApplicationCommands(registry) {
 		registry.registerChatInputCommand((builder) =>
 			builder //
-				.setName('whois')
+				.setName('user-info')
 				.setDescription(this.description)
                 .addUserOption((option) => option
                     .setName('user')
