@@ -130,7 +130,7 @@ class UserCommand extends BeemoCommand {
 			if (find.length !== 0) {
 				const blacklistEmbed = new EmbedBuilder()
 				.setColor(color.fail)
-				.setDescription(`${emojis.custom.warning2} You have been **blacklisted** from **executing** the bug-report command! Please join our discord server [here](https://discord.gg/2XunevgrHD) for more info.`)
+				.setDescription(`${emojis.custom.warning} You have been **blacklisted** from **executing** the bug-report command! Please join our discord server [here](https://discord.gg/2XunevgrHD) for more info.`)
 				.setTimestamp()
 				.setFooter({ text: `Requested by ${interaction.user.displayName}`, iconURL: interaction.user.displayAvatarURL() });
 
@@ -146,9 +146,9 @@ class UserCommand extends BeemoCommand {
 
 		const sentEmbed = new EmbedBuilder()
 		.setColor(`${color.random}`)
-		.setDescription(`${emojis.custom.success} **Thank you for submitting this bug report.** The Developers will **investigate** the bug **very** soon.\n ${emojis.custom.replyend} ${emojis.custom.warning2} Abusing or misusing this feature will **result** in you getting **blacklisted**!`) // \n\n **Issue:**\n${emojis.custom.replyend} ${issue}\n\n **Notes:**\n${emojis.custom.replyend} ${notes} \n\n**Image:**\n ${image ? `${emojis.custom.replyend} Please look below` : `${emojis.custom.replyend} No picture provided`}\n\n**System:**\n ${emojis.custom.replyend} ${system} **Abusing** this feature will **result** in you getting **blacklisted***!`)
+		.setDescription(`${emojis.custom.success} **Thank you for submitting this bug report.** The Developers will **investigate** the bug **very** soon.\n ${emojis.custom.replyend} ${emojis.custom.warning} Abusing or misusing this feature will **result** in you getting **blacklisted**!`) // \n\n **Issue:**\n${emojis.custom.replyend} ${issue}\n\n **Notes:**\n${emojis.custom.replyend} ${notes} \n\n**Image:**\n ${image ? `${emojis.custom.replyend} Please look below` : `${emojis.custom.replyend} No picture provided`}\n\n**System:**\n ${emojis.custom.replyend} ${system} **Abusing** this feature will **result** in you getting **blacklisted***!`)
 		.addFields([
-			{ name: `${emojis.custom.warning1} \`-\` **Bug:**`, value: `${emojis.custom.replyend} ${issue}` },
+			{ name: `${emojis.custom.warning} \`-\` **Bug:**`, value: `${emojis.custom.replyend} ${issue}` },
 			{ name: `${emojis.custom.pencil} \`-\` **Notes:**'`, value: `${emojis.custom.replyend} ${notes}` },
 			{ name: `${emojis.custom.settings} \`-\` **System:**`, value: `${emojis.custom.replyend} ${system}` },
 			{ name: `${emojis.custom.save} \`-\` **Image:**`, value: `${image ? `${emojis.custom.replyend} Please take look below` : `${emojis.custom.replyend} No picture provided`}` }
@@ -162,7 +162,7 @@ class UserCommand extends BeemoCommand {
 		.setTitle(`${emojis.custom.mail} New Bug Report`)
 		.addFields([
 			{ name: `${emojis.custom.person} \`-\` **User info:**`, value: `${emojis.custom.replycontinue} **User ID:** ${interaction.user.id}\n${emojis.custom.replyend} **User:** <@${interaction.user.id}>` },
-			{ name: `${emojis.custom.warning1} **Bug:**`, value: `${emojis.custom.replyend} ${issue}` },
+			{ name: `${emojis.custom.warning} **Bug:**`, value: `${emojis.custom.replyend} ${issue}` },
 			{ name: `${emojis.custom.pencil} \`-\` **Notes:**'`, value: `${emojis.custom.replyend} ${notes}` },
 			{ name: `${emojis.custom.settings} \`-\` **System:**`, value: `${emojis.custom.replyend} ${system}`},
 			{ name: `${emojis.custom.save} \`-\` **Image:**`, value: `${image ? `${emojis.custom.replyend} Please look below` : `${emojis.custom.replyend} No picture provided`}` },

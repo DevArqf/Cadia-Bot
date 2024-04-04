@@ -80,7 +80,7 @@ class UserCommand extends BeemoCommand {
             if (sub === 'view') {
                 let string = '';
                 if (data.length == 0) {
-                    await sendMessage(`${emojis.custom.warning2} **There are no public release notes yet...**`);
+                    await sendMessage(`${emojis.custom.warning} **There are no public release notes yet...**`);
                 } else {
                     await data.forEach(async value => {
                         const updates = value.Updates.split(', ').map(update => `+ ${update}`).join('\n');

@@ -92,13 +92,13 @@ class UserCommand extends BeemoCommand {
 
 				await logChannel.send({ embeds: [logEmbed1] });
 
-				return interaction.reply(`${emojis.custom.warning2} The server with the ID \`${guildId}\` has been **blacklisted**!\n\n${emojis.custom.mail} \`-\` **Reason:**\n${emojis.custom.replyend} **${reason}, Cadia is not within the server**`);
+				return interaction.reply(`${emojis.custom.warning} The server with the ID \`${guildId}\` has been **blacklisted**!\n\n${emojis.custom.mail} \`-\` **Reason:**\n${emojis.custom.replyend} **${reason}, Cadia is not within the server**`);
 
 			}
 
 			const embed = new EmbedBuilder()
 				.setColor(color.default)
-				.setDescription(`${emojis.custom.warning2} Your server has been **blacklisted** from using **${interaction.client.user.displayName}**!`)
+				.setDescription(`${emojis.custom.warning} Your server has been **blacklisted** from using **${interaction.client.user.displayName}**!`)
 				.addFields(
 					{
 						name: `${emojis.custom.settings} \`-\` **Server Name:**`,
@@ -156,7 +156,7 @@ class UserCommand extends BeemoCommand {
 
 			await interaction.user.send({ embeds: [embed] });
 
-			await interaction.reply(`${emojis.custom.warning2} The server with the ID \`${targetGuild.id}\` has been **blacklisted**!\n\n${emojis.custom.mail} \`-\` **Reason:**\n${emojis.custom.replyend} \`${reason}\``);
+			await interaction.reply(`${emojis.custom.warning} The server with the ID \`${targetGuild.id}\` has been **blacklisted**!\n\n${emojis.custom.mail} \`-\` **Reason:**\n${emojis.custom.replyend} \`${reason}\``);
 		} catch (error) {
 			console.error(error);
 			const errorEmbed = new EmbedBuilder()

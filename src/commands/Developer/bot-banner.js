@@ -48,7 +48,7 @@ class UserCommand extends BeemoCommand {
             }
             
             if (banner.contentType !== "image/gif" && banner.contentType !== "image/png")
-                return await sendMessage(`${emojis.custom.warning2} Please use a **GIF** or a **PNG** format for banners`);
+                return await sendMessage(`${emojis.custom.warning} Please use a **GIF** or a **PNG** format for banners`);
             
             var error;
 
