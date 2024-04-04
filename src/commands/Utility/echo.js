@@ -1,6 +1,6 @@
 const BeemoCommand = require('../../lib/structures/commands/BeemoCommand');
 const { PermissionLevels } = require('../../lib/types/Enums');
-const { color, emojis } = require('../../config');;
+const { color, emojis } = require('../../config');
 const { EmbedBuilder, PermissionsBitField, ChannelType } = require('discord.js');
 
 class UserCommand extends BeemoCommand {
@@ -22,7 +22,7 @@ class UserCommand extends BeemoCommand {
 	registerApplicationCommands(registry) {
 		registry.registerChatInputCommand((builder) =>
 			builder //
-            .setName('say')
+            .setName('echo')
             .setDescription(this.description)
             .setDMPermission(false)
             .addStringOption(option => option
@@ -45,7 +45,8 @@ class UserCommand extends BeemoCommand {
 	async chatInputRun(interaction) {
         try {
         // Permissions
-		// if (!interaction.member.permissions.has(PermissionsBitField.Flags.ManageMessages)) return await interaction.reply({ embeds: [new EmbedBuilder().setColor(`${color.invis}`).setDescription(`${emojis.custom.forbidden} You are not **authorized** to **execute** this command!`)], ephemeral: true });
+		// if (!interaction.member.permissions.has(PermissionsBitField.Flags.ManageMessages)) 
+        // return await interaction.reply({ embeds: [new EmbedBuilder().setColor(`${color.invis}`).setDescription(`${emojis.custom.forbidden} You are not **authorized** to **execute** this command!`)], ephemeral: true });
         // else {
 
             const channel = await interaction.options.getChannel('channel') || interaction.channel;
