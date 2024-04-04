@@ -14,7 +14,6 @@ class UserEvent extends Listener {
     }
 
 async run (message) {
-	try {
 		const guildId = message.guild.id;
 		const existingLevel = await Level.findOne({ guildId });
 
@@ -37,7 +36,7 @@ async run (message) {
 				.replace('{userName}', message.author.username)
 				.replace('{userMention}', `<@${userId}>`)
 				.replace('{userLevel}', existingLevel.userLevel) : 
-				`${emojis.custom.tada} **Congratulations** ${message.author}! You have **leveled up** to level **${existingLevel.userLevel}**!`;
+				`${emojis.custom.tada2} **Congratulations** ${message.author}! You have **leveled up** to level **${existingLevel.userLevel}**!`;
 
 		if (existingLevel.userEmbed) {
 			const userAvatar = message.author.displayAvatarURL({ format: 'png', dynamic: true });
@@ -56,17 +55,6 @@ async run (message) {
 			}
 		}
 		await existingLevel.save();
-
-	} catch (error) {
-		console.error(error)
-            const errorEmbed = new EmbedBuilder()
-                .setColor(color.fail)
-                .setDescription(`${emojis.custom.fail} **I have encountered an error! Please try again later.**\n\n > *Have you already tried and still encountering the same error? Then please consider joining our support server [here](https://discord.gg/2XunevgrHD) for assistance or use </bugreport:1219050295770742934>*`)
-                .setTimestamp();
-
-                await interaction.reply({ embeds: [errorEmbed], ephemeral: true });
-                return;
-        }
     }
 };
 

@@ -1,5 +1,5 @@
 const BeemoCommand = require('../../lib/structures/commands/BeemoCommand');
-const { color, emojis } = require('../../config');
+const { color, emojis } = require('../../config');;
 const { EmbedBuilder } = require('discord.js');
 const profileschema = require('../../lib/schemas/interactionSchema');
 const hug = require('../../lib/data/hug.json');
@@ -28,36 +28,45 @@ class UserCommand extends BeemoCommand {
 				.setName('interact')
 				.setDMPermission(false)
 				.setDescription(this.description)
-				.addSubcommand((command) =>
-					command
+				.addSubcommand((command) => command
 						.setName('hug')
 						.setDescription('Hug specified user.')
-						.addUserOption((option) => option.setName('user').setDescription('Specified user will be hugged.').setRequired(true))
+						.addUserOption((option) => option
+							.setName('user')
+							.setDescription('Specified user will be hugged.')
+							.setRequired(true))
 				)
-				.addSubcommand((command) =>
-					command
+				.addSubcommand((command) => command
 						.setName('slap')
 						.setDescription('Slap specified user.')
-						.addUserOption((option) => option.setName('user').setDescription('Specified user will be slapped.').setRequired(true))
+						.addUserOption((option) => option
+							.setName('user')
+							.setDescription('Specified user will be slapped.')
+							.setRequired(true))
 				)
-				.addSubcommand((command) =>
-					command
+				.addSubcommand((command) => command
 						.setName('kill')
 						.setDescription('Kill specified user.')
-						.addUserOption((option) => option.setName('user').setDescription('Specified user will be killed.').setRequired(true))
+						.addUserOption((option) => option
+							.setName('user')
+							.setDescription('Specified user will be killed.')
+							.setRequired(true))
 				)
-				.addSubcommand((command) =>
-					command
+				.addSubcommand((command) => command
 						.setName('kiss')
 						.setDescription('Kiss specified user.')
-						.addUserOption((option) => option.setName('user').setDescription('Specified user will be kissed.').setRequired(true))
+						.addUserOption((option) => option
+							.setName('user')
+							.setDescription('Specified user will be kissed.')
+							.setRequired(true))
 				)
-				.addSubcommand((command) =>
-					command
+				.addSubcommand((command) => command
 						.setName('profile')
 						.setDescription(`Lists specified user's profile.`)
-						.addUserOption((option) =>
-							option.setName('user').setDescription('Specified user will have their profile listed.').setRequired(false)
+						.addUserOption((option) => option
+							.setName('user')
+							.setDescription('Specified user will have their profile listed.')
+							.setRequired(false)
 						)
 				)
 		);

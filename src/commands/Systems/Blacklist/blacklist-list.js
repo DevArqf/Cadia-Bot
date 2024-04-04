@@ -48,11 +48,11 @@ class UserCommand extends BeemoCommand {
 			for (const guild of blacklistedGuilds) {
 				fields.push({
 					name: `**__${guild.guildName}__**`,
-					value: `• Reason:\n ${emojis.custom.replyend} ${guild.reason}\n• Server ID:\n ${emojis.custom.replyend} \`${guild.guildId}\``
+					value: `${emojis.custom.mail} \`-\` **Reason:**\n ${emojis.custom.replyend} **${guild.reason}**\n${emojis.custom.pencil} \`-\` **Server ID:**\n ${emojis.custom.replyend} **${guild.guildId}**`
 				});
 			}
 
-			const templateEmbed = new EmbedBuilder().setTitle('`🔒` Blacklisted Servers').setColor(color.default);
+			const templateEmbed = new EmbedBuilder().setTitle(`${emojis.custom.lock} **Blacklisted Servers**`).setColor(color.default);
 
 			new PaginatedMessageEmbedFields().setTemplate(templateEmbed).setItems(fields).setItemsPerPage(3).make().run(interaction);
 
@@ -111,8 +111,7 @@ class UserCommand extends BeemoCommand {
 			
 			const errorEmbed = new EmbedBuilder()
             		.setColor(color.fail)
-            		.setTitle(`${emojis.custom.fail} Blacklist List Error`)
-            		.setDescription(`${emojis.custom.fail} **I have encountered an error! Please try again later.**\n\n > *Have you already tried and still encountering the same error? Then please consider joining our support server [here](https://discord.gg/2XunevgrHD) for assistance or use </bugreport:1219050295770742934>*`)
+            		.setDescription(`${emojis.custom.fail} Oopsie, I have encountered an error. The error has been **forwarded** to the developers, so please be **patient** and try running the command again later.\n\n > ${emojis.custom.link} *Have you already tried and still encountering the same error? Then please consider joining our support server [here](https://discord.gg/2XunevgrHD) for assistance or use </bugreport:1219050295770742934>*`)
             		.setTimestamp();
  
             		await interaction.reply({ embeds: [errorEmbed], ephemeral: true });

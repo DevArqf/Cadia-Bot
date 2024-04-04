@@ -1,7 +1,7 @@
 const BeemoCommand = require('../../lib/structures/commands/BeemoCommand');
 const { PermissionLevels } = require('../../lib/types/Enums');
 const { PermissionFlagsBits, EmbedBuilder } = require('discord.js');
-const { color, emojis } = require('../../config');
+const { color, emojis } = require('../../config');;
 
 class UserCommand extends BeemoCommand {
 	/**
@@ -41,24 +41,22 @@ class UserCommand extends BeemoCommand {
 			const reason = interaction.options.getString('reason') || 'No reason provided';
 			const timeString = interaction.options.getString('time');
 
+			// Error Preventions
 			if (!muteMember) {
-				return await interaction.reply({
-					embeds: [new EmbedBuilder().setColor(`${color.invis}`).setDescription(`${emojis.custom.fail} The user **mentioned** is no longer within the **server**!`)],
-					ephemeral: true
-				});
+				return await interaction.reply({ embeds: [new EmbedBuilder().setColor(`${color.invis}`).setDescription(`${emojis.custom.fail} The user **mentioned** is no longer within the **server**!`)], ephemeral: true });
 			}
+
 			if (interaction.member.id === muteMember.id) {
 				return interaction.reply({ embeds: [new EmbedBuilder().setColor(`${color.invis}`).setDescription(`${emojis.custom.fail} You **cannot** mute yourself!`)], ephemeral: true });
 			}
+
 			if (muteMember.permissions.has(PermissionFlagsBits.Administrator)) {
-				return interaction.reply({
-					embeds: [new EmbedBuilder().setColor(`${color.invis}`).setDescription(`${emojis.custom.fail} You **cannot** mute **staff members** or people with the **Administrator** permission!`)],
-					ephemeral: true
-				});
+				return interaction.reply({ embeds: [new EmbedBuilder().setColor(`${color.invis}`).setDescription(`${emojis.custom.fail} You **cannot** mute **staff members** or people with the **Administrator** permission!`)], ephemeral: true });
 			}
 
 			// Check if the member is already unmuted
 			const mutedRole = interaction.guild.roles.cache.find((role) => role.name === 'Muted');
+
 			if (muteMember.roles.cache.has(mutedRole?.id)) {
 				return interaction.reply({ embeds: [new EmbedBuilder().setColor(`${color.invis}`).setDescription(`${emojis.custom.fail} This user is already **muted!**`)], ephemeral: true });
 			}
@@ -71,17 +69,29 @@ class UserCommand extends BeemoCommand {
 
 			// Reply with confirmation
 			const muteConfirmationEmbed = new EmbedBuilder()
-				.setColor(color.success)
-				.setDescription(`**${userToMute.tag}** has been successfully **Muted**! \n\n**• Reason:**\n ${emojis.custom.replyend} \`${reason}\``)
-				.setFooter({ text: `${userToMute.id}` })
-				.setTimestamp();
+                .setColor(color.default)
+                .setDescription(`${emojis.custom.info} \`-\` **${userToMute.tag}** has been **Muted**!`)
+                .addFields(
+                    {
+                        name: `${emojis.custom.mail} \`-\` **Reason:**`,
+                        value: `${emojis.custom.replyend} **${reason}**`,
+                        inline: false
+                    },
+                    {
+                        name: `${emojis.custom.person} \`-\` **Moderator:**`,
+                        value: `${emojis.custom.replyend} **${interaction.user.displayName}**`,
+                        inline: false
+                    }
+                )
+                .setFooter({ text: `User Muted: ${userToMute.id}` })
+                .setTimestamp();
 
 			return interaction.reply({ embeds: [muteConfirmationEmbed], ephemeral: false });
 		} catch (error) {
 			console.error(error);
         	const errorEmbed = new EmbedBuilder()
             	.setColor(color.fail)
-            	.setDescription(`${emojis.custom.fail} **I have encountered an error! Please try again later.**\n\n > *Have you already tried and still encountering the same error? Then please consider joining our support server [here](https://discord.gg/2XunevgrHD) for assistance or use </bugreport:1219050295770742934>*`)
+            	.setDescription(`${emojis.custom.fail} Oopsie, I have encountered an error. The error has been **forwarded** to the developers, so please be **patient** and try running the command again later.\n\n > ${emojis.custom.link} *Have you already tried and still encountering the same error? Then please consider joining our support server [here](https://discord.gg/2XunevgrHD) for assistance or use </bugreport:1219050295770742934>*`)
             	.setTimestamp();
 
         	await interaction.reply({ embeds: [errorEmbed], ephemeral: true });

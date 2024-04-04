@@ -10,6 +10,8 @@ class UserEvent extends Listener {
 	 * @returns {Promise<void>} - A promise that resolves when the event is handled.
 	 */
 	async run(error, payload) {
+		await interaction.deferReply()
+
 		const { context, message: content, identifier } = error;
 		const { interaction, command } = payload;
 
@@ -24,7 +26,7 @@ class UserEvent extends Listener {
 
 		await interaction.client.channels.cache.get(channels.errorLogging).send({ embeds: [errorEmbed] });
 
-		return interaction.reply(`${emojis.custom.fail} **I have encountered an error! Please try again later.**`);
+		await interaction.editReply({ embeds: [new EmbedBuilder().setColor(`${color.fail}`).setDescription(`${emojis.custom.fail} Oopsie, I have encountered an error. The error has been **forwarded** to the developers, so please be **patient** and try running the command again later.\n\n > ${emojis.custom.link} *Have you already tried and still encountering the same error? Then please consider joining our support server [here](https://discord.gg/2XunevgrHD) for assistance or use </bugreport:1219050295770742934>*`)], ephemeral: true });
 
 	}
 }

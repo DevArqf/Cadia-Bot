@@ -13,7 +13,7 @@ class UserCommand extends BeemoCommand {
 		super(context, {
 			...options,
 			permissionLevel: PermissionLevels.BotOwner,
-			description: 'Blacklist a server, restricting them from using Cadia Bot'
+			description: 'Blacklist a server, restricting them from using Cadia'
 		});
 	}
 
@@ -26,7 +26,7 @@ class UserCommand extends BeemoCommand {
 				.setName('blacklist-add')
 				.setDescription(this.description)
 				.addStringOption((option) =>
-					option.setName('server-id').setDescription('The ID of the server to be added to my blacklist').setRequired(true)
+					option.setName('server-id').setDescription('The ID of the server to be blacklist').setRequired(true)
 				)
 				.addStringOption((option) => option.setName('reason').setDescription('Reason for blacklisting'))
 		);
@@ -37,7 +37,7 @@ class UserCommand extends BeemoCommand {
 	 */
 	async chatInputRun(interaction, client) {
 		try {
-			const reason = interaction.options.getString('reason') || 'No Reason Provided';
+			const reason = interaction.options.getString('reason') || 'No reason provided';
 			const guildId = interaction.options.getString('server-id');
 			const targetGuild = interaction.client.guilds.cache.get(guildId);
 
@@ -45,67 +45,123 @@ class UserCommand extends BeemoCommand {
 			const logChannel = interaction.client.channels.cache.get(logChannelId);
 
 			if (Number.isNaN(guildId)) {
-				return await interaction.reply(`${emojis.custom.fail} You have entered an character that is not a number`);
+				return await interaction.reply({ embeds: [new EmbedBuilder().setColor(`${color.invis}`).setDescription(`${emojis.custom.fail} You have **entered** an character that is **not** a number`)], ephemeral: true });
 			}
 
 			const existingGuild = await Guild.findOne({ guildId: targetGuild.id });
+
 			if (existingGuild !== null) {
-				return await interaction.reply(`${emojis.custom.fail} This server has **already** been **found** in my blacklist!`);
+				return await interaction.reply({ embeds: [new EmbedBuilder().setColor(`${color.invis}`).setDescription(`${emojis.custom.fail} This server has **already** been **found** in the database!`)], ephemeral: true });
 			}
 
 			if (!targetGuild) {
-				await Guild.create({ guildName: 'No Name Found', guildId: guildId, reason: `${reason}, Bot not in guild` });
-				const logEmbed = new EmbedBuilder()
-					.setTitle('`🚫` Server Blacklisted')
-					.setColor(`${color.random}`)
-					.setFooter({ text: `Requested by ${interaction.user.displayName}`, iconURL: interaction.user.displayAvatarURL() })
-					.setDescription(
-						`• **Server Name**\n ${emojis.custom.replyend} \`Server name cannot be found\`\n • **Server ID**\n ${emojis.custom.replyend} \`${guildId}\`\n • **Owner ID**\n ${emojis.custom.replyend} \`Owner ID cannot be found\`\n • **Reason**\n ${emojis.custom.replyend} \`${reason}, Bot is not within the server\``
-					)
+				await Guild.create({ guildName: 'No name found in the database', guildId: guildId, reason: `${reason}, Bot not in guild` });
+
+				const logEmbed1 = new EmbedBuilder()
+				.setColor(`${color.random}`)
+				.setDescription(`${emojis.custom.ban} The server has been **blacklisted**`)
+					.addFields(
+						{
+							name: `${emojis.custom.settings} \`-\` **Server Name:**`,
+							value: `${emojis.custom.replyend} **The server name could not be found in the database**`,
+							inline: false
+						},
+						{
+							name: `${emojis.custom.pencil} \`-\` **Server ID:**`,
+							value: `${emojis.custom.replyend} **${guildId}**`,
+							inline: false
+						},
+						{
+							name: `${emojis.custom.crown} \`-\` **Owner ID:**`,
+							value: `${emojis.custom.replyend} **The owner ID could not be found in the database**`,
+							inline: false
+						},
+						{
+							name: `${emojis.custom.mail} \`-\` **Reason:**`,
+							value: `${emojis.custom.replyend} **${reason}, Cadia is not within the server**`,
+							inline: false
+						},
+						{
+							name: `${emojis.custom.person} \`-\` **Moderator:**`,
+							value: `${emojis.custom.replyend} ${interaction.user.displayName}`,
+							inline: false
+						}
+                	)
+					.setFooter({ text: `Actioned by ${interaction.user.displayName}`, iconURL: interaction.user.displayAvatarURL() })
 					.setTimestamp();
 
-				return await interaction.reply(
-					`${emojis.custom.warning} The server with the ID \`${guildId}\` has been successfully **added** to my blacklist!\n\n**• Reason:**\n${emojis.custom.replyend} \`${reason}, Bot not in guild\``
-				);
+				await logChannel.send({ embeds: [logEmbed1] });
+
+				return interaction.reply(`${emojis.custom.warning} The server with the ID \`${guildId}\` has been **blacklisted**!\n\n${emojis.custom.mail} \`-\` **Reason:**\n${emojis.custom.replyend} **${reason}, Cadia is not within the server**`);
+
 			}
 
 			const embed = new EmbedBuilder()
-				.setTitle('`🚫` You have been Blacklisted!')
 				.setColor(color.default)
-				.setDescription(
-					`${emojis.custom.warning} Your server has been **blacklisted** from using **${interaction.client.user.displayName}**!\n\n** • Server Name:**\n ${emojis.custom.replyend} \`${targetGuild.name}\`\n** • Reason:**\n ${emojis.custom.replyend} \`${reason}\``
+				.setDescription(`${emojis.custom.warning} Your server has been **blacklisted** from using **${interaction.client.user.displayName}**!`)
+				.addFields(
+					{
+						name: `${emojis.custom.settings} \`-\` **Server Name:**`,
+						value: `${emojis.custom.replyend} **${targetGuild.name}**`,
+						inline: false
+					},
+					{
+						name: `${emojis.custom.mail} \`-\` **Reason:**`,
+						value: `${emojis.custom.replyend} **${reason}**`,
+						inline: false
+					},
+					{
+						name: `${emojis.custom.settings} \`-\` **Blacklisted By:**`,
+						value: `${emojis.custom.replyend} **${interaction.user.displayName}**`,
+						inline: false
+					},
 				)
-				.setFooter({ text: `Requested by ${interaction.user.displayName}`, iconURL: interaction.user.displayAvatarURL() })
+				.setFooter({ text: `Your server has been blacklisted` })
 				.setTimestamp();
 
 			const ownerId = targetGuild.ownerId; // Get the owner ID
 			const guildName = targetGuild.name;
 
-			const logEmbed = new EmbedBuilder()
-				.setTitle('`🚫` Server Blacklisted')
+			const logEmbed2 = new EmbedBuilder()
 				.setColor(`${color.random}`)
-				.setFooter({ text: `Requested by ${interaction.user.displayName}`, iconURL: interaction.user.displayAvatarURL() })
-				.setDescription(
-					`• **Server Name**\n ${emojis.custom.replyend} \`${guildName}\`\n • **Server ID**\n ${emojis.custom.replyend} \`${targetGuild.id}\`\n • **Owner ID**\n ${emojis.custom.replyend} \`${ownerId}\`\n • **Reason**\n ${emojis.custom.replyend} \`${reason}\``
+				.setDescription(`${emojis.custom.ban} The server has been **blacklisted**`)
+				.addFields(
+					{
+						name: `${emojis.custom.settings} \`-\` **Server Name:**`,
+						value: `${emojis.custom.replyend} **${guildName}**`,
+						inline: false
+					},
+					{
+						name: `${emojis.custom.pencil} \`-\` **Server ID**`,
+						value: `${emojis.custom.replyend} **${targetGuild.id}**`,
+						inline: false
+					},
+					{
+						name: `${emojis.custom.crown} \`-\` **Owner ID:**`,
+						value: `${emojis.custom.replyend} ${ownerId}`,
+						inline: false
+					},
+					{
+						name: `${emojis.custom.mail} \`-\` **Reason**`,
+						value: `${emojis.custom.replyend} **${reason}**`,
+						inline: false
+					}
 				)
+				.setFooter({ text: `Actioned by ${interaction.user.displayName}`, iconURL: interaction.user.displayAvatarURL() })
 				.setTimestamp();
 
-			await logChannel.send({ embeds: [logEmbed] });
+			await logChannel.send({ embeds: [logEmbed2] });
 
 			await Guild.create({ guildName: targetGuild.name, guildId: targetGuild.id, reason });
 
 			await interaction.user.send({ embeds: [embed] });
 
-			await interaction.reply(
-				`${emojis.custom.warning} The server with the ID \`${targetGuild.id}\` has been successfully **added** to my blacklist!\n\n**• Reason:**\n${emojis.custom.replyend} \`${reason}\``
-			);
+			await interaction.reply(`${emojis.custom.warning} The server with the ID \`${targetGuild.id}\` has been **blacklisted**!\n\n${emojis.custom.mail} \`-\` **Reason:**\n${emojis.custom.replyend} \`${reason}\``);
 		} catch (error) {
 			console.error(error);
-
 			const errorEmbed = new EmbedBuilder()
 				.setColor(color.fail)
-				.setTitle(`${emojis.custom.fail} Blacklist Add Error`)
-				.setDescription(`${emojis.custom.fail} **I have encountered an error! Please try again later.**\n\n > *Have you already tried and still encountering the same error? Then please consider joining our support server [here](https://discord.gg/2XunevgrHD) for assistance or use </bugreport:1219050295770742934>*`)
+				.setDescription(`${emojis.custom.fail} Oopsie, I have encountered an error. The error has been **forwarded** to the developers, so please be **patient** and try running the command again later.\n\n > ${emojis.custom.link} *Have you already tried and still encountering the same error? Then please consider joining our support server [here](https://discord.gg/2XunevgrHD) for assistance or use </bugreport:1219050295770742934>*`)
 				.setTimestamp();
 
 			await interaction.reply({ embeds: [errorEmbed], ephemeral: true });

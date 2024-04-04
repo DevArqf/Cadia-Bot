@@ -26,13 +26,12 @@ class UserEvent extends Listener {
 
             const pingEmbed = new EmbedBuilder()
                 .setColor(color.default)
-                .setTitle("`❓` Someone mentioned me!")
                 .setDescription(
-                    `Hey there **${message.author.username}**! Here is some **information** on how to **use** me!\n\n \`🔑\` **Commands**\nUse the </help:1220511304771440641> command to view a list of all my existing commands!`)
+                    `${emojis.custom.wave} Hey there **${message.author.username}**! Here is some **information** on how to **use** me!\n\n ${emojis.custom.info} Use the </help:1220511304771440641> command to view a list of all my existing commands!`)
                 .addFields(
-                    { name: "`💡` **Total Commands:**", value: `${emojis.custom.replyend} **${commands}**`, inline: true },
-                    { name: "`👤` **Total Users:**", value: `${emojis.custom.replyend} **${members}**`, inline: true },
-                    { name: "`🌐` **Total Servers:**", value: `${emojis.custom.replyend} **${servers}**`, inline: true }
+                    { name: `${emojis.custom.slash} \`-\` **Commands:**`, value: `${emojis.custom.replyend} **${commands}**`, inline: true },
+                    { name: `${emojis.custom.community} \`-\` **Users:**`, value: `${emojis.custom.replyend} **${members}**`, inline: true },
+                    { name: `${emojis.custom.compass} \`-\` **Servers:**`, value: `${emojis.custom.replyend} **${servers}**`, inline: true }
                 )
                 .setTimestamp()
                 .setFooter({ text: `Requested by ${message.author.username}`, iconURL: message.author.displayAvatarURL() });
@@ -40,17 +39,17 @@ class UserEvent extends Listener {
             const buttons = new ActionRowBuilder()
                 .addComponents(
                     new ButtonBuilder()
-                        .setEmoji("1206441060494999592")
-                        .setLabel("Invite")
+                        .setEmoji(emojis.custom.link)
+                        .setLabel("Invite Cadia")
                         .setURL("https://discord.com/api/oauth2/authorize?client_id=1200475110235197631&permissions=8&scope=bot")
                         .setStyle(ButtonStyle.Link),
                     new ButtonBuilder()
-                        .setEmoji("1206440941335089153")
-                        .setLabel("Support")
+                        .setEmoji(emojis.custom.home)
+                        .setLabel("Support Server")
                         .setURL("https://discord.gg/qavsdVeyTZ")
                         .setStyle(ButtonStyle.Link),
                     new ButtonBuilder()
-                        .setEmoji("1208592226918080514")
+                        .setEmoji(emojis.custom.trash)
                         .setLabel("Delete")
                         .setStyle(ButtonStyle.Danger)
                         .setCustomId("deleteEmbed")
@@ -70,7 +69,7 @@ class UserEvent extends Listener {
                         console.error(error);
                             const errorEmbed = new EmbedBuilder()
                                 .setColor(color.fail)
-                                .setDescription(`${emojis.custom.fail} **I have encountered an error! Please try again later.**\n\n > *Have you already tried and still encountering the same error? Then please consider joining our support server [here](https://discord.gg/2XunevgrHD) for assistance or use </bugreport:1219050295770742934>*`)
+                                .setDescription(`${emojis.custom.fail} Oopsie, I have encountered an error. The error has been **forwarded** to the developers, so please be **patient** and try running the command again later.\n\n > ${emojis.custom.link} *Have you already tried and still encountering the same error? Then please consider joining our support server [here](https://discord.gg/2XunevgrHD) for assistance or use </bugreport:1219050295770742934>*`)
                                 .setTimestamp();
 
                             await interaction.reply({ embeds: [errorEmbed], ephemeral: true });

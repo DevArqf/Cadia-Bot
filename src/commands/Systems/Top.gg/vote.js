@@ -48,7 +48,7 @@ class UserCommand extends BeemoCommand {
             } else if (data.voted === 0){
                 const voteEmbed = new EmbedBuilder()
                     .setColor(color.default)
-                    .setDescription(`${emojis.custom.heart2} It appears you're interested in **voting** for Cadia. To **cast** your vote, simply **click** the button **below** at your convenience!`)
+                    .setDescription(`${emojis.custom.heart2} It appears you're interested in **voting** for Cadia. To **cast** your vote, simply **click** the buttons **below** at your convenience!`)
                     .setFooter({ text: `Requested by ${interaction.user.displayName}`, iconURL: interaction.user.displayAvatarURL() })
                     .setTimestamp();
 
@@ -84,11 +84,11 @@ class UserCommand extends BeemoCommand {
                     return interaction.reply({ embeds: [voteEmbed], components: [voteButton1] })
             }
         } else {
-            return interaction.reply(`**I have encountered an error! Please try again later.**`)
+            return interaction.reply(`${emojis.custom.fail} Oopsie, I have encountered an error. The error has been **forwarded** to the developers, so please be **patient** and try running the command again later.\n\n > ${emojis.custom.link} *Have you already tried and still encountering the same error? Then please consider joining our support server [here](https://discord.gg/2XunevgrHD) for assistance or use </bugreport:1219050295770742934>*`)
         }
 
         } catch (error) {
-            return interaction.reply(`**I have encountered an error! Please try again later.**`)
+            return interaction.reply(`${emojis.custom.fail} Oopsie, I have encountered an error. The error has been **forwarded** to the developers, so please be **patient** and try running the command again later.\n\n > ${emojis.custom.link} *Have you already tried and still encountering the same error? Then please consider joining our support server [here](https://discord.gg/2XunevgrHD) for assistance or use </bugreport:1219050295770742934>*`)
         }
 	}
 };
