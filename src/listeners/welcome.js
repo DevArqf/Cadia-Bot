@@ -25,9 +25,13 @@ class UserEvent extends Listener {
         const message = find.message.replace('{userId}',  member.id).replace('{serverName}', member.guild.name).replace('{userMention}', `<@${member.id}>`).replace('{serverMembers}', totalMembers)
 
         const channel = await member.client.channels.cache.get(`${find.welcomeChannelId}`);
+
         if (find.messageType === 'embed') {
+
             const embedTitle = find.title === null ? ' ' : find.title.replace('{userId}',  member.id).replace('{serverName}', member.guild.name).replace('{serverMembers}', totalMembers)
+
             const embedFooter = find.footer === null ?  ' ' : find.footer.replace('{userId}',  member.id).replace('{serverName}', member.guild.name).replace('{userMention}', member.id).replace('{serverMembers}', totalMembers)
+
             const embedHex = find.hexCode || color.default;
             const embedThumbNailURL = find.thumbnailImage;
             const iconURL = find.iconURL;
