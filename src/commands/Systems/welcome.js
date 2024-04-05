@@ -49,7 +49,7 @@ class UserCommand extends BeemoCommand {
                 .addStringOption((option) =>
                         option
                             .setName('message')
-                            .setDescription('Specified message will be sent as a Welcome within the Embed')
+                            .setDescription('Specified message will be sent as a Welcome within the embed')
                             .setRequired(true))
                 .addStringOption((option) =>
                     option
@@ -109,8 +109,9 @@ class UserCommand extends BeemoCommand {
             const messageType = interaction.options.getString('type');
             const message = interaction.options.getString('message');
             const find = await WelcomeSchema.findOne({ guildId: interaction.guild.id });
+
             if (!find === null) {
-                    return await interaction.reply(`${emojis.custom.fail} This server has **already** setup welcomer.`);
+                    return await interaction.reply(`${emojis.custom.fail} The Welcome System has **already** been **setup** within the server!`);
             } else {
 
             // await WelcomeSchema.create({ guildId: interaction.guild.id, welcomeChannelId: channelID, messageType: messageType, messageInfo: { title: null, message: null, footer: null, hexCode: null} });
@@ -129,8 +130,7 @@ class UserCommand extends BeemoCommand {
                     if (!iconURL.startsWith('https://') && !iconURL.startsWith('http://')) {
                         const iconURLError = new EmbedBuilder()
                         .setColor(color.fail)
-                        .setTitle(`${emojis.reg.fail} Icon URL Error`)
-                        .setDescription('You have inputed a invalaid Icon URL')
+                        .setDescription(`${emojis.custom.fail} Your Input is **not** an **URL**. Please make sure your **URL** starts with "**https://**" or "**http://*"`)
                         .setFooter({ text: `Requested by ${interaction.user.displayName}`, iconURL: interaction.user.displayAvatarURL() })
 
                         return await interaction.reply({ embeds: [iconURLError] });
@@ -141,8 +141,7 @@ class UserCommand extends BeemoCommand {
                     if (!thumbnailURL.startsWith('https://') && !thumbnailURL.startsWith('http://')) {
                         const thumbnailError = new EmbedBuilder()
                         .setColor(color.fail)
-                        .setTitle(`${emojis.reg.fail} Thumbnail URL Error`)
-                        .setDescription('You have inputed a invalaid Thumbnail URL')
+                        .setDescription(`${emojis.custom.fail} Your Input is **not** an **URL**. Please make sure your **URL** starts with "**https://**" or "**http://*"`)
                         .setFooter({ text: `Requested by ${interaction.user.displayName}`, iconURL: interaction.user.displayAvatarURL() })
 
                         return await interaction.reply({ embeds: [thumbnailError] });
@@ -153,13 +152,13 @@ class UserCommand extends BeemoCommand {
                     if (!typeof !hexCode.length === 6 && !hexCode.startsWith('#')) {
                         const hexError = new EmbedBuilder()
                         .setColor(color.fail)
-                        .setTitle(`${emojis.reg.fail} Hex Code Error`)
-                        .setDescription('You have inputed a incorrect Hex Code')
+                        .setDescription(`${emojis.custom.fail} Your Input is **not** a valid **HEX Code**. Please make sure your **HEX Code** starts with "**#**" or includes **6** numbers!`)
                         .setFooter({ text: `Requested by ${interaction.user.displayName}`, iconURL: interaction.user.displayAvatarURL() })
 
                         return await interaction.reply({ embeds: [hexError] });
                     }
                 };
+
                 await WelcomeSchema.create({ guildId: interaction.guild.id, welcomeChannelId: channelID, messageType: messageType, message: ' ', title: null, footer: null, thumbnailImage: null, authorName: null, iconURL: null, hexCode: null });
 
                 await WelcomeSchema.findOneAndUpdate({ guildId: interaction.guild.id }, { title: title, message: message, footer: footer, thumbnailImage: thumbnailURL, authorName: authorName, iconURL: iconURL, hexCode: hexCode }, { upsert: false });
@@ -170,31 +169,27 @@ class UserCommand extends BeemoCommand {
             async function SendMessage(interaction) {
             const CreatedEmbed = new EmbedBuilder()
                 .setColor(`${color.success}`)
-                .setTitle(`${emojis.reg.success} Welcomer Setup`)
-                .setDescription(`**Welcocmer Has Been Setup**\n\n **Channel:**\n${emojis.custom.replyend} <#${channelID}>`)
+                .setDescription(`${emojis.custom.success} The **Welcome System** has been setup!**\n\n ${emojis.custom.pencil} \`-\` **Channel:**\n ${emojis.custom.replyend} \`<#${channelID}>\``)
                 .setTimestamp()
                 .setFooter({ text: `Requested by ${interaction.user.displayName}`, iconURL: interaction.user.displayAvatarURL() });
 
             return await interaction.reply({ embeds: [CreatedEmbed] })
-            }
-        }
-            
-        };
+           }
+        }      
+     };
 
         if (subcommand === 'disable') {
             const find = await WelcomeSchema.find({ guildId: interaction.guild.id });
             if (!find) {
                 const cantDisable = new EmbedBuilder()
-                    .setColor(color.warning)
-                    .setTitle(`Cant Disable Welcomer`)
-                    .setDescription(`I can't disable welcomer as it has **not** been setup`)
+                    .setColor(color.fail)
+                    .setDescription(`${emojis.custom.fail} I **cannot** disable the **Welcome System** as it has **not** been setup within the server!`)
                 return await interaction.reply({ embeds: [cantDisable] });
             } else {
                 await WelcomeSchema.deleteOne({ guildId: interaction.guild.id });
                 const Deleted = new EmbedBuilder()
                     .setColor(color.success)
-                    .setTitle(`${emojis.custom.success} Welcomer Disabled`)
-                    .setDescription(`Welcomer has been **successfully** disabled for **${interaction.guild.name}**`)
+                    .setDescription(`${emojis.custom.success} The **Welcome System** has been **disabled** within the server!`)
                 return await interaction.reply({ embeds: [Deleted] });
             }
         };
@@ -202,20 +197,18 @@ class UserCommand extends BeemoCommand {
         if (subcommand === 'vars') {
             const embed = new EmbedBuilder()
                 .setColor(color.default)
-                .setTitle('Welcomer Vairables')
+                .setTitle('Welcome System Vairables')
                 .addFields([
-                    { name: '**Title:**',  value: `${emojis.custom.replycontinue} \`{userId}\` Get the users name\n${emojis.custom.replycontinue} \`{serverName}\` Get the servers name\n${emojis.custom.replyend} \`{serverMembers}\` Get the total member count of the server` },
-                    { name: '**Message:**', value: `${emojis.custom.replycontinue} \`{userId}\` Get the users name\n${emojis.custom.replycontinue} \`{userMention}\` Mention the user who joined\n${emojis.custom.replycontinue} \`{serverName}\` Get the servers name\n${emojis.custom.replycontinue} \`{serverMembers}\` Get the total member count of the server\n${emojis.custom.replycontinue} \`\\n\` Use this to make a new line in a message` },
+                    { name: '**Title:**', value: `${emojis.custom.replycontinue} \`{userId}\` Get the users **ID**\n${emojis.custom.replycontinue} \`{serverName}\` Get the servers name\n${emojis.custom.replyend} \`{serverMembers}\` Get the total member count of the server` },
+                    { name: '**Message:**', value: `${emojis.custom.replycontinue} \`{userId}\` Get the users **ID**\n${emojis.custom.replycontinue} \`{userMention}\` Mention the user who joined\n${emojis.custom.replycontinue} \`{serverName}\` Get the servers name\n${emojis.custom.replycontinue} \`{serverMembers}\` Get the total member count of the server\n${emojis.custom.replycontinue} \`\\n\` Use this to make a new line in a message` },
                     { name: '**Footer:**', value: `${emojis.custom.replycontinue} \`{userId}\` Get the users name\n${emojis.custom.replycontinue} \`{serverName}\` Get the servers name\n${emojis.custom.replyend} \`{serverMembers}\` Get the total member count of the server` }
                 ])
                 .setFooter({ text: `Requested by ${interaction.user.displayName}`, iconURL: interaction.user.displayAvatarURL() });
 
                 return interaction.reply({ embeds: [embed] });
+           }
         }
-
-
-        }
-    };
+     };
 
 module.exports = {
 	UserCommand
