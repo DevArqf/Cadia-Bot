@@ -2,19 +2,21 @@ const BeemoCommand = require('../../../lib/structures/commands/BeemoCommand');
 const { PermissionLevels } = require('../../../lib/types/Enums');
 const { color, emojis } = require('../../../config');
 const { EmbedBuilder, ButtonBuilder, ActionRowBuilder, ButtonStyle } = require('discord.js');
-const { TwoZeroFourEight } = require("discord-gamecord");
-const { FindEmoji  } = require("discord-gamecord");
-const { Connect4 } = require("discord-gamecord");
-const { Flood } = require('discord-gamecord');
-const { GuessThePokemon } = require('discord-gamecord');
-const { Hangman } = require(`discord-gamecord`);
-const { MatchPairs } = require(`discord-gamecord`);
-const { Minesweeper } = require(`discord-gamecord`);
-const { RockPaperScissors } = require(`discord-gamecord`);
-const { Slots } = require(`discord-gamecord`);
-const { Snake } = require(`discord-gamecord`);
-const { TicTacToe } = require(`discord-gamecord`);
-const { Wordle } = require(`discord-gamecord`);
+const { 
+    TwoZeroFourEight, 
+    FindEmoji, 
+    Connect4, 
+    Flood, 
+    GuessThePokemon, 
+    Hangman, 
+    MatchPairs, 
+    Minesweeper, 
+    RockPaperScissors, 
+    Slots, 
+    Snake, 
+    TicTacToe, 
+    Wordle 
+} = require('discord-gamecord');
 
 class UserCommand extends BeemoCommand {
 	/**
