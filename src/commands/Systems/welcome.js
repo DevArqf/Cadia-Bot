@@ -1,8 +1,8 @@
-const BeemoCommand = require('../../lib/structures/commands/BeemoCommand');
-const { PermissionLevels } = require('../../lib/types/Enums');
-const { color, emojis } = require('../../config')
+const BeemoCommand = require('../../../lib/structures/commands/BeemoCommand');
+const { PermissionLevels } = require('../../../lib/types/Enums');
+const { color, emojis } = require('../../../config')
 const { EmbedBuilder, ChannelType, PermissionsBitField } = require('discord.js');
-const { WelcomeSchema } = require('../../lib/schemas/welcome');
+const { WelcomeSchema } = require('../../../lib/schemas/welcome');
 
 class UserCommand extends BeemoCommand {
 	/**
@@ -13,7 +13,7 @@ class UserCommand extends BeemoCommand {
 		super(context, {
 			...options,
             name: 'welcome',
-			description: 'Setup an automatic welcome for your discord server',
+			description: 'Setup an automatic Welcome System witgin your server',
             requiredUserPermissions: ['ManageGuild']
 		});
 	}
@@ -31,16 +31,16 @@ class UserCommand extends BeemoCommand {
                 .addSubcommand((subcommand) =>
 					subcommand //
 						.setName('setup')
-						.setDescription('Setup welcomer for your discord server')
+						.setDescription('Setup a Welcome System within your server')
                 .addChannelOption(option =>
                     option.setName('channel')
-                        .setDescription('The channel to send the welcome to')
+                        .setDescription('Specified channel to send the welcome message to')
                         .addChannelTypes(ChannelType.GuildText)
                         .setRequired(true))
                 .addStringOption((option) =>
                         option
                             .setName('type')
-                            .setDescription('The message type')
+                            .setDescription('The type of message')
                             .addChoices(
                                 { name: '• Regular', value: 'regular' },
                                 { name: '• Embed', value: 'embed' },
@@ -49,38 +49,38 @@ class UserCommand extends BeemoCommand {
                 .addStringOption((option) =>
                         option
                             .setName('message')
-                            .setDescription('The message to send')
+                            .setDescription('Specified message will be sent as a Welcome within the Embed')
                             .setRequired(true))
                 .addStringOption((option) =>
                     option
                         .setName('embed-title')
-                        .setDescription('The embed title')
+                        .setDescription('The title of the embed')
                         .setRequired(false))
                         
                 .addStringOption((option) =>
                     option
                         .setName('embed-hex')
-                        .setDescription('The embed hex code')
+                        .setDescription('The HEX code of the embed')
                         .setRequired(false)) 
                 .addStringOption((option) =>
                     option
                         .setName('embed-footer')
-                        .setDescription('The embed footer')
+                        .setDescription('The footer of the embed')
                         .setRequired(false))
                 .addStringOption((option) =>
                     option
                         .setName('embed-thumbnailurl')
-                        .setDescription('The embed thumbnail url')
+                        .setDescription('The thumbnail URL for the embed')
                         .setRequired(false))
                 .addStringOption((option) =>
                     option
                         .setName('embed-authorname')
-                        .setDescription('The embed author name')
+                        .setDescription('The author message or name of the embed')
                         .setRequired(false))
                 .addStringOption((option) =>
                     option
                         .setName('embed-iconurl')
-                        .setDescription('The embed thumbnail url')
+                        .setDescription('The icon URL of the embed')
                         .setRequired(false))
                 )
 
@@ -88,12 +88,12 @@ class UserCommand extends BeemoCommand {
                 .addSubcommand((subcommand) =>
                         subcommand 
                             .setName('disable')
-                            .setDescription('Disable welcomer for the server'))
+                            .setDescription('Disable the Welcome System within your server'))
                 // Vars SubCommand
                 .addSubcommand((subcommand) => 
                         subcommand
                             .setName('vars')
-                            .setDescription('Get all the vairables for this system.')),
+                            .setDescription('Receive a list of Variables that you can use for your Welcome message')),
                  
         );
 	}
