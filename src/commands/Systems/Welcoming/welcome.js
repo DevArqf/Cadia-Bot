@@ -216,12 +216,12 @@ class UserCommand extends BeemoCommand {
         if (subcommand === 'vars') {
             const embed = new EmbedBuilder()
                 .setColor(color.default)
-                .setTitle('Welcome System Variables')
+                .setTitle('`📜` Welcome System Variables')
                 .addFields([
                     { name: '**Title:**', value: `${emojis.custom.replystart} \`{userId}\` Get the users **ID**\n${emojis.custom.replycontinue} \`{serverName}\` Get the servers name\n${emojis.custom.replyend} \`{serverMembers}\` Get the total member count of the server` },
                     { name: '**Message:**', value: `${emojis.custom.replystart} \`{userId}\` Get the users **ID**\n${emojis.custom.replycontinue} \`{userMention}\` Mention the user who joined\n${emojis.custom.replycontinue} \`{serverName}\` Get the servers name\n${emojis.custom.replycontinue} \`{serverMembers}\` Get the total member count of the server\n${emojis.custom.replyend} \`\\n\` Use this to make a new line in a message` },
                     { name: '**Footer:**', value: `${emojis.custom.replystart} \`{userId}\` Get the users name\n${emojis.custom.replycontinue} \`{serverName}\` Get the servers name\n${emojis.custom.replyend} \`{serverMembers}\` Get the total member count of the server` },
-                    { name: '**Image URLS:**', value: `${emojis.custom.replyend} \`{serverIcon}\` Get the icon of the server.` }
+                    { name: '**Url's:**', value: `${emojis.custom.replyend} \`{serverIcon}\` Get the icon of the server.` }
                 ])
                 .setTimestamp()
                 .setFooter({ text: `Requested by ${interaction.user.displayName}`, iconURL: interaction.user.displayAvatarURL() });
