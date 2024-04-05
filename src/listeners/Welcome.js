@@ -16,7 +16,6 @@ class UserEvent extends Listener {
     async run(member) {
         const find = await WelcomeSchema.findOne({ guildId: member.guild.id });
         if (!find) return;
-        console.log(find)
 
         const guild = await member.client.guilds.cache.get(`${member.guild.id}`);
         const totalMembers = guild.memberCount;

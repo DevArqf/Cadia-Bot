@@ -199,7 +199,6 @@ class UserCommand extends BeemoCommand {
 
         if (subcommand === 'disable') {
             const find = await WelcomeSchema.find({ guildId: interaction.guild.id });
-            console.log(find)
             if (find.length === 0) {
                 const cantDisable = new EmbedBuilder()
                 .setColor(color.fail)
