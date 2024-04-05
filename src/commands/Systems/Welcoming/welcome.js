@@ -42,8 +42,8 @@ class UserCommand extends BeemoCommand {
                             .setName('type')
                             .setDescription('The type of message')
                             .addChoices(
-                                { name: '• Regular', value: 'regular' },
-                                { name: '• Embed', value: 'embed' },
+                                { name: 'Regular', value: 'regular' },
+                                { name: 'Embed', value: 'embed' },
                             )
                             .setRequired(true))
                 .addStringOption((option) =>
