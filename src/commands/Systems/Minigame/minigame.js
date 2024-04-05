@@ -536,6 +536,9 @@ class UserCommand extends BeemoCommand {
                                 return interaction.reply({ embeds: [new EmbedBuilder().setColor(`${color.invis}`).setDescription(`${emojis.custom.fail} You **cannot** challenge yourself, are you lonely or something..`)], ephemeral: true });
                             }
 
+			    if (player.bot) 
+                                return await interaction.reply({ embeds: [new EmbedBuilder().setColor(`${color.invis}`).setDescription(`${emojis.custom.fail} You **cannot** play with a bot, do you not have friends...`)], ephemeral: true });
+
                             const acceptButton = new ButtonBuilder()
                                 .setCustomId('accept')
                                 .setLabel('Accept')
