@@ -124,11 +124,20 @@ class UserCommand extends BeemoCommand {
                 const title = interaction.options.getString('embed-title');
                 const footer = interaction.options.getString('embed-footer');
                 const hexCode = interaction.options.getString('embed-hex');
-                const thumbnailURL = interaction.options.getString('embed-thumbnailurl');
                 const authorName = interaction.options.getString('embed-authorname');
-                const iconURL = interaction.options.getString('embed-iconurl')
+                const thumbnailURLBefore = interaction.options.getString('embed-thumbnailurl');
+                const iconURLBefore = interaction.options.getString('embed-iconurl');
 
+                let iconURL = '';
+                let thumbnailURL ='';
                 if (iconURL) {
+                    if (iconURLBefore.includes('{serverIcon}')) {
+                        const guildIcon = await interaction.guild.iconURL({ dynamic: true, size: 2048 });
+                        iconURL += guildIcon
+                    } else {
+                        iconURL =+ iconURLBefore
+                    };
+
                     if (!iconURL.startsWith('https://') && !iconURL.startsWith('http://')) {
                         const iconURLError = new EmbedBuilder()
                         .setColor(color.fail)
@@ -140,6 +149,14 @@ class UserCommand extends BeemoCommand {
                 };
 
                 if (thumbnailURL) {
+                    if (thumbnailURLBefore.includes('{serverIcon}')) {
+                        const guildIcon = await interaction.guild.iconURL({ dynamic: true, size: 2048 });
+                        thumbnailURL += guildIcon
+                    } else {
+                        thumbnailURL += thumbnailURLBefore;
+                    };
+
+
                     if (!thumbnailURL.startsWith('https://') && !thumbnailURL.startsWith('http://')) {
                         const thumbnailError = new EmbedBuilder()
                         .setColor(color.fail)
@@ -204,7 +221,8 @@ class UserCommand extends BeemoCommand {
                 .addFields([
                     { name: '**Title:**', value: `${emojis.custom.replystart} \`{userId}\` Get the users **ID**\n${emojis.custom.replycontinue} \`{serverName}\` Get the servers name\n${emojis.custom.replyend} \`{serverMembers}\` Get the total member count of the server` },
                     { name: '**Message:**', value: `${emojis.custom.replystart} \`{userId}\` Get the users **ID**\n${emojis.custom.replycontinue} \`{userMention}\` Mention the user who joined\n${emojis.custom.replycontinue} \`{serverName}\` Get the servers name\n${emojis.custom.replycontinue} \`{serverMembers}\` Get the total member count of the server\n${emojis.custom.replyend} \`\\n\` Use this to make a new line in a message` },
-                    { name: '**Footer:**', value: `${emojis.custom.replystart} \`{userId}\` Get the users name\n${emojis.custom.replycontinue} \`{serverName}\` Get the servers name\n${emojis.custom.replyend} \`{serverMembers}\` Get the total member count of the server` }
+                    { name: '**Footer:**', value: `${emojis.custom.replystart} \`{userId}\` Get the users name\n${emojis.custom.replycontinue} \`{serverName}\` Get the servers name\n${emojis.custom.replyend} \`{serverMembers}\` Get the total member count of the server` },
+                    { name: '**Image URLS:**', value: `${emojis.custom.replyend} \`{serverIcon}\` Get the icon of the server.` }
                 ])
                 .setTimestamp()
                 .setFooter({ text: `Requested by ${interaction.user.displayName}`, iconURL: interaction.user.displayAvatarURL() });

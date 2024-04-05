@@ -22,7 +22,7 @@ class UserEvent extends Listener {
         const totalMembers = guild.memberCount;
 
         // Message infos
-        const message = find.message.replace('{userId}',  member.id).replace('{serverName}', member.guild.name).replace('{userMention}', `<@${member.id}>`).replace('{serverMembers}', totalMembers)
+        const message = find.message.replace('{userId}',  member.id).replace('{serverName}', member.guild.name).replace('{userMention}', `<@${member.id}>`).replace('{serverMembers}', totalMembers).replace(/\\n/g, '\n')
 
         const channel = await member.client.channels.cache.get(`${find.welcomeChannelId}`);
 
