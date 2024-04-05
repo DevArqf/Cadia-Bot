@@ -199,6 +199,7 @@ class UserCommand extends BeemoCommand {
 
         if (subcommand === 'disable') {
             const find = await WelcomeSchema.find({ guildId: interaction.guild.id });
+		
             if (find.length === 0) {
                 const cantDisable = new EmbedBuilder()
                 .setColor(color.fail)
@@ -207,7 +208,7 @@ class UserCommand extends BeemoCommand {
             } else {
                 await WelcomeSchema.deleteOne({ guildId: interaction.guild.id });
                 const Deleted = new EmbedBuilder()
-                    .setColor(color.success)
+                    .setColor(color.default)
                     .setDescription(`${emojis.custom.success} The **Welcome System** has been **disabled** within the server!`)
                 return await interaction.reply({ embeds: [Deleted] });
             };
@@ -216,7 +217,7 @@ class UserCommand extends BeemoCommand {
         if (subcommand === 'vars') {
             const embed = new EmbedBuilder()
                 .setColor(color.default)
-                .setTitle('`📜` Welcome System Variables')
+                .setTitle('`📜` Welcome System Variables `📜`')
                 .addFields([
                     { name: '**Title:**', value: `${emojis.custom.replystart} \`{userId}\` Get the users **ID**\n${emojis.custom.replycontinue} \`{serverName}\` Get the servers name\n${emojis.custom.replyend} \`{serverMembers}\` Get the total member count of the server` },
                     { name: '**Message:**', value: `${emojis.custom.replystart} \`{userId}\` Get the users **ID**\n${emojis.custom.replycontinue} \`{userMention}\` Mention the user who joined\n${emojis.custom.replycontinue} \`{serverName}\` Get the servers name\n${emojis.custom.replycontinue} \`{serverMembers}\` Get the total member count of the server\n${emojis.custom.replyend} \`\\n\` Use this to make a new line in a message` },
