@@ -51,12 +51,7 @@ class UserEvent extends Listener {
             } else {
                 return await channel.send(message);
             }
-            /*
-
-    const channel = await member.client.channels.cache.get('1217638444105334966');  
-
-        return await channel.send(`${member.id}, <@${member.id}>  ${member.guild.name}`)
-        */
+           
      }
 }
 
