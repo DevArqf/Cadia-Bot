@@ -7,6 +7,14 @@ const { FindEmoji  } = require("discord-gamecord");
 const { Connect4 } = require("discord-gamecord");
 const { Flood } = require('discord-gamecord');
 const { GuessThePokemon } = require('discord-gamecord');
+const { Hangman } = require(`discord-gamecord`);
+const { MatchPairs } = require(`discord-gamecord`);
+const { Minesweeper } = require(`discord-gamecord`);
+const { RockPaperScissors } = require(`discord-gamecord`);
+const { Slots } = require(`discord-gamecord`);
+const { Snake } = require(`discord-gamecord`);
+const { TicTacToe } = require(`discord-gamecord`);
+const { Wordle } = require(`discord-gamecord`);
 
 class UserCommand extends BeemoCommand {
 	/**
@@ -60,6 +68,38 @@ class UserCommand extends BeemoCommand {
                         option.setName('player')
                         .setDescription('Select a player to challenge')
                         .setRequired(true)))
+                .addSubcommand(command => 
+                    command.setName(`hangman`)
+                    .setDescription(`Play a game of Hangman. TIP: Don't get hanged on the word ;)`))
+                .addSubcommand(command => 
+                    command.setName(`match-pairs`)
+                    .setDescription(`Play a game of Match Pairs. TIP: Just guess!`))
+                .addSubcommand(command => 
+                    command.setName('minesweeper')
+                    .setDescription('Play a game of Minesweeper. TIP: WATCH OUT!!'))
+                .addSubcommand(command =>
+                    command.setName('rps')
+                    .setDescription('Play a game of Rock Paper Scissors. TIP: Have the psychic ability of Telekinesis!')
+                    .addUserOption(option => 
+                      option.setName('opponent')
+                        .setDescription('Specified user will be your opponent')
+                        .setRequired(true)))
+                .addSubcommand(command => 
+                    command.setName(`slots`)
+                    .setDescription(`Play a game of Slots. TIP: Have luck within you ;)`))
+                .addSubcommand(command => 
+                    command.setName(`snake`)
+                    .setDescription(`Play a game of Snake. TIP: Be good at navigating snakes!`))
+                .addSubcommand(command => 
+                    command.setName('ttt')
+                    .setDescription('Play a game of Tic Tac Toe. TIP: Just have the ability of Telekinesis man ;)')
+                    .addUserOption(option => 
+                      option.setName('opponent')
+                        .setDescription('Specified user will be your opponent')
+                        .setRequired(true)))
+                .addSubcommand(command => 
+                    command.setName('wordle')
+                    .setDescription(`Play a game of wordle. TIP: Know majority of the English words!`)),
 		);
 	}
 
@@ -143,12 +183,12 @@ class UserCommand extends BeemoCommand {
                             break;
                         
                         case 'connect-four':
-                            const enemy = interaction.options.getUser('opponent');
+                            const enemy1 = interaction.options.getUser('opponent');
 
-                            if (interaction.user.id === enemy.id) 
+                            if (interaction.user.id === enemy1.id) 
                                 return await interaction.reply({ embeds: [new EmbedBuilder().setColor(`${color.invis}`).setDescription(`${emojis.custom.fail} You **cannot** play with yourself, are you lonely?`)], ephemeral: true });
 
-                            if (enemy.bot) 
+                            if (enemy1.bot) 
                                 return await interaction.reply({ embeds: [new EmbedBuilder().setColor(`${color.invis}`).setDescription(`${emojis.custom.fail} You **cannot** play with a bot, do you not have friends?`)], ephemeral: true });
 
                             const game3 = new Connect4({
@@ -171,12 +211,12 @@ class UserCommand extends BeemoCommand {
                         mentionUser: true,
                         timeoutTime: 120000,
                         buttonStyle: "PRIMARY",
-                        turnMessage: "> {emoji} | **{player}**, it is your turn!",
+                        turnMessage: `> {emoji} | **{player}**, it is your turn!`,
                         winMessage: `> ${emojis.custom.tada1} **{player}** has **won** the Connect Four Game!`,
-                        tieMessage: "> The game turned out to be a tie!",
-                        timeoutMessage: "> The game went **unfinished**! no one won the game!",
+                        tieMessage: `> The game turned out to be a tie!`,
+                        timeoutMessage: `> ${emojis.custom.fail} The game went **unfinished**! no one won the game!`,
                         playerOnlyMessage: `${emojis.custom.forbidden} You **cannot** interact with these buttons. Only {player} and {opponent} can use these buttons!`,
-                        rejectMessage: "{opponent} **denied** your request for a round of Connect Four!",
+                        rejectMessage: `${emojis.custom.fail} {opponent} **denied** your request for a round of Connect Four!`,
                     });
 
                         try {
@@ -499,20 +539,319 @@ class UserCommand extends BeemoCommand {
                     });
 
                     break;
-                          
-            }
-        } catch (error) {
-            console.log(error);
-            const errorEmbed = new EmbedBuilder()
-                .setColor(color.fail)
-                .setDescription(`${emojis.custom.fail} Oopsie, I have encountered an error. The error has been **forwarded** to the developers, so please be **patient** and try running the command again later.\n\n > ${emojis.custom.link} *Have you already tried and still encountering the same error? Then please consider joining our support server [here](https://discord.gg/2XunevgrHD) for assistance or use </bugreport:1219050295770742934>*`)
-                .setTimestamp();
+
+                case 'hangman':
+                    const game6 = new Hangman({
+                        message: interaction,
+                        isSlashGame: true,
+                        embed: {
+                            title: `> Cadia Minigame - Hangman`,
+                            color: `${color.default}`
+                        },
+                        hangman: { hat: "🎩", head: `👨‍🦰`, shirt: `👕`, pants: `🩳`, boots: `🥾🥾`},
+                        timeoutTime: 60000,
+                        timeWords: "all",
+                        winMessage: `> ${emojis.custom.emoji2} You won! The word was **{word}**.`,
+                        loseMessage: `> ${emojis.custom.fail} **You lost**, the word was **{word}**.`,
+                        timeoutMessage: `> ${emojis.custom.fail} The game went **unfinished**.`,
+                        playerOnlyMessage: `${emojis.custom.forbidden} You **cannot** interact with these buttons. Only {player} can use these buttons!`,
+                    })
+             
+                    try {
+                        await game6.startGame();
+                      } catch (err) {
+                            console.log(err);
+                            const errorEmbed = new EmbedBuilder()
+                                .setColor(color.fail)
+                                .setDescription(`${emojis.custom.fail} Oopsie, I have encountered an error. The error has been **forwarded** to the developers, so please be **patient** and try running the command again later.\n\n > ${emojis.custom.link} *Have you already tried and still encountering the same error? Then please consider joining our support server [here](https://discord.gg/2XunevgrHD) for assistance or use </bugreport:1219050295770742934>*`)
+                                .setTimestamp();
     
-            await interaction.reply({ embeds: [errorEmbed], ephemeral: true });
-            return;
-        }
-    }
-};
+                            await interaction.reply({ embeds: [errorEmbed], ephemeral: true });
+                            return;
+                            }
+
+                            break;
+
+                        case 'match-pairs':
+                            const game7 = new MatchPairs({
+                                message: interaction,
+                                isSlashGame: true,
+                                embed: {
+                                    title: '> Cadia Minigame - Match Pairs',
+                                    color: `${color.default}`,
+                                    description: '**Click on the buttons to match emojis with their pairs.**'
+                                },
+                                timeoutTime: 60000,
+                                emojis: ['🍉', '🍇', '🍊', '🥭', '🍎', '🍏', '🥝', '🥥', '🍓', '🫐', '🍍', '🥕', '🥔'],
+                                winMessage: `> ${emojis.custom.emoji2} **You won the game!** You turned a total of \`{tilesTurned}\` tiles!`,
+                                loseMessage: `${emojis.custom.fail} **You lost the game!** You turned a total of \`{tilesTurned}\` tiles!`,
+                                timeoutMessage: `> ${emojis.custom.fail} The game went **unfinished**.`,
+                                playerOnlyMessage: `${emojis.custom.forbidden} You **cannot** interact with these buttons. Only {player} can use these buttons!`
+                            });
+                          
+                            try {
+                                await game7.startGame();
+                            } catch (err) {
+                                console.log(err);
+                                const errorEmbed = new EmbedBuilder()
+                                    .setColor(color.fail)
+                                    .setDescription(`${emojis.custom.fail} Oopsie, I have encountered an error. The error has been **forwarded** to the developers, so please be **patient** and try running the command again later.\n\n > ${emojis.custom.link} *Have you already tried and still encountering the same error? Then please consider joining our support server [here](https://discord.gg/2XunevgrHD) for assistance or use </bugreport:1219050295770742934>*`)
+                                    .setTimestamp();
+    
+                                await interaction.reply({ embeds: [errorEmbed], ephemeral: true });
+                                return;
+                                }
+
+                                break;
+
+                            case 'minesweeper':
+                                const game8 = new Minesweeper({
+                                    message: interaction,
+                                    isSlashGame: true,
+                                    embed: {
+                                      title: "> Cadia Minigame - Minesweeper",
+                                      color: `${color.default}`,
+                                      description: "Click on the buttons to reveal the blocks except mines.",
+                                    },
+                                    emojis: { flag: "🚩", mine: "💣" },
+                                    mines: 5,
+                                    timeoutTime: 60000,
+                                    winMessage: `> ${emojis.custom.tada2} **You have won the game!** All mines were successfully **avoided** by you.`,
+                                    loseMessage: `> ${emojis.custom.fail} **You failed the game!** Next time, be **cautious** of the mines.`,
+                                    timeoutMessage: `> ${emojis.custom.fail} The game went **unfinished**.`,
+                                    playerOnlyMessage: `${emojis.custom.forbidden} You **cannot** interact with these buttons. Only {player} can use these buttons!`,
+                                  });
+                              
+                                  try {
+                                      await game8.startGame();
+                                    } catch (err) {
+                                        console.log(err);
+                                        const errorEmbed = new EmbedBuilder()
+                                            .setColor(color.fail)
+                                            .setDescription(`${emojis.custom.fail} Oopsie, I have encountered an error. The error has been **forwarded** to the developers, so please be **patient** and try running the command again later.\n\n > ${emojis.custom.link} *Have you already tried and still encountering the same error? Then please consider joining our support server [here](https://discord.gg/2XunevgrHD) for assistance or use </bugreport:1219050295770742934>*`)
+                                            .setTimestamp();
+    
+                                        await interaction.reply({ embeds: [errorEmbed], ephemeral: true });
+                                        return;
+                                    }
+
+                                    break;
+
+                                case 'rps':
+                                    const enemy2 = interaction.options.getUser('opponent');
+
+                                    if (interaction.user.id === enemy2.id) 
+                                        return await interaction.reply({ embeds: [new EmbedBuilder().setColor(`${color.invis}`).setDescription(`${emojis.custom.fail} You **cannot** play with yourself, are you lonely?`)], ephemeral: true });
+                                    if (enemy2.bot) 
+                                        return await interaction.reply({ embeds: [new EmbedBuilder().setColor(`${color.invis}`).setDescription(`${emojis.custom.fail} You **cannot** play with a bot, do you not have friends?`)], ephemeral: true });
+
+                                    const game9 = new RockPaperScissors({
+                                        message: interaction,
+                                        isSlashGame: true,
+                                        opponent: interaction.options.getUser('opponent'),
+                                        embed: {
+                                            title: "Cadia Minigame - Rock Paper Scissors",
+                                            rejectTitle: "Cancelled Request",
+                                            statusTitle: `\`⌛\` \`-\` Status`,
+                                            overTitle: `\`⏰\` \`-\` Game Over`,
+                                            color: `${color.default}`,
+                                            rejectColor: `${color.fail}`,
+                                        },
+                                        buttons: {
+                                            rock: "Rock",
+                                            paper: "Paper",
+                                            scissors: "Scissors",
+                                        },
+                                        emojis: {
+                                            rock: "🌑",
+                                            paper: "📰",
+                                            scissors: "✂️",
+                                        },
+                                        mentionUser: true,
+                                        timeoutTime: 120000,
+                                        buttonStyle: "PRIMARY",
+                                        pickMessage: `> You chose {emoji}.`,
+                                        winMessage: `> ${emojis.custom.tada1} **{player}** has **won** the Rock-Paper-Scissors Game!`,
+                                        tieMessage: `> The game turned out to be a tie!`,
+                                        timeoutMessage: `> ${emojis.custom.fail} The game went **unfinished**!`,
+                                        playerOnlyMessage: `${emojis.custom.forbidden} You **cannot** interact with these buttons. Only {player} and {opponent} can use these buttons!`,
+                                        rejectMessage: `${emojis.custom.fail} {opponent} **denied** your request for a round of Rock-Paper-Scissors!`,
+                                    });
+
+                                    try {
+                                        await game9.startGame();
+                                    } catch (err) {
+                                        console.log(err);
+                                        const errorEmbed = new EmbedBuilder()
+                                            .setColor(color.fail)
+                                            .setDescription(`${emojis.custom.fail} Oopsie, I have encountered an error. The error has been **forwarded** to the developers, so please be **patient** and try running the command again later.\n\n > ${emojis.custom.link} *Have you already tried and still encountering the same error? Then please consider joining our support server [here](https://discord.gg/2XunevgrHD) for assistance or use </bugreport:1219050295770742934>*`)
+                                            .setTimestamp();
+    
+                                        await interaction.reply({ embeds: [errorEmbed], ephemeral: true });
+                                        return;
+                                    }
+
+                                    break;
+
+                                case 'slot':
+                                    const game10 = new Slots({
+                                        message: interaction,
+                                        isSlashGame: true,
+                                        embed: {
+                                          title: '> Cadia Minigame - Slot Machine',
+                                          color: `${color.default}`
+                                        },
+                                        slots: ['🍇', '🍊', '🍋', '🍌']
+                                      });
+                                      
+                                      try {
+                                        await game10.startGame();
+                                    } catch (err) {
+                                        console.log(err);
+                                        const errorEmbed = new EmbedBuilder()
+                                            .setColor(color.fail)
+                                            .setDescription(`${emojis.custom.fail} Oopsie, I have encountered an error. The error has been **forwarded** to the developers, so please be **patient** and try running the command again later.\n\n > ${emojis.custom.link} *Have you already tried and still encountering the same error? Then please consider joining our support server [here](https://discord.gg/2XunevgrHD) for assistance or use </bugreport:1219050295770742934>*`)
+                                            .setTimestamp();
+    
+                                        await interaction.reply({ embeds: [errorEmbed], ephemeral: true });
+                                        return;
+                                    }
+
+                                    break;
+
+                                case 'snake':
+                                    const game11 = new Snake({
+                                        message: interaction,
+                                        isSlashGame: true,
+                                        embed: {
+                                          title: '> Cadia Minigame - Snake Game',
+                                          overTitle: `\`⏰\` \`-\` Game Over`,
+                                          color: `${color.default}`
+                                        },
+                                        emojis: {
+                                          board: '⬛',
+                                          food: '🍎',
+                                          up: '⬆️', 
+                                          down: '⬇️',
+                                          left: '⬅️',
+                                          right: '➡️',
+                                        },
+                                        snake: { head: '🟢', body: '🟩', tail: '🟢', over: '💀' },
+                                        foods: ['🍎', '🍇', '🍊', '🫐', '🥕', '🥝', '🌽'],
+                                        stopButton: 'Stop',
+                                        timeoutTime: 60000,
+                                        timeoutMessage: `> ${emojis.custom.fail} The game went **unfinished**.`,
+                                        playerOnlyMessage: `${emojis.custom.forbidden} You **cannot** interact with these buttons. Only {player} and {opponent} can use these buttons!`,
+                                      });
+                                      
+                                      try {
+                                        await game11.startGame();
+                                    } catch (err) {
+                                        console.log(err);
+                                        const errorEmbed = new EmbedBuilder()
+                                            .setColor(color.fail)
+                                            .setDescription(`${emojis.custom.fail} Oopsie, I have encountered an error. The error has been **forwarded** to the developers, so please be **patient** and try running the command again later.\n\n > ${emojis.custom.link} *Have you already tried and still encountering the same error? Then please consider joining our support server [here](https://discord.gg/2XunevgrHD) for assistance or use </bugreport:1219050295770742934>*`)
+                                            .setTimestamp();
+    
+                                        await interaction.reply({ embeds: [errorEmbed], ephemeral: true });
+                                        return;
+                                    }
+
+                                    break;
+
+                                case 'ttt':
+                                    const enemy3 = interaction.options.getUser('opponent');
+
+                                    if (interaction.user.id === enemy3.id) 
+                                        return await interaction.reply({ embeds: [new EmbedBuilder().setColor(`${color.invis}`).setDescription(`${emojis.custom.fail} You **cannot** play with yourself, are you lonely?`)], ephemeral: true });
+                                    if (enemy3.bot) 
+                                        return await interaction.reply({ embeds: [new EmbedBuilder().setColor(`${color.invis}`).setDescription(`${emojis.custom.fail} You **cannot** play with a bot, do you not have friends?`)], ephemeral: true });
+
+                                    const game12 = new TicTacToe({
+                                        message: interaction,
+                                        isSlashGame: true,
+                                        opponent: interaction.options.getUser('opponent'),
+                                        embed: {
+                                            title: "Cadia Minigame - Tic Tac Toe",
+                                            rejectTitle: "Cancelled Request",
+                                            statusTitle: `\`⌛\` \`-\` Status`,
+                                            overTitle: `\`⏰\` \`-\` Game Over`,
+                                            color: `${color.default}`,
+                                            rejectColor: `${color.fail}`,
+                                        },
+                                        emojis: {
+                                            xButton: '❌',
+                                            oButton: '🔵',
+                                            blankButton: '➖'
+                                        },
+                                        mentionUser: true,
+                                        timeoutTime: 120000,
+                                        buttonStyle: "PRIMARY",
+                                        pickMessage: `> {emoji} | **{player}**, it is your turn!`,
+                                        winMessage: `> ${emojis.custom.tada1} **{player}** has **won** the TicTacToe Game!`,
+                                        tieMessage: `> The game turned out to be a tie!`,
+                                        timeoutMessage: `> ${emojis.custom.fail} The game went **unfinished**!`,
+                                        playerOnlyMessage: `${emojis.custom.forbidden} You **cannot** interact with these buttons. Only {player} and {opponent} can use these buttons!`,
+                                        rejectMessage: `${emojis.custom.fail} {opponent} **denied** your request for a round of Rock-Paper-Scissors!`,
+                                    });
+
+                                    try {
+                                        await game12.startGame();
+                                    } catch (err) {
+                                        console.log(err);
+                                        const errorEmbed = new EmbedBuilder()
+                                            .setColor(color.fail)
+                                            .setDescription(`${emojis.custom.fail} Oopsie, I have encountered an error. The error has been **forwarded** to the developers, so please be **patient** and try running the command again later.\n\n > ${emojis.custom.link} *Have you already tried and still encountering the same error? Then please consider joining our support server [here](https://discord.gg/2XunevgrHD) for assistance or use </bugreport:1219050295770742934>*`)
+                                            .setTimestamp();
+    
+                                        await interaction.reply({ embeds: [errorEmbed], ephemeral: true });
+                                        return;
+                                    }
+
+                                    break;
+                                    
+                                case 'wordle':
+                                    const game13 = new Wordle({
+                                        message: interaction,
+                                        isSlashGame: true,
+                                        embed: {
+                                            title: `> Cadia Minigame - Wordle`,
+                                            color: `${color.default}`
+                                        },
+                                        customWord: null,
+                                        timeoutTime: 60000,
+                                        winMessage: `> ${emojis.custom.tada1} **You won!** The word was **{word}**.`,
+                                        loseMessage: `> ${emojis.custom.fail} **You lost!** The word was **{word}**.`,
+                                        timeoutMessage: `> ${emojis.custom.fail} The game went **unfinished**!`,
+                                        playerOnlyMessage: `${emojis.custom.forbidden} You **cannot** interact with these buttons. Only {player} and {opponent} can use these buttons!`
+                                    });
+                             
+                                    try {
+                                        await game13.startGame();
+                                    } catch (err) {
+                                        console.log(err);
+                                        const errorEmbed = new EmbedBuilder()
+                                            .setColor(color.fail)
+                                            .setDescription(`${emojis.custom.fail} Oopsie, I have encountered an error. The error has been **forwarded** to the developers, so please be **patient** and try running the command again later.\n\n > ${emojis.custom.link} *Have you already tried and still encountering the same error? Then please consider joining our support server [here](https://discord.gg/2XunevgrHD) for assistance or use </bugreport:1219050295770742934>*`)
+                                            .setTimestamp();
+    
+                                        await interaction.reply({ embeds: [errorEmbed], ephemeral: true });
+                                        return;
+                                    }
+
+                                }
+                            } catch (error) {
+                                console.log(error);
+                                const errorEmbed = new EmbedBuilder()
+                                    .setColor(color.fail)
+                                    .setDescription(`${emojis.custom.fail} Oopsie, I have encountered an error. The error has been **forwarded** to the developers, so please be **patient** and try running the command again later.\n\n > ${emojis.custom.link} *Have you already tried and still encountering the same error? Then please consider joining our support server [here](https://discord.gg/2XunevgrHD) for assistance or use </bugreport:1219050295770742934>*`)
+                                    .setTimestamp();
+    
+                                await interaction.reply({ embeds: [errorEmbed], ephemeral: true });
+                                return;
+                            }
+                        }
+                    };
 
 module.exports = {
 	UserCommand
