@@ -2,7 +2,7 @@ const BeemoCommand = require('../../../lib/structures/commands/BeemoCommand');
 const { PermissionLevels } = require('../../../lib/types/Enums');
 const { color, emojis } = require('../../../config')
 const { EmbedBuilder, ChannelType, PermissionsBitField } = require('discord.js');
-const { WelcomeSchema } = require('../../../lib/schemas/welcome');
+const { WelcomeSchema } = require('../../../lib/schemas/welcomeSchema');
 
 class UserCommand extends BeemoCommand {
 	/**
@@ -110,13 +110,15 @@ class UserCommand extends BeemoCommand {
             const message = interaction.options.getString('message');
             const find = await WelcomeSchema.findOne({ guildId: interaction.guild.id });
 
-            if (!find === null) {
+            if (find) {
                     return await interaction.reply(`${emojis.custom.fail} The Welcome System has **already** been **setup** within the server!`);
             } else {
 
             // await WelcomeSchema.create({ guildId: interaction.guild.id, welcomeChannelId: channelID, messageType: messageType, messageInfo: { title: null, message: null, footer: null, hexCode: null} });
 
             if (messageType === 'regular') {
+                await WelcomeSchema.create({ guildId: interaction.guild.id, welcomeChannelId: channelID, messageType: messageType, message: ' ', title: null, footer: null, thumbnailImage: null, authorName: null, iconURL: null, hexCode: null });
+                await WelcomeSchema.findOneAndUpdate({ guildId: interaction.guild.id }, { title: null, message: message, footer: null, thumbnailImage: null, authorName: null, iconURL: null, hexCode: null }, { upsert: false });
                 return SendMessage(interaction);
             } else {
                 const title = interaction.options.getString('embed-title');
@@ -168,8 +170,8 @@ class UserCommand extends BeemoCommand {
 
             async function SendMessage(interaction) {
             const CreatedEmbed = new EmbedBuilder()
-                .setColor(`${color.success}`)
-                .setDescription(`${emojis.custom.success} The **Welcome System** has been setup!**\n\n ${emojis.custom.pencil} \`-\` **Channel:**\n ${emojis.custom.replyend} \`<#${channelID}>\``)
+                .setColor(`${color.default}`)
+                .setDescription(`${emojis.custom.success} The **Welcome System** has been setup!\n\n ${emojis.custom.pencil} \`-\` **Channel:**\n ${emojis.custom.replyend} <#${channelID}>`)
                 .setTimestamp()
                 .setFooter({ text: `Requested by ${interaction.user.displayName}`, iconURL: interaction.user.displayAvatarURL() });
 
@@ -180,10 +182,11 @@ class UserCommand extends BeemoCommand {
 
         if (subcommand === 'disable') {
             const find = await WelcomeSchema.find({ guildId: interaction.guild.id });
-            if (!find) {
+            console.log(find)
+            if (find.length === 0) {
                 const cantDisable = new EmbedBuilder()
-                    .setColor(color.fail)
-                    .setDescription(`${emojis.custom.fail} I **cannot** disable the **Welcome System** as it has **not** been setup within the server!`)
+                .setColor(color.fail)
+                .setDescription(`${emojis.custom.fail} I **cannot** disable the **Welcome System** as it has **not** been setup within the server!`)
                 return await interaction.reply({ embeds: [cantDisable] });
             } else {
                 await WelcomeSchema.deleteOne({ guildId: interaction.guild.id });
@@ -191,18 +194,19 @@ class UserCommand extends BeemoCommand {
                     .setColor(color.success)
                     .setDescription(`${emojis.custom.success} The **Welcome System** has been **disabled** within the server!`)
                 return await interaction.reply({ embeds: [Deleted] });
-            }
+            };
         };
 
         if (subcommand === 'vars') {
             const embed = new EmbedBuilder()
                 .setColor(color.default)
-                .setTitle('Welcome System Vairables')
+                .setTitle('Welcome System Variables')
                 .addFields([
-                    { name: '**Title:**', value: `${emojis.custom.replycontinue} \`{userId}\` Get the users **ID**\n${emojis.custom.replycontinue} \`{serverName}\` Get the servers name\n${emojis.custom.replyend} \`{serverMembers}\` Get the total member count of the server` },
-                    { name: '**Message:**', value: `${emojis.custom.replycontinue} \`{userId}\` Get the users **ID**\n${emojis.custom.replycontinue} \`{userMention}\` Mention the user who joined\n${emojis.custom.replycontinue} \`{serverName}\` Get the servers name\n${emojis.custom.replycontinue} \`{serverMembers}\` Get the total member count of the server\n${emojis.custom.replycontinue} \`\\n\` Use this to make a new line in a message` },
-                    { name: '**Footer:**', value: `${emojis.custom.replycontinue} \`{userId}\` Get the users name\n${emojis.custom.replycontinue} \`{serverName}\` Get the servers name\n${emojis.custom.replyend} \`{serverMembers}\` Get the total member count of the server` }
+                    { name: '**Title:**', value: `${emojis.custom.replystart} \`{userId}\` Get the users **ID**\n${emojis.custom.replycontinue} \`{serverName}\` Get the servers name\n${emojis.custom.replyend} \`{serverMembers}\` Get the total member count of the server` },
+                    { name: '**Message:**', value: `${emojis.custom.replystart} \`{userId}\` Get the users **ID**\n${emojis.custom.replycontinue} \`{userMention}\` Mention the user who joined\n${emojis.custom.replycontinue} \`{serverName}\` Get the servers name\n${emojis.custom.replycontinue} \`{serverMembers}\` Get the total member count of the server\n${emojis.custom.replyend} \`\\n\` Use this to make a new line in a message` },
+                    { name: '**Footer:**', value: `${emojis.custom.replystart} \`{userId}\` Get the users name\n${emojis.custom.replycontinue} \`{serverName}\` Get the servers name\n${emojis.custom.replyend} \`{serverMembers}\` Get the total member count of the server` }
                 ])
+                .setTimestamp()
                 .setFooter({ text: `Requested by ${interaction.user.displayName}`, iconURL: interaction.user.displayAvatarURL() });
 
                 return interaction.reply({ embeds: [embed] });

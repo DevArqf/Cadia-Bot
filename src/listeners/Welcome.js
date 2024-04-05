@@ -1,7 +1,7 @@
 const { Listener } = require('@sapphire/framework');
 const { EmbedBuilder } = require("discord.js");
-const { color, emojis, channelTypes } = require('../config');
-const { WelcomeSchema } = require('../lib/schemas/welcome');
+const { color, emojis } = require('../config');
+const { WelcomeSchema } = require('../lib/schemas/welcomeSchema');
 
 class UserEvent extends Listener {
 
@@ -45,13 +45,13 @@ class UserEvent extends Listener {
                     .setImage(embedThumbNailURL)
                     .setThumbnail(iconURL)
                     .setAuthor({ name: `${authorName}` })
-                    
+
                 return await channel.send({ embeds: [embed] });
 
             } else {
                 return await channel.send(message);
             }
-           
+
      }
 }
 

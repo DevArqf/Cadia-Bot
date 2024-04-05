@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
- 
+
 const welcomeSchema = new mongoose.Schema({
   guildId: {
     type: String,
@@ -52,7 +52,7 @@ const welcomeSchema = new mongoose.Schema({
       unique: false,
     }
 });
- 
-const WelcomeSchema = mongoose.model('Multi-Server-Welcome', welcomeSchema);
- 
+
+const WelcomeSchema = mongoose.model('welcomeSchema', welcomeSchema);
+
 module.exports = { WelcomeSchema };
