@@ -11,6 +11,7 @@ class UserCommand extends BeemoCommand {
 	constructor(context, options) {
 		super(context, {
 			...options,
+            requiredUserPermissions: ['Administrator'],
 			description: 'Setup the AutoMod System within your server'
 		});
 	}
@@ -55,8 +56,9 @@ class UserCommand extends BeemoCommand {
 		const { guild, options } = interaction;
         const sub = options.getSubcommand();
 
-        if (!interaction.member.permissions.has(PermissionFlagsBits.Administrator))
-            return await interaction.reply({ embeds: [new EmbedBuilder().setColor(`${color.invis}`).setDescription(`${emojis.custom.forbidden} You are not **authorized** to **execute** this command`)], ephemeral: true });
+        // Permission Check //
+        // if (!interaction.member.permissions.has(PermissionFlagsBits.Administrator))
+        //    return await interaction.reply({ embeds: [new EmbedBuilder().setColor(`${color.invis}`).setDescription(`${emojis.custom.forbidden} You are not **authorized** to **execute** this command`)], ephemeral: true });
 
         switch (sub) {
             case 'flagged-words':
@@ -83,8 +85,7 @@ class UserCommand extends BeemoCommand {
                     ]
                 }).catch(async (err) => {
                     setTimeout(async () => {
-                        console.log(err);
-                        await interaction.editReply({ content: `${err}` });
+                        await interaction.editReply({ embeds: [new EmbedBuilder().setColor(`${color.invis}`).setDescription(`${emojis.custom.fail} You have reached the **maximum** amount of **Flagged-Words** rules. You **cannot** add anymore Automod Rule for Flagged Words!`)] });
                     }, 2000);
                 });
 
@@ -125,8 +126,7 @@ class UserCommand extends BeemoCommand {
                     ]
                 }).catch(async (err) => {
                     setTimeout(async () => {
-                        console.log(err);
-                        await interaction.editReply({ content: `${err}` });
+                        await interaction.editReply({ embeds: [new EmbedBuilder().setColor(`${color.invis}`).setDescription(`${emojis.custom.fail} You **cannot** add anymore Automod Rule for the **Keyword** rule!`)] });
                     }, 2000);
                 });
 
@@ -166,8 +166,7 @@ class UserCommand extends BeemoCommand {
                     ]
                 }).catch(async (err) => {
                     setTimeout(async () => {
-                        console.log(err);
-                        await interaction.editReply({ content: `${err}` });
+                        await interaction.editReply({ embeds: [new EmbedBuilder().setColor(`${color.invis}`).setDescription(`${emojis.custom.fail} You have reached the **maximum** amount of **Spam-Messages** rules. You **cannot** add anymore Automod Rule for Spam-Messages!`)] });
                     }, 2000);
                 });
 
@@ -208,8 +207,7 @@ class UserCommand extends BeemoCommand {
                     ]
                 }).catch(async (err) => {
                     setTimeout(async () => {
-                        console.log(err);
-                        await interaction.editReply({ content: `${err}` });
+                        await interaction.editReply({ embeds: [new EmbedBuilder().setColor(`${color.invis}`).setDescription(`${emojis.custom.fail} You have reached the **maximum** amount of **Mention-Spam** rules. You **cannot** add anymore Automod Rule for Mention Spam!`)] });
                     }, 2000);
                 });
 
