@@ -114,9 +114,9 @@ class UserCommand extends BeemoCommand {
         const data = await reminderSchema.findOne({ User: interaction.user.id, ID: id });
  
         if (!data) 
-            return await interaction.reply({ content: `${emojis.custom.fail} No **reminder** found with the **ID:** **${id}**!`, ephemeral: true});
+            return await interaction.reply({ embeds: [new EmbedBuilder().setColor(`${color.fail}`).setDescription(`${emojis.custom.fail} No **reminder** found with the **ID:** **${id}**!`)], ephemeral: true});
         else {
-            await interaction.reply({ content: `${emojis.custom.success} Your **reminder** with the **ID:** **${id}** has been **cancelled**!`, ephemeral: true});
+            await interaction.reply({ embeds: [new EmbedBuilder().setColor(`${color.invis}`).setDescription(`${emojis.custom.success} Your **reminder** with the **ID:** **${id}** has been **cancelled**!`)], ephemeral: true});
  
             await reminderSchema.deleteMany({
                 User: interaction.user.id,
