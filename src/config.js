@@ -131,6 +131,7 @@ const color = {
 	fail: '#ff2626',
 	warning: '#e9d502',
 	invis: '#2b2d31',
+	RPG: '5e3a6d',
 	random: 'Random'
 };
 
