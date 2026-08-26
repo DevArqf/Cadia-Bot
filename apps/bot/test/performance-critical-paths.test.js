@@ -121,6 +121,7 @@ test('bot mention response uses the gateway cache without fetching every guild',
 			username: 'Warden'
 		},
 		client,
+		content: '<@123456789012345678>',
 		mentions: { users: { has: () => true } },
 		reply: async () => ({
 			id: 'reply'

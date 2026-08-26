@@ -96,19 +96,13 @@ function isMentionDeleteInteraction(interaction, replyId, authorId) {
 function hasDirectBotMention(message, botId) {
 	if (!botId) return false;
 
-	if (typeof message.mentions?.has === 'function') {
-		return message.mentions.has(botId, { ignoreRepliedUser: true });
-	}
-
-	const hasUserMention = message.mentions?.users?.has?.(botId);
-	if (!hasUserMention) return false;
-
 	const content = message.content ?? '';
 	const directMention = content.includes(`<@${botId}>`) || content.includes(`<@!${botId}>`);
+	if (!directMention) return false;
 
-	if (directMention) return true;
-
-	return !message.reference;
+	// MessageMentions#has also matches @everyone and @here for the client user.
+	// Only a parsed user mention plus the bot's explicit mention token is a Cadia mention.
+	return message.mentions?.users?.has?.(botId) ?? false;
 }
 
 module.exports = {

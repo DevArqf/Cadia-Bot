@@ -219,6 +219,7 @@ test('public discovery responses consistently position Cadia as RPG-first', asyn
 	await mentionListener.run({
 		author: { bot: false, displayAvatarURL: avatar, id: 'user', username: 'Warden' },
 		client,
+		content: '<@123456789012345678>',
 		mentions: { users: { has: () => true } },
 		reply: async (reply) => {
 			mentionReply = reply;

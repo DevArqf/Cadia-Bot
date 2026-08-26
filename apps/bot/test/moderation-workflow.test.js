@@ -2,7 +2,7 @@ const assert = require('node:assert/strict');
 const test = require('node:test');
 const { Collection, MessageFlags, PermissionFlagsBits } = require('discord.js');
 const { runModerationAction, sendDmNotice, validateModerationTarget } = require('../src/lib/moderation/workflow');
-const { isMentionDeleteInteraction } = require('../src/listeners/botMention');
+const { hasDirectBotMention, isMentionDeleteInteraction } = require('../src/listeners/botMention');
 const { UserCommand: PurgeCommand } = require('../src/commands/Moderation/purge');
 const { normalizeEvidenceMessageLink } = require('../src/commands/Moderation/ban');
 const { UserCommand: UnbanCommand } = require('../src/commands/Moderation/unban');
@@ -120,6 +120,23 @@ test('mention delete button belongs only to the requesting author', () => {
 	assert.equal(isMentionDeleteInteraction(interaction, 'reply', 'author'), true);
 	assert.equal(isMentionDeleteInteraction({ ...interaction, customId: 'mention-delete:other' }, 'reply', 'author'), false);
 	assert.equal(isMentionDeleteInteraction({ ...interaction, customId: 'deleteMentionReply' }, 'reply', 'author'), true);
+});
+
+test('bot mention response ignores @everyone and @here broadcasts', () => {
+	const botId = '123456789012345678';
+	const broadcastMessage = {
+		content: '@everyone hello',
+		mentions: {
+			has: () => true,
+			users: { has: () => false }
+		}
+	};
+
+	assert.equal(hasDirectBotMention(broadcastMessage, botId), false);
+	assert.equal(
+		hasDirectBotMention({ content: `<@!${botId}> hello`, mentions: { users: { has: () => true } } }, botId),
+		true
+	);
 });
 
 test('unban validates Discord IDs and acknowledges before removing a ban', async () => {
